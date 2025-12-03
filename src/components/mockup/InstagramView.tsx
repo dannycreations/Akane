@@ -15,14 +15,12 @@ import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 
-import type { FC } from 'react';
-
 const isDark = true;
 const bg = isDark ? 'bg-black' : 'bg-white';
 const text = isDark ? 'text-white' : 'text-black';
 const border = isDark ? 'border-gray-800' : 'border-gray-200';
 
-const BottomNav: FC = () => (
+const BottomNav = () => (
   <div className={`h-[50px] ${bg} border-t ${border} flex items-center justify-between px-6 shrink-0 z-50`}>
     <LuHouse size={24} className={text} />
     <LuSearch size={24} className={text} />
@@ -34,8 +32,9 @@ const BottomNav: FC = () => (
   </div>
 );
 
-export const InstagramView: FC = () => {
-  const { perspective, image } = useStore();
+export const InstagramView = () => {
+  const perspective = useStore((state) => state.perspective);
+  const image = useStore((state) => state.image);
 
   if (perspective === Perspective.Story) {
     return (

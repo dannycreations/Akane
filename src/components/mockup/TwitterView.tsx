@@ -21,8 +21,6 @@ import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 
-import type { FC } from 'react';
-
 const VerifiedBadge = () => (
   <svg viewBox="0 0 22 22" className="w-[18px] h-[18px] text-[#1d9bf0] fill-current ml-1">
     <g>
@@ -52,8 +50,8 @@ const BottomNav = () => (
   </div>
 );
 
-export const TwitterView: FC = () => {
-  const { perspective } = useStore();
+export const TwitterView = () => {
+  const perspective = useStore((state) => state.perspective);
   const isProfile = perspective === Perspective.Profile;
 
   if (isProfile) {

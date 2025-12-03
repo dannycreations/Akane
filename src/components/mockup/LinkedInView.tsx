@@ -16,8 +16,6 @@ import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 
-import type { FC } from 'react';
-
 const BottomNav = () => (
   <div className="h-[52px] bg-[#1b1f23] border-t border-[#31363c] flex items-center justify-between px-6 shrink-0 z-50">
     <div className="flex flex-col items-center gap-1 text-white">
@@ -43,8 +41,10 @@ const BottomNav = () => (
   </div>
 );
 
-export const LinkedInView: FC = () => {
-  const { perspective, image } = useStore();
+export const LinkedInView = () => {
+  const perspective = useStore((state) => state.perspective);
+  const image = useStore((state) => state.image);
+
   const isProfile = perspective === Perspective.Profile;
 
   if (isProfile) {

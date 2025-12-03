@@ -4,10 +4,11 @@ import { LuArrowLeft, LuArrowRight, LuBattery, LuSignal, LuWifi } from 'react-ic
 import { useStore } from '../stores/useStore';
 import { getPlatformConfig } from './mockup';
 
-import type { FC } from 'react';
+export const PreviewPanel = () => {
+  const platform = useStore((state) => state.platform);
+  const perspective = useStore((state) => state.perspective);
+  const setPerspective = useStore((state) => state.setPerspective);
 
-export const PreviewPanel: FC = () => {
-  const { platform, perspective, setPerspective } = useStore();
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
 

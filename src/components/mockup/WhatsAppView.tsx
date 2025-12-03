@@ -4,10 +4,8 @@ import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 
-import type { FC } from 'react';
-
-export const WhatsAppView: FC = () => {
-  const { perspective } = useStore();
+export const WhatsAppView = () => {
+  const perspective = useStore((state) => state.perspective);
 
   if (perspective === Perspective.Profile) {
     return (
@@ -52,11 +50,6 @@ export const WhatsAppView: FC = () => {
 
   return (
     <div className="w-full h-full bg-[#0b141a] flex flex-col font-sans relative overflow-hidden">
-      <div
-        className="absolute inset-0 bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')] bg-repeat opacity-[0.35] invert grayscale pointer-events-none"
-        style={{ backgroundSize: '450px' }}
-      />
-
       <div className="h-16 bg-[#202c33] flex items-center px-2 justify-between shrink-0 shadow-sm relative z-10">
         <div className="flex items-center gap-2">
           <LuArrowLeft size={20} className="text-white" />

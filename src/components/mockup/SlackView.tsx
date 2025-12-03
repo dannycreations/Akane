@@ -4,15 +4,13 @@ import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 
-import type { FC } from 'react';
-
 const bgMain = 'bg-[#1A1D21]';
 const textPrimary = 'text-[#D1D2D3]';
 const textSecondary = 'text-[#ABABAD]';
 const border = 'border-[#36373A]';
 
-export const SlackView: FC = () => {
-  const { perspective } = useStore();
+export const SlackView = () => {
+  const perspective = useStore((state) => state.perspective);
   const isProfile = perspective === Perspective.Profile;
 
   if (isProfile) {

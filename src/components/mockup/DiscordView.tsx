@@ -1,10 +1,8 @@
-import { LuCirclePlus, LuGift, LuHash, LuMenu, LuPhone, LuSettings, LuSmile, LuSticker, LuUsers, LuVideo } from 'react-icons/lu';
+import { LuCirclePlus, LuGift, LuHash, LuMenu, LuPhone, LuSearch, LuSettings, LuSmile, LuSticker, LuUsers, LuVideo } from 'react-icons/lu';
 
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
-
-import type { FC } from 'react';
 
 const bgMain = 'bg-[#1e1f22]';
 const bgSidebar = 'bg-[#2b2d31]';
@@ -12,7 +10,7 @@ const bgUserCard = 'bg-[#111214]';
 const textMain = 'text-[#dbdee1]';
 const textMuted = 'text-[#949ba4]';
 
-const BottomNav: FC = () => (
+const BottomNav = () => (
   <div className={`h-[56px] ${bgSidebar} flex items-center justify-around px-2 shrink-0 z-50 border-t border-[#1e1f22]`}>
     <div className="flex flex-col items-center gap-1 group cursor-pointer">
       <div className="text-white bg-[#5865f2] p-1 rounded-full">
@@ -26,7 +24,7 @@ const BottomNav: FC = () => (
     </div>
     <div className="flex flex-col items-center gap-1 group cursor-pointer text-[#949ba4] hover:text-[#dbdee1]">
       <div className="relative">
-        <SearchIcon />
+        <LuSearch size={24} />
         <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#23a559] rounded-full border-2 border-[#2b2d31]"></div>
       </div>
       <span className="text-[10px] font-medium">Search</span>
@@ -42,13 +40,6 @@ const BottomNav: FC = () => (
   </div>
 );
 
-const SearchIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="11" cy="11" r="8"></circle>
-    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-  </svg>
-);
-
 const NitroBadge = () => (
   <div
     className="bg-gradient-to-br from-[#ff73fa] to-[#6a32ee] p-[2px] rounded-full cursor-pointer hover:scale-110 transition-transform"
@@ -60,8 +51,8 @@ const NitroBadge = () => (
   </div>
 );
 
-export const DiscordView: FC = () => {
-  const { perspective } = useStore();
+export const DiscordView = () => {
+  const perspective = useStore((state) => state.perspective);
   const isProfile = perspective === Perspective.Profile;
 
   if (isProfile) {
@@ -73,7 +64,6 @@ export const DiscordView: FC = () => {
 
         <div className="flex-1 overflow-y-auto no-scrollbar">
           <div className="w-full h-[180px] bg-[#5865f2] relative">
-            <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
             <div className="absolute inset-0 bg-gradient-to-t from-[#111214]/80 to-transparent"></div>
           </div>
 
@@ -165,10 +155,7 @@ export const DiscordView: FC = () => {
               <span className="text-xs text-[#949ba4]">Today at 4:20 PM</span>
             </div>
             <p className="text-[#dbdee1] leading-snug">
-              Hey everyone! Just checking out the new profile styles.{' '}
-              <span className="inline-block align-middle">
-                <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f440.png" alt="eyes" className="w-5 h-5" />
-              </span>
+              Hey everyone! Just checking out the new profile styles. <span className="inline-block align-middle text-[1.25em]">👀</span>
             </p>
 
             <div className="flex gap-1 mt-1.5">

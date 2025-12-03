@@ -4,8 +4,6 @@ import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 
-import type { FC } from 'react';
-
 const bgMain = 'bg-[#17212b]';
 const bgContent = 'bg-[#0e1621]';
 const headerBg = 'bg-[#17212b]';
@@ -25,8 +23,8 @@ const PremiumStar = ({ size = 16, className = '' }: { size?: number; className?:
   </svg>
 );
 
-export const TelegramView: FC = () => {
-  const { perspective } = useStore();
+export const TelegramView = () => {
+  const perspective = useStore((state) => state.perspective);
   const isProfile = perspective === Perspective.Profile;
 
   if (isProfile) {
@@ -88,8 +86,6 @@ export const TelegramView: FC = () => {
 
   return (
     <div className={`w-full h-full ${bgContent} flex flex-col font-sans relative`}>
-      <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://cdn.pixabay.com/photo/2016/06/02/02/33/triangles-1430105_960_720.png')] bg-repeat"></div>
-
       <div className={`h-[56px] ${headerBg} flex items-center px-2 shadow-sm z-20 shrink-0`}>
         <div className="p-2 hover:bg-[#202b36] rounded-full cursor-pointer">
           <LuArrowLeft size={22} className={textSecondary} />

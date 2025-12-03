@@ -4,10 +4,9 @@ import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 
-import type { FC } from 'react';
-
-export const FacebookView: FC = () => {
-  const { perspective, image } = useStore();
+export const FacebookView = () => {
+  const perspective = useStore((state) => state.perspective);
+  const image = useStore((state) => state.image);
 
   if (perspective === Perspective.Profile) {
     return (

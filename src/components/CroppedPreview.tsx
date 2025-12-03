@@ -1,15 +1,20 @@
 import { useStore } from '../stores/useStore';
 
-import type { FC } from 'react';
-
 interface CroppedPreviewProps {
   readonly size?: number | string;
   readonly className?: string;
 }
 
-export const CroppedPreview: FC<CroppedPreviewProps> = ({ size, className }) => {
-  const { image, editorState } = useStore();
-  const style = size !== undefined ? { width: size, height: size } : { width: '100%', height: '100%' };
+const FULL_SIZE = {
+  width: '100%',
+  height: '100%',
+} as const;
+
+export const CroppedPreview = ({ size, className }: CroppedPreviewProps) => {
+  const image = useStore((state) => state.image);
+  const editorState = useStore((state) => state.editorState);
+
+  const style = size !== undefined ? { width: size, height: size } : FULL_SIZE;
 
   if (!image) return <div className={`bg-slate-700 ${className}`} style={style} />;
 

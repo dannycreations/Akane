@@ -10,7 +10,7 @@ import { TelegramView } from './TelegramView';
 import { TwitterView } from './TwitterView';
 import { WhatsAppView } from './WhatsAppView';
 
-import type { FC } from 'react';
+import type { ComponentType } from 'react';
 import type { IconType } from 'react-icons';
 
 export enum Platform {
@@ -30,8 +30,8 @@ export interface PlatformConfig {
   readonly icon: IconType;
   readonly color: string;
   readonly perspectives: Perspective[];
-  readonly node: FC;
-  readonly size: number;
+  readonly node: ComponentType;
+  readonly outputSize: number;
 }
 
 export const PLATFORMS: readonly PlatformConfig[] = [
@@ -42,7 +42,7 @@ export const PLATFORMS: readonly PlatformConfig[] = [
     color: 'text-indigo-400',
     perspectives: [Perspective.Profile, Perspective.Chat],
     node: DiscordView,
-    size: 512,
+    outputSize: 512,
   },
   {
     id: Platform.Facebook,
@@ -51,7 +51,7 @@ export const PLATFORMS: readonly PlatformConfig[] = [
     color: 'text-blue-500',
     perspectives: [Perspective.Profile, Perspective.Feed],
     node: FacebookView,
-    size: 1080,
+    outputSize: 1080,
   },
   {
     id: Platform.Instagram,
@@ -60,7 +60,7 @@ export const PLATFORMS: readonly PlatformConfig[] = [
     color: 'text-pink-500',
     perspectives: [Perspective.Profile, Perspective.Story, Perspective.Feed],
     node: InstagramView,
-    size: 320,
+    outputSize: 320,
   },
   {
     id: Platform.LinkedIn,
@@ -69,7 +69,7 @@ export const PLATFORMS: readonly PlatformConfig[] = [
     color: 'text-blue-400',
     perspectives: [Perspective.Profile, Perspective.Feed],
     node: LinkedInView,
-    size: 400,
+    outputSize: 400,
   },
   {
     id: Platform.Slack,
@@ -78,7 +78,7 @@ export const PLATFORMS: readonly PlatformConfig[] = [
     color: 'text-[#E01E5A]',
     perspectives: [Perspective.Profile, Perspective.Chat],
     node: SlackView,
-    size: 1024,
+    outputSize: 1024,
   },
   {
     id: Platform.Telegram,
@@ -87,7 +87,7 @@ export const PLATFORMS: readonly PlatformConfig[] = [
     color: 'text-sky-400',
     perspectives: [Perspective.Profile, Perspective.Chat],
     node: TelegramView,
-    size: 640,
+    outputSize: 640,
   },
   {
     id: Platform.WhatsApp,
@@ -96,7 +96,7 @@ export const PLATFORMS: readonly PlatformConfig[] = [
     color: 'text-green-500',
     perspectives: [Perspective.Profile, Perspective.Chat],
     node: WhatsAppView,
-    size: 640,
+    outputSize: 640,
   },
   {
     id: Platform.Twitter,
@@ -105,14 +105,13 @@ export const PLATFORMS: readonly PlatformConfig[] = [
     color: 'text-white',
     perspectives: [Perspective.Profile, Perspective.Feed],
     node: TwitterView,
-    size: 400,
+    outputSize: 400,
   },
 ];
 
 export function getPlatformConfig(id: Platform): PlatformConfig {
   const config = PLATFORMS.find((p) => p.id === id);
   if (!config) {
-    // Fallback to avoid crashing if a new enum is added but not config
     console.warn(`Platform config for ${id} not found, falling back to first available`);
     return PLATFORMS[0];
   }

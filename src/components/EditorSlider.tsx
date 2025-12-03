@@ -1,5 +1,3 @@
-import type { FC } from 'react';
-
 interface SliderProps {
   readonly label: string;
   readonly value: number;
@@ -9,7 +7,7 @@ interface SliderProps {
   readonly onChange: (value: number) => void;
 }
 
-export const Slider: FC<SliderProps> = ({ label, value, min, max, step = 1, onChange }) => {
+export const Slider = ({ label, value, min, max, step = 1, onChange }: SliderProps) => {
   return (
     <div className="flex flex-col gap-1 w-full">
       <div className="flex justify-between text-xs font-medium text-slate-400">

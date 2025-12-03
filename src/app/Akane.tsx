@@ -5,10 +5,9 @@ import { PlatformList } from '../components/PlatformList';
 import { PreviewPanel } from '../components/PreviewPanel';
 import { useStore } from '../stores/useStore';
 
-import type { FC } from 'react';
-
-export const Akane: FC = () => {
-  const { activeTab, setActiveTab } = useStore();
+export const Akane = () => {
+  const activeTab = useStore((state) => state.activeTab);
+  const setActiveTab = useStore((state) => state.setActiveTab);
 
   return (
     <div className="flex flex-col lg:flex-row h-screen w-screen bg-slate-950 overflow-hidden font-sans">

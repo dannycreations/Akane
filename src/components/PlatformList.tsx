@@ -1,14 +1,14 @@
 import { useStore } from '../stores/useStore';
 import { PLATFORMS } from './mockup';
 
-import type { FC } from 'react';
-
 interface PlatformListProps {
   readonly orientation?: 'vertical' | 'horizontal';
 }
 
-export const PlatformList: FC<PlatformListProps> = ({ orientation = 'vertical' }) => {
-  const { platform: selected, setPlatform } = useStore();
+export const PlatformList = ({ orientation = 'vertical' }: PlatformListProps) => {
+  const selected = useStore((state) => state.platform);
+  const setPlatform = useStore((state) => state.setPlatform);
+
   const isVertical = orientation === 'vertical';
 
   return (

@@ -7,27 +7,32 @@ import { saveImage } from '../utilities/image';
 import { Slider } from './EditorSlider';
 import { getPlatformConfig, Platform } from './mockup';
 
-import type { ChangeEvent, FC, PointerEvent, SyntheticEvent, WheelEvent } from 'react';
+import type { ChangeEvent, PointerEvent, SyntheticEvent, WheelEvent } from 'react';
 import type { EditorState } from '../app/types';
 
-const GridOverlay: FC<{ isRoundedSquare: boolean }> = ({ isRoundedSquare }) => {
-  const lineClass = 'absolute bg-white/30 pointer-events-none shadow-[0_0_2px_rgba(0,0,0,0.2)]';
+const GRID_LINE_CLASS = 'absolute bg-white/30 pointer-events-none shadow-[0_0_2px_rgba(0,0,0,0.2)]';
 
+const GridOverlay = ({ isRoundedSquare }: { readonly isRoundedSquare: boolean }) => {
   return (
     <div className={`absolute inset-0 pointer-events-none overflow-hidden select-none z-10 ${isRoundedSquare ? 'rounded-3xl' : 'rounded-full'}`}>
       <div
         className={`absolute inset-0 border border-white/20 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] ${isRoundedSquare ? 'rounded-3xl' : 'rounded-full'}`}
       />
-      <div className={`${lineClass} left-1/3 top-0 bottom-0 w-px`} />
-      <div className={`${lineClass} left-2/3 top-0 bottom-0 w-px`} />
-      <div className={`${lineClass} top-1/3 left-0 right-0 h-px`} />
-      <div className={`${lineClass} top-2/3 left-0 right-0 h-px`} />
+      <div className={`${GRID_LINE_CLASS} left-1/3 top-0 bottom-0 w-px`} />
+      <div className={`${GRID_LINE_CLASS} left-2/3 top-0 bottom-0 w-px`} />
+      <div className={`${GRID_LINE_CLASS} top-1/3 left-0 right-0 h-px`} />
+      <div className={`${GRID_LINE_CLASS} top-2/3 left-0 right-0 h-px`} />
     </div>
   );
 };
 
-export const EditorPanel: FC = () => {
-  const { image, editorState, platform, setImage, setEditorState } = useStore();
+export const EditorPanel = () => {
+  const image = useStore((state) => state.image);
+  const editorState = useStore((state) => state.editorState);
+  const platform = useStore((state) => state.platform);
+  const setImage = useStore((state) => state.setImage);
+  const setEditorState = useStore((state) => state.setEditorState);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const pendingImageRef = useRef<string | null>(null);
@@ -75,6 +80,7 @@ export const EditorPanel: FC = () => {
       const file = e.target.files[0];
       const url = URL.createObjectURL(file);
       setImage({ url, name: file.name });
+      e.target.value = '';
     }
   };
 
@@ -170,8 +176,8 @@ export const EditorPanel: FC = () => {
 
   const handleDownload = async () => {
     if (!image) return;
-    const { size } = getPlatformConfig(platform);
-    await saveImage(image, editorState, size, platform);
+    const { outputSize } = getPlatformConfig(platform);
+    await saveImage(image, editorState, outputSize, platform);
   };
 
   return (
@@ -179,7 +185,8 @@ export const EditorPanel: FC = () => {
       <div className="flex justify-between items-center mb-1 shrink-0 z-20">
         <button
           onClick={() => setImage(null)}
-          className="flex items-center gap-2 text-slate-400 hover:text-red-400 transition-colors text-xs font-medium whitespace-nowrap bg-slate-900/50 rounded-lg px-2 py-1"
+          disabled={!image}
+          className="flex items-center gap-2 text-slate-400 hover:text-red-400 transition-colors text-xs font-medium whitespace-nowrap disabled:opacity-30 disabled:cursor-not-allowed bg-slate-900/50 rounded-lg px-2 py-1"
         >
           <LuX size={16} />
           <span className="sm:inline">CLOSE</span>
