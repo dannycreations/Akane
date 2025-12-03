@@ -34,7 +34,7 @@ jobs:
       - name: Prepare deployment directory
         run: |
           mkdir -p public
-          cp -r dist public
+          cp -r dist/* public
 
       - name: Deploy to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v4
