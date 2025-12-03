@@ -3,8 +3,8 @@ import { useStore } from '../stores/useStore';
 import type { FC } from 'react';
 
 interface CroppedPreviewProps {
-  size?: number | string;
-  className?: string;
+  readonly size?: number | string;
+  readonly className?: string;
 }
 
 export const CroppedPreview: FC<CroppedPreviewProps> = ({ size, className }) => {

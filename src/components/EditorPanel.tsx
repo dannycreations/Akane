@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { LuDownload, LuRotateCw, LuUpload, LuX, LuZoomIn } from 'react-icons/lu';
 
-import { Platform } from '../app/types';
 import { useStore } from '../stores/useStore';
 import { calculateLimits, rotateDelta } from '../utilities/geometry';
-import { downloadCroppedImage } from '../utilities/image';
+import { saveImage } from '../utilities/image';
 import { Slider } from './EditorSlider';
+import { getPlatformConfig, Platform } from './mockup';
 
 import type { ChangeEvent, FC, PointerEvent, SyntheticEvent, WheelEvent } from 'react';
 import type { EditorState } from '../app/types';
@@ -170,7 +170,8 @@ export const EditorPanel: FC = () => {
 
   const handleDownload = async () => {
     if (!image) return;
-    await downloadCroppedImage(image, editorState);
+    const { size } = getPlatformConfig(platform);
+    await saveImage(image, editorState, size, platform);
   };
 
   return (

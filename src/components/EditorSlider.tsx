@@ -1,12 +1,12 @@
 import type { FC } from 'react';
 
 interface SliderProps {
-  label: string;
-  value: number;
-  min: number;
-  max: number;
-  step?: number;
-  onChange: (value: number) => void;
+  readonly label: string;
+  readonly value: number;
+  readonly min: number;
+  readonly max: number;
+  readonly step?: number;
+  readonly onChange: (value: number) => void;
 }
 
 export const Slider: FC<SliderProps> = ({ label, value, min, max, step = 1, onChange }) => {

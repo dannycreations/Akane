@@ -6,7 +6,7 @@ import {
   LuEllipsis,
   LuHeart,
   LuHouse,
-  LuLink as LuLinkIcon,
+  LuLink,
   LuMail,
   LuMapPin,
   LuMessageCircle,
@@ -17,7 +17,7 @@ import {
   LuUsers,
 } from 'react-icons/lu';
 
-import { Perspective } from '../../app/types';
+import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 
@@ -97,7 +97,7 @@ export const TwitterView: FC = () => {
                 <span>San Francisco, CA</span>
               </div>
               <div className="flex items-center gap-1">
-                <LuLinkIcon size={16} />
+                <LuLink size={16} />
                 <span className="text-[#1d9bf0]">johndoe.com</span>
               </div>
               <div className="flex items-center gap-1">

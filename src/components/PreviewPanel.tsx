@@ -1,37 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { LuArrowLeft, LuArrowRight, LuBattery, LuSignal, LuWifi } from 'react-icons/lu';
 
-import { Platform } from '../app/types';
 import { useStore } from '../stores/useStore';
-import { DiscordView } from './mockup/DiscordView';
-import { FacebookView } from './mockup/FacebookView';
-import { InstagramView } from './mockup/InstagramView';
-import { LinkedInView } from './mockup/LinkedInView';
-import { SlackView } from './mockup/SlackView';
-import { TelegramView } from './mockup/TelegramView';
-import { TwitterView } from './mockup/TwitterView';
-import { WhatsAppView } from './mockup/WhatsAppView';
-import { getPerspectives } from './PlatformIcon';
+import { getPlatformConfig } from './mockup';
 
 import type { FC } from 'react';
-
-const VIEW_MAP: Record<Platform, FC> = {
-  [Platform.WhatsApp]: WhatsAppView,
-  [Platform.Instagram]: InstagramView,
-  [Platform.Facebook]: FacebookView,
-  [Platform.LinkedIn]: LinkedInView,
-  [Platform.Twitter]: TwitterView,
-  [Platform.Discord]: DiscordView,
-  [Platform.Telegram]: TelegramView,
-  [Platform.Slack]: SlackView,
-};
 
 export const PreviewPanel: FC = () => {
   const { platform, perspective, setPerspective } = useStore();
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
-  const perspectives = getPerspectives(platform);
+
+  const config = getPlatformConfig(platform);
+  const perspectives = config.perspectives;
   const currentIdx = perspectives.indexOf(perspective);
+  const View = config.node;
 
   const handleNextPerspective = () => {
     const next = perspectives[(currentIdx + 1) % perspectives.length];
@@ -68,8 +51,6 @@ export const PreviewPanel: FC = () => {
     observer.observe(container);
     return () => observer.disconnect();
   }, []);
-
-  const View = VIEW_MAP[platform];
 
   return (
     <div ref={containerRef} className="flex-1 min-h-0 w-full flex flex-col items-center justify-center relative p-4 lg:p-8 overflow-hidden">
@@ -108,7 +89,7 @@ export const PreviewPanel: FC = () => {
               <View />
             ) : (
               <div className="flex items-center justify-center h-full text-slate-500 text-center p-8">
-                <p>Preview for {platform} coming soon.</p>
+                <p>Preview for {config.name} coming soon.</p>
               </div>
             )}
           </div>

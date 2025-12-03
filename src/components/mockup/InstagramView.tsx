@@ -11,7 +11,7 @@ import {
   LuSquarePlus,
 } from 'react-icons/lu';
 
-import { Perspective } from '../../app/types';
+import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 

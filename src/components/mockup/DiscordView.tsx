@@ -1,6 +1,6 @@
 import { LuCirclePlus, LuGift, LuHash, LuMenu, LuPhone, LuSettings, LuSmile, LuSticker, LuUsers, LuVideo } from 'react-icons/lu';
 
-import { Perspective } from '../../app/types';
+import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 

@@ -1,14 +1,13 @@
-import { Platform } from '../app/types';
 import { useStore } from '../stores/useStore';
-import { PLATFORMS } from './PlatformIcon';
+import { PLATFORMS } from './mockup';
 
 import type { FC } from 'react';
 
-interface PlatformSelectorProps {
-  orientation?: 'vertical' | 'horizontal';
+interface PlatformListProps {
+  readonly orientation?: 'vertical' | 'horizontal';
 }
 
-export const PlatformSelector: FC<PlatformSelectorProps> = ({ orientation = 'vertical' }) => {
+export const PlatformList: FC<PlatformListProps> = ({ orientation = 'vertical' }) => {
   const { platform: selected, setPlatform } = useStore();
   const isVertical = orientation === 'vertical';
 
@@ -54,7 +53,7 @@ export const PlatformSelector: FC<PlatformSelectorProps> = ({ orientation = 'ver
               />
               {isVertical && (
                 <div className="absolute left-full ml-4 px-2 py-1 bg-slate-800 text-xs text-white rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
-                  {p.id === Platform.Twitter ? 'X' : p.id}
+                  {p.name}
                 </div>
               )}
             </button>

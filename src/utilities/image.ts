@@ -1,6 +1,6 @@
 import type { EditorState, ImageSource } from '../app/types';
 
-export async function downloadCroppedImage(image: ImageSource, editorState: EditorState): Promise<void> {
+export async function saveImage(image: ImageSource, editorState: EditorState, outputSize?: number, suffix?: string): Promise<void> {
   const img = new Image();
   img.crossOrigin = 'anonymous';
   img.src = image.url;
@@ -10,8 +10,9 @@ export async function downloadCroppedImage(image: ImageSource, editorState: Edit
     img.onerror = reject;
   });
 
+  const size = outputSize ?? Math.max(1080, img.naturalWidth, img.naturalHeight);
+
   const canvas = document.createElement('canvas');
-  const size = Math.max(1080, img.naturalWidth, img.naturalHeight);
   canvas.width = size;
   canvas.height = size;
   const ctx = canvas.getContext('2d');
@@ -45,8 +46,9 @@ export async function downloadCroppedImage(image: ImageSource, editorState: Edit
   const link = document.createElement('a');
   const lastDotIndex = image.name.lastIndexOf('.');
   const nameWithoutExt = lastDotIndex !== -1 ? image.name.substring(0, lastDotIndex) : image.name;
+  const fileNameSuffix = suffix ? `_${suffix}` : '_edited';
 
-  link.download = `${nameWithoutExt}_edited.png`;
+  link.download = `${nameWithoutExt}${fileNameSuffix}.png`;
   link.href = canvas.toDataURL('image/png');
   document.body.appendChild(link);
   link.click();

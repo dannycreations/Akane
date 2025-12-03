@@ -1,22 +1,23 @@
 import { create } from 'zustand';
 
-import { Perspective, Platform } from '../app/types';
-import { getPerspectives } from '../components/PlatformIcon';
+import { Perspective } from '../app/constants';
+import { getPerspectives, PLATFORMS } from '../components/mockup';
 
 import type { EditorState, ImageSource } from '../app/types';
+import type { Platform } from '../components/mockup';
 
 interface AppState {
-  image: ImageSource | null;
-  activeTab: 'editor' | 'preview';
-  editorState: EditorState;
-  platform: Platform;
-  perspective: Perspective;
+  readonly image: ImageSource | null;
+  readonly activeTab: 'editor' | 'preview';
+  readonly editorState: EditorState;
+  readonly platform: Platform;
+  readonly perspective: Perspective;
 
-  setImage: (image: ImageSource | null) => void;
-  setActiveTab: (tab: 'editor' | 'preview') => void;
-  setEditorState: (editorState: EditorState) => void;
-  setPlatform: (platform: Platform) => void;
-  setPerspective: (perspective: Perspective) => void;
+  readonly setImage: (image: ImageSource | null) => void;
+  readonly setActiveTab: (tab: 'editor' | 'preview') => void;
+  readonly setEditorState: (editorState: EditorState) => void;
+  readonly setPlatform: (platform: Platform) => void;
+  readonly setPerspective: (perspective: Perspective) => void;
 }
 
 export const useStore = create<AppState>((set) => ({
@@ -28,7 +29,7 @@ export const useStore = create<AppState>((set) => ({
     x: 0,
     y: 0,
   },
-  platform: Platform.WhatsApp,
+  platform: PLATFORMS[0].id,
   perspective: Perspective.Profile,
 
   setImage: (image) => set({ image }),

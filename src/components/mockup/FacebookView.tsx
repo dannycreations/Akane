@@ -1,18 +1,6 @@
-import {
-  LuBell,
-  LuEllipsis,
-  LuGlobe,
-  LuHouse,
-  LuImage as LuImageIcon,
-  LuMessageCircle,
-  LuSearch,
-  LuShare2,
-  LuThumbsUp,
-  LuTv,
-  LuUsers,
-} from 'react-icons/lu';
+import { LuBell, LuEllipsis, LuGlobe, LuHouse, LuImage, LuMessageCircle, LuSearch, LuShare2, LuThumbsUp, LuTv, LuUsers } from 'react-icons/lu';
 
-import { Perspective } from '../../app/types';
+import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 
@@ -31,7 +19,7 @@ export const FacebookView: FC = () => {
               <CroppedPreview size={120} className="rounded-full ring-2 ring-gray-700" />
             </div>
             <div className="absolute bottom-2 right-2 bg-[#3a3b3c] p-1.5 rounded-full border-2 border-[#18191a]">
-              <LuImageIcon size={14} className="text-white" />
+              <LuImage size={14} className="text-white" />
             </div>
           </div>
         </div>

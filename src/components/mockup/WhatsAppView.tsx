@@ -1,6 +1,6 @@
-import { LuArrowLeft, LuCircleCheck, LuEllipsisVertical, LuImage as LuImageIcon, LuPhone, LuSend, LuVideo } from 'react-icons/lu';
+import { LuArrowLeft, LuCircleCheck, LuEllipsisVertical, LuImage, LuPhone, LuSend, LuVideo } from 'react-icons/lu';
 
-import { Perspective } from '../../app/types';
+import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 
@@ -20,7 +20,7 @@ export const WhatsAppView: FC = () => {
         <div className="flex justify-center my-8 relative group">
           <CroppedPreview size={180} className="rounded-full ring-4 ring-[#25D366]/20 group-hover:ring-[#25D366] transition-all duration-500" />
           <div className="absolute bottom-2 right-14 bg-[#00a884] p-3 rounded-full shadow-lg">
-            <LuImageIcon size={20} className="text-white" />
+            <LuImage size={20} className="text-white" />
           </div>
         </div>
         <div className="px-6 space-y-6">

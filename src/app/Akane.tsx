@@ -1,7 +1,7 @@
 import { LuEye, LuPencil } from 'react-icons/lu';
 
 import { EditorPanel } from '../components/EditorPanel';
-import { PlatformSelector } from '../components/PlatformSelector';
+import { PlatformList } from '../components/PlatformList';
 import { PreviewPanel } from '../components/PreviewPanel';
 import { useStore } from '../stores/useStore';
 
@@ -41,7 +41,7 @@ export const Akane: FC = () => {
       </div>
 
       <div className="hidden lg:block flex-none z-20 h-full">
-        <PlatformSelector orientation="vertical" />
+        <PlatformList orientation="vertical" />
       </div>
 
       <div
@@ -53,7 +53,7 @@ export const Akane: FC = () => {
         <PreviewPanel />
 
         <div className="lg:hidden flex-none z-20 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
-          <PlatformSelector orientation="horizontal" />
+          <PlatformList orientation="horizontal" />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { LuChevronDown, LuClock, LuEllipsis, LuHash, LuMessageSquare, LuPaperclip, LuSend, LuSmile, LuUserPlus, LuVideo, LuX } from 'react-icons/lu';
 
-import { Perspective } from '../../app/types';
+import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
 
