@@ -70,7 +70,7 @@ export const PreviewPanel = () => {
         </button>
       </div>
 
-      <div style={{ transform: `scale(${scale})` }} className="transition-transform duration-200 ease-out origin-center will-change-transform">
+      <div style={{ transform: `scale(${scale})` }} className="transition-transform duration-300 ease-out origin-center will-change-transform">
         <div className="relative w-[340px] h-[680px] bg-black rounded-[3rem] border-8 border-slate-800 shadow-2xl overflow-hidden ring-1 ring-white/10">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-b-2xl z-50 flex items-center justify-center gap-2">
             <div className="w-16 h-3 bg-slate-900/50 rounded-full" />

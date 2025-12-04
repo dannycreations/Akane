@@ -16,7 +16,7 @@ export const WhatsAppView = () => {
           <LuEllipsisVertical size={24} />
         </div>
         <div className="flex justify-center my-8 relative group">
-          <CroppedPreview size={180} className="rounded-full ring-4 ring-[#25D366]/20 group-hover:ring-[#25D366] transition-all duration-500" />
+          <CroppedPreview size={180} className="rounded-full ring-4 ring-[#25D366]/20 group-hover:ring-[#25D366] transition-all duration-300" />
           <div className="absolute bottom-2 right-14 bg-[#00a884] p-3 rounded-full shadow-lg">
             <LuImage size={20} className="text-white" />
           </div>
