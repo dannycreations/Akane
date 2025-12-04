@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { LuArrowLeft, LuArrowRight, LuBattery, LuSignal, LuWifi } from 'react-icons/lu';
 
 import { useStore } from '../stores/useStore';
-import { getPlatformConfig } from './mockup';
+import { getPlatformConfig, PLATFORMS } from './mockup';
 
 export const PreviewPanel = () => {
   const platform = useStore((state) => state.platform);
@@ -11,11 +11,11 @@ export const PreviewPanel = () => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
+  const [prerender, setPrerender] = useState(false);
 
   const config = getPlatformConfig(platform);
   const perspectives = config.perspectives;
   const currentIdx = perspectives.indexOf(perspective);
-  const View = config.node;
 
   const handleNextPerspective = () => {
     const next = perspectives[(currentIdx + 1) % perspectives.length];
@@ -28,29 +28,45 @@ export const PreviewPanel = () => {
   };
 
   useEffect(() => {
+    // Start prerendering other views in background after initial render
+    const timer = setTimeout(() => {
+      setPrerender(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
+    let rafId: number;
+
     const observer = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (!entry) return;
+      rafId = window.requestAnimationFrame(() => {
+        const entry = entries[0];
+        if (!entry) return;
 
-      const { width, height } = entry.contentRect;
+        const { width, height } = entry.contentRect;
 
-      const PHONE_WIDTH = 340;
-      const PHONE_HEIGHT = 680;
-      const MARGIN = 20;
+        const PHONE_WIDTH = 340;
+        const PHONE_HEIGHT = 680;
+        const MARGIN = 20;
 
-      const scaleX = (width - MARGIN) / PHONE_WIDTH;
-      const scaleY = (height - MARGIN) / PHONE_HEIGHT;
+        const scaleX = (width - MARGIN) / PHONE_WIDTH;
+        const scaleY = (height - MARGIN) / PHONE_HEIGHT;
 
-      const newScale = Math.min(1, scaleX, scaleY);
+        const newScale = Math.min(1, scaleX, scaleY);
 
-      setScale(Math.max(0.3, newScale));
+        setScale(Math.max(0.3, newScale));
+      });
     });
 
     observer.observe(container);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (
@@ -85,14 +101,37 @@ export const PreviewPanel = () => {
             </div>
           </div>
 
-          <div className="w-full h-full pt-8 bg-slate-950">
-            {View ? (
-              <View />
-            ) : (
-              <div className="flex items-center justify-center h-full text-slate-500 text-center p-8">
-                <p>Preview for {config.name} coming soon.</p>
-              </div>
-            )}
+          <div className="w-full h-full pt-8 bg-slate-950 relative">
+            {PLATFORMS.map((p) => {
+              const isActive = p.id === platform;
+              const shouldRender = isActive || prerender;
+
+              if (!shouldRender) return null;
+              const View = p.node;
+
+              return (
+                <div
+                  key={p.id}
+                  className="absolute inset-0 pt-8 w-full h-full"
+                  style={{
+                    display: isActive ? 'block' : 'none',
+                    zIndex: isActive ? 10 : 0,
+                  }}
+                >
+                  <Suspense
+                    fallback={
+                      isActive ? (
+                        <div className="flex items-center justify-center h-full text-slate-500">
+                          <div className="animate-pulse">Loading...</div>
+                        </div>
+                      ) : null
+                    }
+                  >
+                    <View />
+                  </Suspense>
+                </div>
+              );
+            })}
           </div>
 
           <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-50"></div>

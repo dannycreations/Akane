@@ -43,14 +43,27 @@ export async function saveImage(image: ImageSource, editorState: EditorState, ou
   ctx.drawImage(img, -drawW / 2, -drawH / 2, drawW, drawH);
   ctx.restore();
 
-  const link = document.createElement('a');
-  const lastDotIndex = image.name.lastIndexOf('.');
-  const nameWithoutExt = lastDotIndex !== -1 ? image.name.substring(0, lastDotIndex) : image.name;
-  const fileNameSuffix = suffix ? `_${suffix}` : '_edited';
+  return new Promise((resolve) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          const lastDotIndex = image.name.lastIndexOf('.');
+          const nameWithoutExt = lastDotIndex !== -1 ? image.name.substring(0, lastDotIndex) : image.name;
+          const fileNameSuffix = suffix ? `_${suffix}` : '_edited';
 
-  link.download = `${nameWithoutExt}${fileNameSuffix}.png`;
-  link.href = canvas.toDataURL('image/png');
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+          link.download = `${nameWithoutExt}${fileNameSuffix}.png`;
+          link.href = url;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        }
+        resolve();
+      },
+      'image/png',
+      1.0,
+    );
+  });
 }

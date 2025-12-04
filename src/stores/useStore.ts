@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 
 import { Perspective } from '../app/constants';
-import { getPerspectives, PLATFORMS } from '../components/mockup';
+import { getPlatformPerspective, PLATFORM_METADATA } from '../app/platforms';
 
+import type { Platform } from '../app/platforms';
 import type { EditorState, ImageSource } from '../app/types';
-import type { Platform } from '../components/mockup';
 
 interface AppState {
   readonly image: ImageSource | null;
@@ -29,7 +29,7 @@ export const useStore = create<AppState>((set) => ({
     x: 0,
     y: 0,
   },
-  platform: PLATFORMS[0].id,
+  platform: PLATFORM_METADATA[0].id,
   perspective: Perspective.Profile,
 
   setImage: (image) => set({ image }),
@@ -37,7 +37,7 @@ export const useStore = create<AppState>((set) => ({
   setEditorState: (editorState) => set({ editorState }),
   setPlatform: (platform) =>
     set((state) => {
-      const available = getPerspectives(platform);
+      const available = getPlatformPerspective(platform);
       const perspective = available.includes(state.perspective) ? state.perspective : available[0];
       return { platform, perspective };
     }),

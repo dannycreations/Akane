@@ -1,34 +1,112 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { LuDownload, LuRotateCw, LuUpload, LuX, LuZoomIn } from 'react-icons/lu';
 
+import { getPlatformMetadata, Platform } from '../app/platforms';
 import { useStore } from '../stores/useStore';
 import { calculateLimits, rotateDelta } from '../utilities/geometry';
 import { saveImage } from '../utilities/image';
 import { Slider } from './EditorSlider';
-import { getPlatformConfig, Platform } from './mockup';
 
 import type { ChangeEvent, PointerEvent, SyntheticEvent, WheelEvent } from 'react';
-import type { EditorState } from '../app/types';
+import type { EditorState, ImageSource } from '../app/types';
 
 const GRID_LINE_CLASS = 'absolute bg-white/30 pointer-events-none shadow-[0_0_2px_rgba(0,0,0,0.2)]';
 
-const GridOverlay = memo(({ isRoundedSquare }: { readonly isRoundedSquare: boolean }) => (
-  <div
-    className={`absolute inset-0 pointer-events-none overflow-hidden select-none z-10 transition-all duration-300 ${isRoundedSquare ? 'rounded-3xl' : 'rounded-full'}`}
-  >
-    <div
-      className={`absolute inset-0 border border-white/20 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 ${isRoundedSquare ? 'rounded-3xl' : 'rounded-full'}`}
-    />
-    <div className={`${GRID_LINE_CLASS} left-1/3 top-0 bottom-0 w-px`} />
-    <div className={`${GRID_LINE_CLASS} left-2/3 top-0 bottom-0 w-px`} />
-    <div className={`${GRID_LINE_CLASS} top-1/3 left-0 right-0 h-px`} />
-    <div className={`${GRID_LINE_CLASS} top-2/3 left-0 right-0 h-px`} />
-  </div>
-));
+const GridOverlay = memo(({ isRoundedSquare }: { readonly isRoundedSquare: boolean }) => {
+  const style = { borderRadius: isRoundedSquare ? '1.5rem' : '50%' };
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-10 transition-all duration-300 ease-in-out" style={style}>
+      <div
+        className="absolute inset-0 border border-white/20 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 ease-in-out"
+        style={style}
+      />
+      <div className={`${GRID_LINE_CLASS} left-1/3 top-0 bottom-0 w-px`} />
+      <div className={`${GRID_LINE_CLASS} left-2/3 top-0 bottom-0 w-px`} />
+      <div className={`${GRID_LINE_CLASS} top-1/3 left-0 right-0 h-px`} />
+      <div className={`${GRID_LINE_CLASS} top-2/3 left-0 right-0 h-px`} />
+    </div>
+  );
+});
+
+const EditorCanvas = memo(
+  ({ image, onImageLoad }: { readonly image: ImageSource; readonly onImageLoad: (e: SyntheticEvent<HTMLImageElement>) => void }) => {
+    const transformRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+      const updateTransform = (state: ReturnType<typeof useStore.getState>) => {
+        if (transformRef.current) {
+          const { rotation, zoom, x, y } = state.editorState;
+          transformRef.current.style.transform = `rotate(${rotation}deg) scale(${zoom}) translate(${x * 100}%, ${y * 100}%)`;
+        }
+      };
+
+      updateTransform(useStore.getState());
+
+      return useStore.subscribe((state, prevState) => {
+        if (state.editorState !== prevState.editorState) {
+          updateTransform(state);
+        }
+      });
+    }, [image]);
+
+    return (
+      <div ref={transformRef} className="w-full h-full origin-center will-change-transform">
+        <img
+          src={image.url}
+          alt="Preview"
+          className="w-full h-full object-contain pointer-events-none select-none"
+          draggable={false}
+          onLoad={onImageLoad}
+        />
+      </div>
+    );
+  },
+);
+
+const EditorControls = memo(
+  ({
+    minZoom,
+    maxZoom,
+    onZoomChange,
+    onRotationChange,
+    disabled,
+  }: {
+    readonly minZoom: number;
+    readonly maxZoom: number;
+    readonly onZoomChange: (val: number) => void;
+    readonly onRotationChange: (val: number) => void;
+    readonly disabled: boolean;
+  }) => {
+    const zoom = useStore((state) => state.editorState.zoom);
+    const rotation = useStore((state) => state.editorState.rotation);
+
+    return (
+      <div className="mt-2 shrink-0 bg-slate-800/80 p-3 rounded-xl border border-slate-700/50 backdrop-blur-md z-20">
+        <div className="grid grid-cols-1 gap-2 sm:gap-4">
+          <div className="flex items-center gap-3">
+            <LuZoomIn size={16} className={`text-indigo-400 flex-shrink-0 ${disabled ? 'opacity-50' : ''}`} />
+            <Slider
+              label="ZOOM"
+              min={0}
+              max={maxZoom - minZoom}
+              step={0.01}
+              value={!disabled ? Math.max(0, zoom - minZoom) : 0}
+              onChange={onZoomChange}
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <LuRotateCw size={16} className={`text-indigo-400 flex-shrink-0 ${disabled ? 'opacity-50' : ''}`} />
+            <Slider label="ROTATE" min={-180} max={180} value={rotation} onChange={onRotationChange} />
+          </div>
+        </div>
+      </div>
+    );
+  },
+);
 
 export const EditorPanel = () => {
   const image = useStore((state) => state.image);
-  const editorState = useStore((state) => state.editorState);
   const platform = useStore((state) => state.platform);
   const setImage = useStore((state) => state.setImage);
   const setEditorState = useStore((state) => state.setEditorState);
@@ -36,8 +114,10 @@ export const EditorPanel = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const pendingImageRef = useRef<string | null>(null);
+  const currentObjectUrlRef = useRef<string | null>(null);
+
   const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ mouseX: 0, mouseY: 0, stateX: 0, stateY: 0 });
+  const [dragStart, setDragStart] = useState({ mouseX: 0, mouseY: 0, stateX: 0, stateY: 0, containerSize: 0 });
   const [imageMeta, setImageMeta] = useState<{ ar: number } | null>(null);
   const [loadedImageId, setLoadedImageId] = useState<string | null>(null);
 
@@ -52,13 +132,15 @@ export const EditorPanel = () => {
       setLoadedImageId(image.url);
       pendingImageRef.current = null;
     }
-  }, [editorState, image]);
+  }, [image]);
 
   useEffect(() => {
     return () => {
-      if (image) URL.revokeObjectURL(image.url);
+      if (currentObjectUrlRef.current) {
+        URL.revokeObjectURL(currentObjectUrlRef.current);
+      }
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!image) {
@@ -84,9 +166,14 @@ export const EditorPanel = () => {
     (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files[0]) {
         const file = e.target.files[0];
-        const url = URL.createObjectURL(file);
 
-        // Pre-load image to calculate dimensions and avoid visual jump/flash
+        if (currentObjectUrlRef.current) {
+          URL.revokeObjectURL(currentObjectUrlRef.current);
+        }
+
+        const url = URL.createObjectURL(file);
+        currentObjectUrlRef.current = url;
+
         const img = new Image();
         img.onload = () => {
           const { naturalWidth, naturalHeight } = img;
@@ -119,8 +206,6 @@ export const EditorPanel = () => {
 
       if (loadedImageId !== image.url) {
         const current = useStore.getState().editorState;
-        // Check if current state deviates significantly from default, if so, we might want to reset
-        // But since we pre-calculate now, this is mostly a sanity check
         const newState = { ...current, zoom: computedCoverZoom, x: 0, y: 0 };
 
         if (Math.abs(newState.zoom - current.zoom) > 0.001 || Math.abs(newState.x - current.x) > 0.001 || Math.abs(newState.y - current.y) > 0.001) {
@@ -138,6 +223,8 @@ export const EditorPanel = () => {
     (e: PointerEvent) => {
       if (!image) return;
       const currentState = useStore.getState().editorState;
+      const containerSize = containerRef.current?.offsetWidth ?? 0;
+
       setIsDragging(true);
       (e.target as Element).setPointerCapture(e.pointerId);
       setDragStart({
@@ -145,6 +232,7 @@ export const EditorPanel = () => {
         mouseY: e.clientY,
         stateX: currentState.x,
         stateY: currentState.y,
+        containerSize,
       });
     },
     [image],
@@ -152,11 +240,11 @@ export const EditorPanel = () => {
 
   const handlePointerMove = useCallback(
     (e: PointerEvent) => {
-      if (!isDragging || !containerRef.current) return;
+      const { containerSize } = dragStart;
+      if (!isDragging || containerSize === 0) return;
       e.preventDefault();
 
       const currentState = useStore.getState().editorState;
-      const containerSize = containerRef.current.offsetWidth;
       const dxScreen = e.clientX - dragStart.mouseX;
       const dyScreen = e.clientY - dragStart.mouseY;
       const { dx: dxLocal, dy: dyLocal } = rotateDelta(dxScreen, dyScreen, currentState.rotation);
@@ -212,26 +300,21 @@ export const EditorPanel = () => {
   const handleDownload = useCallback(async () => {
     if (!image) return;
     const currentState = useStore.getState().editorState;
-    const { outputSize } = getPlatformConfig(platform);
+    const { outputSize } = getPlatformMetadata(platform);
     await saveImage(image, currentState, outputSize, platform);
   }, [image, platform]);
+
+  const buttonBaseClass =
+    'flex items-center gap-2 transition-colors text-xs font-medium whitespace-nowrap disabled:opacity-30 disabled:cursor-not-allowed bg-slate-900/50 rounded-lg px-2 py-1';
 
   return (
     <div className="flex flex-col h-full w-full bg-slate-900 border-r border-slate-800 p-2 relative select-none">
       <div className="flex justify-between items-center mb-1 shrink-0 z-20">
-        <button
-          onClick={() => setImage(null)}
-          disabled={!image}
-          className="flex items-center gap-2 text-slate-400 hover:text-red-400 transition-colors text-xs font-medium whitespace-nowrap disabled:opacity-30 disabled:cursor-not-allowed bg-slate-900/50 rounded-lg px-2 py-1"
-        >
+        <button onClick={() => setImage(null)} disabled={!image} className={`${buttonBaseClass} text-slate-400 hover:text-red-400`}>
           <LuX size={16} />
           <span className="sm:inline">CLOSE</span>
         </button>
-        <button
-          onClick={handleDownload}
-          disabled={!image}
-          className="flex items-center gap-2 text-slate-400 hover:text-emerald-400 transition-colors text-xs font-medium whitespace-nowrap disabled:opacity-30 disabled:cursor-not-allowed bg-slate-900/50 rounded-lg px-2 py-1"
-        >
+        <button onClick={handleDownload} disabled={!image} className={`${buttonBaseClass} text-slate-400 hover:text-emerald-400`}>
           <LuDownload size={16} />
           <span className="sm:inline">SAVE</span>
         </button>
@@ -263,27 +346,15 @@ export const EditorPanel = () => {
             <div className="absolute inset-0 w-full h-full flex items-center justify-center">
               <div
                 ref={containerRef}
-                className={`w-full h-full overflow-hidden ${isRoundedSquare ? 'rounded-3xl' : 'rounded-full'} bg-slate-950 shadow-2xl relative cursor-move ring-4 ring-indigo-500/20 touch-none transition-all duration-300`}
+                className="w-full h-full overflow-hidden bg-slate-950 shadow-2xl relative cursor-move ring-4 ring-indigo-500/20 touch-none transition-all duration-300 ease-in-out"
+                style={{ borderRadius: isRoundedSquare ? '1.5rem' : '50%' }}
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
                 onPointerUp={handlePointerUp}
                 onPointerLeave={handlePointerUp}
                 onWheel={handleWheel}
               >
-                <div
-                  className="w-full h-full origin-center"
-                  style={{
-                    transform: `rotate(${editorState.rotation}deg) scale(${editorState.zoom}) translate(${editorState.x * 100}%, ${editorState.y * 100}%)`,
-                  }}
-                >
-                  <img
-                    src={image.url}
-                    alt="Preview"
-                    className="w-full h-full object-contain pointer-events-none select-none"
-                    draggable={false}
-                    onLoad={handleImageLoad}
-                  />
-                </div>
+                <EditorCanvas image={image} onImageLoad={handleImageLoad} />
               </div>
 
               <GridOverlay isRoundedSquare={isRoundedSquare} />
@@ -298,25 +369,13 @@ export const EditorPanel = () => {
         )}
       </div>
 
-      <div className="mt-2 shrink-0 bg-slate-800/80 p-3 rounded-xl border border-slate-700/50 backdrop-blur-md z-20">
-        <div className="grid grid-cols-1 gap-2 sm:gap-4">
-          <div className="flex items-center gap-3">
-            <LuZoomIn size={16} className="text-indigo-400 flex-shrink-0" />
-            <Slider
-              label="ZOOM"
-              min={0}
-              max={maxZoom - minZoom}
-              step={0.01}
-              value={image ? Math.max(0, editorState.zoom - minZoom) : 0}
-              onChange={handleZoomSliderChange}
-            />
-          </div>
-          <div className="flex items-center gap-3">
-            <LuRotateCw size={16} className="text-indigo-400 flex-shrink-0" />
-            <Slider label="ROTATE" min={-180} max={180} value={editorState.rotation} onChange={handleRotationSliderChange} />
-          </div>
-        </div>
-      </div>
+      <EditorControls
+        minZoom={minZoom}
+        maxZoom={maxZoom}
+        onZoomChange={handleZoomSliderChange}
+        onRotationChange={handleRotationSliderChange}
+        disabled={!image}
+      />
     </div>
   );
 };
