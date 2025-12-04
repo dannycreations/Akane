@@ -1,18 +1,19 @@
-import { SiDiscord, SiFacebook, SiInstagram, SiLinkedin, SiSlack, SiTelegram, SiWhatsapp, SiX } from 'react-icons/si';
+import { SiDiscord, SiFacebook, SiInstagram, SiLinkedin, SiSlack, SiSnapchat, SiTelegram, SiWhatsapp, SiX } from 'react-icons/si';
 
 import { Perspective } from './constants';
 
 import type { IconType } from 'react-icons';
 
 export enum Platform {
-  WhatsApp = 'WhatsApp',
-  Instagram = 'Instagram',
-  Facebook = 'Facebook',
-  LinkedIn = 'LinkedIn',
-  Twitter = 'Twitter',
   Discord = 'Discord',
-  Telegram = 'Telegram',
+  Facebook = 'Facebook',
+  Instagram = 'Instagram',
+  LinkedIn = 'LinkedIn',
   Slack = 'Slack',
+  Snapchat = 'Snapchat',
+  Telegram = 'Telegram',
+  Twitter = 'Twitter',
+  WhatsApp = 'WhatsApp',
 }
 
 export interface PlatformMetadata {
@@ -64,6 +65,14 @@ export const PLATFORM_METADATA: readonly PlatformMetadata[] = [
     color: 'text-[#E01E5A]',
     perspectives: [Perspective.Profile, Perspective.Chat],
     outputSize: 1024,
+  },
+  {
+    id: Platform.Snapchat,
+    name: 'Snapchat',
+    icon: SiSnapchat,
+    color: 'text-yellow-400',
+    perspectives: [Perspective.Profile, Perspective.Chat],
+    outputSize: 320,
   },
   {
     id: Platform.Telegram,

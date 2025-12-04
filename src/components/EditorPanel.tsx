@@ -95,7 +95,7 @@ export const EditorPanel = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const currentObjectUrlRef = useRef<string | null>(null);
 
-  const isRoundedSquare = platform === Platform.Slack;
+  const isRoundedSquare = platform === Platform.Slack || platform === Platform.Snapchat;
   const ar = image ? image.width / image.height : 1;
   const coverZoom = Math.max(ar, 1 / ar);
   const minZoom = image ? coverZoom : 0.0;
