@@ -45,7 +45,7 @@ const StoryView = memo(() => (
     <div className="p-4 mt-4 flex items-center justify-between z-20">
       <div className="flex items-center gap-2">
         <CroppedPreview size={32} className="rounded-full border border-white/20" />
-        <span className="text-white text-sm font-semibold text-shadow">johndoe_2025</span>
+        <span className="text-white text-sm font-semibold text-shadow">username</span>
         <span className="text-gray-300 text-xs">3h</span>
       </div>
       <LuEllipsisVertical className="text-white" size={20} />
@@ -106,7 +106,7 @@ const FeedView = memo(() => (
             <div className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-gray-800">
               <CroppedPreview size={32} />
             </div>
-            <span className="font-semibold text-sm">johndoe_2025</span>
+            <span className="font-semibold text-sm">username</span>
           </div>
           <LuEllipsis size={20} />
         </div>
@@ -129,7 +129,7 @@ const FeedView = memo(() => (
           </div>
           <div className="font-semibold text-sm mb-1">2,453 likes</div>
           <div className="text-sm">
-            <span className="font-semibold mr-2">johndoe_2025</span>
+            <span className="font-semibold mr-2">username</span>
             <span className="text-gray-100">Exploring the new aesthetic. 📸 #2025 #design</span>
           </div>
           <div className="text-gray-500 text-sm mt-1 cursor-pointer">View all 12 comments</div>
@@ -145,7 +145,7 @@ const FeedView = memo(() => (
 const ProfileView = memo(() => (
   <div className={`w-full h-full ${bg} ${text} font-sans flex flex-col`}>
     <div className={`h-12 flex items-center justify-between px-4 border-b ${border} shrink-0`}>
-      <span className="font-bold text-lg">johndoe_2025</span>
+      <span className="font-bold text-lg">username</span>
       <div className="flex gap-4">
         <LuSquarePlus size={24} />
         <LuEllipsis size={24} />
@@ -176,10 +176,10 @@ const ProfileView = memo(() => (
           </div>
         </div>
         <div className="space-y-1">
-          <div className="font-bold">John Doe | Creator</div>
-          <div className="text-sm">📍 San Francisco</div>
-          <div className="text-sm">🎨 Digital Artist & Developer</div>
-          <div className="text-sm text-blue-400">linktr.ee/johndoe</div>
+          <div className="font-bold">Your Name | Category</div>
+          <div className="text-sm">📍 City</div>
+          <div className="text-sm">🎨 Artist & Developer</div>
+          <div className="text-sm text-blue-400">linktr.ee/username</div>
         </div>
         <div className="flex gap-2 mt-4">
           <button className="flex-1 bg-slate-800 py-1.5 rounded-lg text-sm font-semibold">Edit profile</button>
@@ -190,7 +190,7 @@ const ProfileView = memo(() => (
         {[1, 2, 3].map((i) => (
           <div key={i} className="flex flex-col items-center gap-1 min-w-[64px]">
             <div className="w-16 h-16 rounded-full bg-slate-800 border border-slate-700"></div>
-            <span className="text-xs">Life {i}</span>
+            <span className="text-xs">Highlight {i}</span>
           </div>
         ))}
       </div>

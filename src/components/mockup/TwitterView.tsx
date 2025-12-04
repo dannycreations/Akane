@@ -78,21 +78,21 @@ const ProfileView = memo(() => (
 
         <div>
           <h1 className="text-xl font-bold text-[#e7e9ea] flex items-center">
-            John Doe <VerifiedBadge />
+            Your Name <VerifiedBadge />
           </h1>
-          <div className="text-[#71767b] text-sm">@johndoe_2025</div>
+          <div className="text-[#71767b] text-sm">@username</div>
         </div>
 
-        <div className="mt-3 text-[15px] leading-snug">building the future. 🚀 engineer & designer. opinions my own.</div>
+        <div className="mt-3 text-[15px] leading-snug">Bio description goes here. 🚀 opinions my own.</div>
 
         <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-[#71767b] text-sm">
           <div className="flex items-center gap-1">
             <LuMapPin size={16} />
-            <span>San Francisco, CA</span>
+            <span>Location</span>
           </div>
           <div className="flex items-center gap-1">
             <LuLink size={16} />
-            <span className="text-[#1d9bf0]">johndoe.com</span>
+            <span className="text-[#1d9bf0]">website.com</span>
           </div>
           <div className="flex items-center gap-1">
             <LuCalendar size={16} />
@@ -129,9 +129,9 @@ const ProfileView = memo(() => (
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-1 text-[#71767b] text-sm">
-              <span className="font-bold text-[#e7e9ea]">John Doe</span>
+              <span className="font-bold text-[#e7e9ea]">Your Name</span>
               <VerifiedBadge />
-              <span>@johndoe_2025</span>
+              <span>@username</span>
               <span>·</span>
               <span>2h</span>
               <LuEllipsis size={14} className="ml-auto" />
@@ -216,9 +216,9 @@ const FeedView = memo(() => (
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-1 text-[#71767b] text-sm">
-              <span className="font-bold text-[#e7e9ea]">John Doe</span>
+              <span className="font-bold text-[#e7e9ea]">Your Name</span>
               <VerifiedBadge />
-              <span>@johndoe_2025</span>
+              <span>@username</span>
               <span>·</span>
               <span>42m</span>
               <LuEllipsis size={14} className="ml-auto" />
@@ -260,11 +260,11 @@ const FeedView = memo(() => (
 
       <div className="p-4 border-b border-[#2f3336] hover:bg-white/[0.03] transition-colors cursor-pointer">
         <div className="flex gap-3">
-          <div className="shrink-0 w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center font-bold text-white">A</div>
+          <div className="shrink-0 w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center font-bold text-white">U</div>
           <div className="flex-1">
             <div className="flex items-center gap-1 text-[#71767b] text-sm">
-              <span className="font-bold text-[#e7e9ea]">Alice</span>
-              <span>@alice_dev</span>
+              <span className="font-bold text-[#e7e9ea]">User</span>
+              <span>@user</span>
               <span>·</span>
               <span>1h</span>
               <LuEllipsis size={14} className="ml-auto" />

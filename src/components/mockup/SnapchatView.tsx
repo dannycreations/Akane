@@ -77,9 +77,9 @@ const ProfileView = memo(() => (
           </div>
 
           <div className="mt-3 text-center">
-            <h1 className="text-2xl font-bold tracking-tight text-white">John Doe</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-white">Your Name</h1>
             <p className="text-sm font-medium text-gray-400 mt-0.5">
-              johndoe_2025 • <span className="text-gray-500">♍️ Virgo</span>
+              username • <span className="text-gray-500">♍️ Virgo</span>
             </p>
             <div className="text-xs font-semibold text-gray-500 mt-1">54,203 Snap Score</div>
           </div>
@@ -113,7 +113,7 @@ const ProfileView = memo(() => (
                     2d ago
                   </div>
                 </div>
-                <span className="text-xs font-medium text-center text-gray-400 group-hover:text-white transition-colors">Life {i}</span>
+                <span className="text-xs font-medium text-center text-gray-400 group-hover:text-white transition-colors">Highlight {i}</span>
               </div>
             ))}
           </div>
@@ -177,7 +177,7 @@ const ChatView = memo(() => (
             </div>
           </div>
           <div className="flex-1 min-w-0 pr-10">
-            <h3 className="font-bold text-[17px] text-white leading-tight">John Doe</h3>
+            <h3 className="font-bold text-[17px] text-white leading-tight">Your Name</h3>
             <div className="flex items-center gap-1.5 mt-0.5">
               <div className="w-3 h-3 rounded-[2px] bg-[#F23C57] shrink-0 shadow-[0_0_8px_rgba(242,60,87,0.4)]"></div>
               <span className="text-[#F23C57] font-bold text-xs tracking-wide">New Snap • 1m</span>
@@ -197,11 +197,11 @@ const ChatView = memo(() => (
         <div className="flex items-center gap-3 px-4 py-3 hover:bg-[#111] active:bg-[#1A1A1A] cursor-pointer transition-colors">
           <div className="relative shrink-0">
             <div className="w-14 h-14 rounded-full bg-[#1A1A1A] overflow-hidden border border-white/5">
-              <div className="w-full h-full flex items-center justify-center text-purple-400 font-bold text-lg">A</div>
+              <div className="w-full h-full flex items-center justify-center text-purple-400 font-bold text-lg">F</div>
             </div>
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-[17px] text-white leading-tight">Alice</h3>
+            <h3 className="font-bold text-[17px] text-white leading-tight">Friend</h3>
             <div className="flex items-center gap-1.5 mt-0.5">
               <div className="w-3 h-3 border border-[#3E95FF] rounded-tl-lg rounded-tr-lg rounded-br-lg shrink-0"></div>
               <span className="text-gray-500 font-medium text-xs">Delivered • 2h</span>

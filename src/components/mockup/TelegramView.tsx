@@ -40,7 +40,7 @@ const ProfileView = memo(() => (
 
       <div className="absolute bottom-4 left-5 text-white z-20">
         <h1 className="text-2xl font-bold flex items-center gap-2 text-shadow">
-          John Doe <PremiumStar size={20} />
+          Your Name <PremiumStar size={20} />
         </h1>
         <p className="text-[#aab4be] text-base">online</p>
       </div>
@@ -49,12 +49,12 @@ const ProfileView = memo(() => (
     <div className="flex-1 p-5 space-y-6 overflow-y-auto no-scrollbar">
       <div>
         <h3 className={`${accent} text-sm font-medium mb-1`}>Info</h3>
-        <p className={`${textPrimary} text-[17px] leading-snug`}>Digital creator & software engineer. Building cool things with React. 🚀</p>
+        <p className={`${textPrimary} text-[17px] leading-snug`}>Bio description here. 🚀</p>
         <p className={`${textSecondary} text-xs mt-1`}>Bio</p>
       </div>
 
       <div>
-        <p className={`${textPrimary} text-[17px]`}>@johndoe_2025</p>
+        <p className={`${textPrimary} text-[17px]`}>@username</p>
         <p className={`${textSecondary} text-xs mt-1`}>Username</p>
       </div>
 
@@ -90,7 +90,7 @@ const ChatView = memo(() => (
           <CroppedPreview size={40} />
         </div>
         <div className="flex flex-col justify-center">
-          <div className={`${textPrimary} font-bold text-base leading-none flex items-center gap-1`}>John Doe</div>
+          <div className={`${textPrimary} font-bold text-base leading-none flex items-center gap-1`}>Your Name</div>
           <div className={`${textSecondary} text-xs mt-1`}>last seen recently</div>
         </div>
       </div>

@@ -21,7 +21,7 @@ const ProfileView = memo(() => (
     </div>
 
     <div className="mt-14 px-4 pb-4 border-b border-[#3e4042]">
-      <h1 className="text-2xl font-bold">John Doe</h1>
+      <h1 className="text-2xl font-bold">Your Name</h1>
       <p className="text-[#b0b3b8] text-sm font-medium">1.2K friends</p>
 
       <div className="flex gap-2 mt-4">
@@ -40,15 +40,15 @@ const ProfileView = memo(() => (
         <div className="space-y-3 text-[#b0b3b8] text-sm">
           <div className="flex items-center gap-2">
             <div className="w-5" />
-            Designer at <strong className="text-white">Tech Corp</strong>
+            Designer at <strong className="text-white">Workplace</strong>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-5" />
-            Studied at <strong className="text-white">Design University</strong>
+            Studied at <strong className="text-white">University</strong>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-5" />
-            Lives in <strong className="text-white">New York</strong>
+            Lives in <strong className="text-white">City</strong>
           </div>
         </div>
       </div>
@@ -102,7 +102,7 @@ const FeedView = memo(() => (
               <CroppedPreview size={40} className="rounded-full" />
             </div>
             <div>
-              <div className="text-[#e4e6eb] font-semibold text-sm leading-tight">John Doe</div>
+              <div className="text-[#e4e6eb] font-semibold text-sm leading-tight">Your Name</div>
               <div className="text-[#b0b3b8] text-xs flex items-center gap-1 mt-0.5">
                 <span>Just now</span>
                 <span>·</span>

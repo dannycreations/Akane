@@ -23,7 +23,7 @@ const ProfileView = memo(() => (
         <div className="flex-1">
           <label className="text-sm block mb-1">Name</label>
           <div className="text-[#e9edef] text-lg flex items-center justify-between">
-            <span>John Doe</span>
+            <span>Your Name</span>
             <span className="text-[#00a884]">
               <LuCircleCheck size={16} />
             </span>
@@ -52,7 +52,7 @@ const ChatView = memo(() => (
         <div className="flex items-center gap-2">
           <CroppedPreview size={36} className="rounded-full" />
           <div className="flex flex-col">
-            <span className="text-white font-medium text-sm leading-tight">John Doe</span>
+            <span className="text-white font-medium text-sm leading-tight">Your Name</span>
             <span className="text-[#8696a0] text-xs">online</span>
           </div>
         </div>

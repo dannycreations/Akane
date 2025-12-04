@@ -75,10 +75,10 @@ const ProfileView = memo(() => (
           </div>
 
           <div className="mt-2">
-            <h1 className="text-xl font-bold leading-tight">John Doe</h1>
-            <p className="text-sm text-white/90 mt-1 leading-snug">Senior Product Designer | Building the future of social preview tools 🚀</p>
+            <h1 className="text-xl font-bold leading-tight">Your Name</h1>
+            <p className="text-sm text-white/90 mt-1 leading-snug">Job Title | Industry Keyword 🚀</p>
             <div className="flex items-center gap-1 mt-2 text-xs text-[#90959c]">
-              <span>San Francisco Bay Area</span>
+              <span>Location</span>
               <span className="w-1 h-1 bg-[#90959c] rounded-full mx-1"></span>
               <span className="text-[#0a66c2] font-semibold">Contact info</span>
             </div>
@@ -152,8 +152,8 @@ const FeedView = memo(() => (
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between">
               <div className="flex flex-col">
-                <span className="font-semibold text-sm hover:text-[#0a66c2] cursor-pointer">John Doe</span>
-                <span className="text-xs text-[#90959c] truncate">Senior Product Designer | UI/UX</span>
+                <span className="font-semibold text-sm hover:text-[#0a66c2] cursor-pointer">Your Name</span>
+                <span className="text-xs text-[#90959c] truncate">Job Title | Industry</span>
                 <div className="flex items-center gap-1 text-xs text-[#90959c]">
                   <span>2h</span> • <span className="text-xs">🌐</span>
                 </div>
@@ -173,11 +173,7 @@ const FeedView = memo(() => (
         </div>
 
         <div className="w-full bg-[#293038] flex items-center justify-center overflow-hidden mb-2">
-          <PostImage
-            containerClass="w-full aspect-video flex items-center justify-center"
-            imageClass="w-full h-auto max-h-[500px] object-contain"
-            fallbackText="Post Media"
-          />
+          <PostImage containerClass="w-full aspect-video flex items-center justify-center" imageClass="w-full h-auto max-h-[500px] object-contain" />
         </div>
 
         <div className="px-3 py-2 flex items-center justify-between text-xs text-[#90959c] border-b border-[#31363c]">

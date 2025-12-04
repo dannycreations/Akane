@@ -30,8 +30,8 @@ const ProfileView = memo(() => (
           </div>
         </div>
 
-        <h1 className="text-2xl font-bold mt-4">John Doe</h1>
-        <div className={`${textSecondary} mt-1`}>Senior Product Designer</div>
+        <h1 className="text-2xl font-bold mt-4">Your Name</h1>
+        <div className={`${textSecondary} mt-1`}>Job Title</div>
 
         <button className="mt-4 flex items-center gap-2 px-4 py-1.5 rounded-lg border border-[#56585B] hover:bg-[#35373B] transition-colors w-full justify-center max-w-[240px]">
           <LuSmile size={16} />
@@ -59,7 +59,7 @@ const ProfileView = memo(() => (
               <LuMessageSquare size={16} className="#ABABAD" />
             </div>
             <div>
-              <div className="text-sm text-[#36C5F0] hover:underline cursor-pointer">johndoe@company.com</div>
+              <div className="text-sm text-[#36C5F0] hover:underline cursor-pointer">user@company.com</div>
               <div className="text-xs text-[#ABABAD]">Email</div>
             </div>
           </div>
@@ -76,7 +76,7 @@ const ProfileView = memo(() => (
           </div>
           <div className="flex-1">
             <label className="text-xs font-bold uppercase text-[#ABABAD] mb-1 block">Pronouns</label>
-            <div className="text-sm">he/him</div>
+            <div className="text-sm">they/them</div>
           </div>
         </div>
       </div>
@@ -105,10 +105,10 @@ const ChatView = memo(() => (
         </div>
         <div className="flex -space-x-2">
           <div className="w-6 h-6 rounded bg-yellow-500 border border-[#1A1D21] flex items-center justify-center text-[10px] font-bold text-black">
-            A
+            T
           </div>
           <div className="w-6 h-6 rounded bg-blue-500 border border-[#1A1D21] flex items-center justify-center text-[10px] font-bold text-white">
-            B
+            U
           </div>
           <div className="w-6 h-6 rounded bg-[#35373B] border border-[#1A1D21] flex items-center justify-center text-[10px] font-bold text-[#ABABAD]">
             +5
@@ -128,7 +128,7 @@ const ChatView = memo(() => (
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-baseline gap-2">
-              <span className="font-bold hover:underline cursor-pointer">John Doe</span>
+              <span className="font-bold hover:underline cursor-pointer">Your Name</span>
               <span className="text-xs text-[#ABABAD]">10:42 AM</span>
             </div>
             <p className="text-[15px] leading-relaxed">
@@ -144,10 +144,10 @@ const ChatView = memo(() => (
         </div>
 
         <div className="flex gap-3 group hover:bg-[#222529] -mx-4 px-4 py-1 transition-colors">
-          <div className="w-9 h-9 rounded bg-pink-500 shrink-0 mt-1 flex items-center justify-center font-bold text-white">S</div>
+          <div className="w-9 h-9 rounded bg-pink-500 shrink-0 mt-1 flex items-center justify-center font-bold text-white">T</div>
           <div className="flex-1 min-w-0">
             <div className="flex items-baseline gap-2">
-              <span className="font-bold hover:underline cursor-pointer">Sarah</span>
+              <span className="font-bold hover:underline cursor-pointer">Teammate</span>
               <span className="text-xs text-[#ABABAD]">10:45 AM</span>
             </div>
             <p className="text-[15px] leading-relaxed">Nice work! The rounded square crop for Slack is a nice touch. 👌</p>

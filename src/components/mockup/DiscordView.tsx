@@ -76,9 +76,9 @@ const ProfileView = memo(() => (
         <div className="bg-[#2b2d31] rounded-2xl p-4 mt-3 shadow-lg">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-xl font-bold text-white leading-tight">John Doe</h1>
-              <div className="text-sm font-medium text-[#dbdee1] mt-0.5">johndoe_2025</div>
-              <div className="text-xs text-[#949ba4] mt-1">He/Him</div>
+              <h1 className="text-xl font-bold text-white leading-tight">Your Name</h1>
+              <div className="text-sm font-medium text-[#dbdee1] mt-0.5">username</div>
+              <div className="text-xs text-[#949ba4] mt-1">Pronouns</div>
             </div>
             <NitroBadge />
           </div>
@@ -91,7 +91,7 @@ const ProfileView = memo(() => (
           <div className="mt-4 border-t border-[#3f4147] pt-3">
             <h3 className="text-xs font-bold uppercase text-[#949ba4] mb-2">About Me</h3>
             <p className="text-sm leading-relaxed text-[#dbdee1]">
-              Full-stack developer & UI Designer. <br />
+              Developer & Designer. <br />
               Trying out the new profile previewer! 🎨
             </p>
           </div>
@@ -109,7 +109,7 @@ const ProfileView = memo(() => (
               <span className="font-bold text-white text-lg">V</span>
             </div>
             <div>
-              <div className="text-sm font-bold text-white">Visual Studio Code</div>
+              <div className="text-sm font-bold text-white">Code Editor</div>
               <div className="text-xs text-[#949ba4]">Editing DiscordView.tsx</div>
               <div className="text-xs text-[#949ba4]">02:45 elapsed</div>
             </div>
@@ -145,7 +145,7 @@ const ChatView = memo(() => (
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
-            <span className="text-base font-medium text-white hover:underline cursor-pointer">John Doe</span>
+            <span className="text-base font-medium text-white hover:underline cursor-pointer">Your Name</span>
             <span className="px-1.5 py-0.5 bg-[#5865f2] text-white text-[10px] rounded font-bold uppercase">BOT</span>
             <span className="text-xs text-[#949ba4]">Today at 4:20 PM</span>
           </div>
@@ -163,10 +163,10 @@ const ChatView = memo(() => (
       </div>
 
       <div className="flex gap-4 group mt-2">
-        <div className="shrink-0 w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center font-bold text-[#1e1f22] mt-1">A</div>
+        <div className="shrink-0 w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center font-bold text-[#1e1f22] mt-1">U</div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">
-            <span className="text-base font-medium text-red-400 hover:underline cursor-pointer">Alice</span>
+            <span className="text-base font-medium text-red-400 hover:underline cursor-pointer">User</span>
             <span className="text-xs text-[#949ba4]">Today at 4:22 PM</span>
           </div>
           <p className="text-[#dbdee1] leading-snug">That looks super clean! Did you edit that yourself?</p>
