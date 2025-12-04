@@ -75,13 +75,13 @@ export const PreviewPanel = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-between pointer-events-none z-10 px-4 w-full max-w-[500px]">
         <button
           onClick={handlePrevPerspective}
-          className={`pointer-events-auto p-3 rounded-full bg-slate-800/80 text-white hover:bg-indigo-500 transition-all shadow-lg ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
+          className={`pointer-events-auto cursor-pointer p-3 rounded-full bg-slate-800/80 text-white hover:bg-indigo-500 transition-all shadow-lg ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
         >
           <LuArrowLeft size={20} />
         </button>
         <button
           onClick={handleNextPerspective}
-          className={`pointer-events-auto p-3 rounded-full bg-slate-800/80 text-white hover:bg-indigo-500 transition-all shadow-lg ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
+          className={`pointer-events-auto cursor-pointer p-3 rounded-full bg-slate-800/80 text-white hover:bg-indigo-500 transition-all shadow-lg ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
         >
           <LuArrowRight size={20} />
         </button>

@@ -175,7 +175,7 @@ export const EditorPanel = () => {
   }, [image, platform]);
 
   const buttonBaseClass =
-    'flex items-center gap-2 transition-colors text-xs font-medium whitespace-nowrap disabled:opacity-30 disabled:cursor-not-allowed bg-slate-900/50 rounded-lg px-2 py-1';
+    'flex items-center gap-2 transition-colors text-xs font-medium whitespace-nowrap cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed bg-slate-900/50 rounded-lg px-2 py-1';
 
   return (
     <div className="flex flex-col h-full w-full bg-slate-900 border-r border-slate-800 p-2 relative select-none">

@@ -24,7 +24,7 @@ const PlatformItem = memo(
     const Icon = p.icon;
 
     const buttonClass = `
-    relative group flex items-center justify-center rounded-2xl transition-all duration-300 flex-shrink-0
+    relative group flex items-center justify-center rounded-2xl transition-all duration-300 flex-shrink-0 cursor-pointer
     ${isVertical ? 'w-14 h-14' : 'w-12 h-12'}
     ${isSelected ? 'bg-slate-800 shadow-[0_0_20px_rgba(99,102,241,0.3)] scale-110' : 'hover:bg-slate-900'}
   `;
