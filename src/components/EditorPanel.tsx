@@ -1,16 +1,17 @@
-import { memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import { LuDownload, LuRotateCw, LuUpload, LuX, LuZoomIn } from 'react-icons/lu';
 
 import { getPlatformMetadata, Platform } from '../app/platforms';
+import { useEditorGesture } from '../hooks/useEditorGesture';
 import { useStore } from '../stores/useStore';
-import { calculateLimits, rotateDelta } from '../utilities/geometry';
 import { saveImage } from '../utilities/image';
 import { Slider } from './EditorSlider';
 
-import type { ChangeEvent, PointerEvent, SyntheticEvent, WheelEvent } from 'react';
-import type { EditorState, ImageSource } from '../app/types';
+import type { ChangeEvent } from 'react';
+import type { ImageSource } from '../app/types';
 
 const GRID_LINE_CLASS = 'absolute bg-white/30 pointer-events-none shadow-[0_0_2px_rgba(0,0,0,0.2)]';
+const TRANSFORM_STYLE = { transform: 'rotate(var(--crop-rotate)) scale(var(--crop-scale)) translate(var(--crop-x), var(--crop-y))' };
 
 const GridOverlay = memo(({ isRoundedSquare }: { readonly isRoundedSquare: boolean }) => {
   const style = { borderRadius: isRoundedSquare ? '1.5rem' : '50%' };
@@ -29,40 +30,19 @@ const GridOverlay = memo(({ isRoundedSquare }: { readonly isRoundedSquare: boole
   );
 });
 
-const EditorCanvas = memo(
-  ({ image, onImageLoad }: { readonly image: ImageSource; readonly onImageLoad: (e: SyntheticEvent<HTMLImageElement>) => void }) => {
-    const transformRef = useRef<HTMLDivElement>(null);
-
-    useLayoutEffect(() => {
-      const updateTransform = (state: ReturnType<typeof useStore.getState>) => {
-        if (transformRef.current) {
-          const { rotation, zoom, x, y } = state.editorState;
-          transformRef.current.style.transform = `rotate(${rotation}deg) scale(${zoom}) translate(${x * 100}%, ${y * 100}%)`;
-        }
-      };
-
-      updateTransform(useStore.getState());
-
-      return useStore.subscribe((state, prevState) => {
-        if (state.editorState !== prevState.editorState) {
-          updateTransform(state);
-        }
-      });
-    }, [image]);
-
-    return (
-      <div ref={transformRef} className="w-full h-full origin-center will-change-transform">
-        <img
-          src={image.url}
-          alt="Preview"
-          className="w-full h-full object-contain pointer-events-none select-none"
-          draggable={false}
-          onLoad={onImageLoad}
-        />
-      </div>
-    );
-  },
-);
+const EditorCanvas = memo(({ image }: { readonly image: ImageSource }) => {
+  return (
+    <div className="w-full h-full origin-center will-change-transform" style={TRANSFORM_STYLE}>
+      <img
+        src={image.url}
+        alt="Preview"
+        className="w-full h-full object-contain pointer-events-none select-none"
+        draggable={false}
+        decoding="async"
+      />
+    </div>
+  );
+});
 
 const EditorControls = memo(
   ({
@@ -113,26 +93,20 @@ export const EditorPanel = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const pendingImageRef = useRef<string | null>(null);
   const currentObjectUrlRef = useRef<string | null>(null);
 
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ mouseX: 0, mouseY: 0, stateX: 0, stateY: 0, containerSize: 0 });
-  const [imageMeta, setImageMeta] = useState<{ ar: number } | null>(null);
-  const [loadedImageId, setLoadedImageId] = useState<string | null>(null);
-
   const isRoundedSquare = platform === Platform.Slack;
-  const ar = imageMeta?.ar ?? 1;
+  const ar = image ? image.width / image.height : 1;
   const coverZoom = Math.max(ar, 1 / ar);
   const minZoom = image ? coverZoom : 0.0;
   const maxZoom = Math.max(5.0, coverZoom * 3);
 
-  useEffect(() => {
-    if (image && pendingImageRef.current === image.url) {
-      setLoadedImageId(image.url);
-      pendingImageRef.current = null;
-    }
-  }, [image]);
+  const { handlePointerDown, handlePointerMove, handlePointerUp, handleWheel, updateStateClamped } = useEditorGesture(
+    containerRef,
+    ar,
+    minZoom,
+    maxZoom,
+  );
 
   useEffect(() => {
     return () => {
@@ -141,26 +115,6 @@ export const EditorPanel = () => {
       }
     };
   }, []);
-
-  useEffect(() => {
-    if (!image) {
-      setImageMeta(null);
-      setLoadedImageId(null);
-      pendingImageRef.current = null;
-    }
-  }, [image]);
-
-  const updateStateClamped = useCallback(
-    (newState: EditorState, metaAr: number) => {
-      const { xLim, yLim } = calculateLimits(metaAr, newState.zoom);
-      setEditorState({
-        ...newState,
-        x: Math.max(-xLim, Math.min(xLim, newState.x)),
-        y: Math.max(-yLim, Math.min(yLim, newState.y)),
-      });
-    },
-    [setEditorState],
-  );
 
   const handleFileChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -186,7 +140,7 @@ export const EditorPanel = () => {
             x: 0,
             y: 0,
           });
-          setImage({ url, name: file.name });
+          setImage({ url, name: file.name, width: naturalWidth, height: naturalHeight });
         };
         img.src = url;
 
@@ -196,97 +150,13 @@ export const EditorPanel = () => {
     [setImage, setEditorState],
   );
 
-  const handleImageLoad = useCallback(
-    (e: SyntheticEvent<HTMLImageElement>) => {
-      if (!image) return;
-      const { naturalWidth, naturalHeight } = e.currentTarget;
-      const computedAr = naturalWidth / naturalHeight;
-      setImageMeta({ ar: computedAr });
-      const computedCoverZoom = Math.max(computedAr, 1 / computedAr);
-
-      if (loadedImageId !== image.url) {
-        const current = useStore.getState().editorState;
-        const newState = { ...current, zoom: computedCoverZoom, x: 0, y: 0 };
-
-        if (Math.abs(newState.zoom - current.zoom) > 0.001 || Math.abs(newState.x - current.x) > 0.001 || Math.abs(newState.y - current.y) > 0.001) {
-          pendingImageRef.current = image.url;
-          setEditorState(newState);
-        } else {
-          setLoadedImageId(image.url);
-        }
-      }
-    },
-    [image, loadedImageId, setEditorState],
-  );
-
-  const handlePointerDown = useCallback(
-    (e: PointerEvent) => {
-      if (!image) return;
-      const currentState = useStore.getState().editorState;
-      const containerSize = containerRef.current?.offsetWidth ?? 0;
-
-      setIsDragging(true);
-      (e.target as Element).setPointerCapture(e.pointerId);
-      setDragStart({
-        mouseX: e.clientX,
-        mouseY: e.clientY,
-        stateX: currentState.x,
-        stateY: currentState.y,
-        containerSize,
-      });
-    },
-    [image],
-  );
-
-  const handlePointerMove = useCallback(
-    (e: PointerEvent) => {
-      const { containerSize } = dragStart;
-      if (!isDragging || containerSize === 0) return;
-      e.preventDefault();
-
-      const currentState = useStore.getState().editorState;
-      const dxScreen = e.clientX - dragStart.mouseX;
-      const dyScreen = e.clientY - dragStart.mouseY;
-      const { dx: dxLocal, dy: dyLocal } = rotateDelta(dxScreen, dyScreen, currentState.rotation);
-      const zoomFactor = currentState.zoom > 0.001 ? currentState.zoom : 0.001;
-
-      if (imageMeta) {
-        updateStateClamped(
-          {
-            ...currentState,
-            x: dragStart.stateX + dxLocal / zoomFactor / containerSize,
-            y: dragStart.stateY + dyLocal / zoomFactor / containerSize,
-          },
-          imageMeta.ar,
-        );
-      }
-    },
-    [isDragging, dragStart, imageMeta, updateStateClamped],
-  );
-
-  const handlePointerUp = useCallback((e: PointerEvent) => {
-    setIsDragging(false);
-    (e.target as Element).releasePointerCapture(e.pointerId);
-  }, []);
-
-  const handleWheel = useCallback(
-    (e: WheelEvent) => {
-      if (!image || !imageMeta) return;
-      const currentState = useStore.getState().editorState;
-      const sensitivity = 0.001;
-      const newZoom = Math.min(Math.max(currentState.zoom + -e.deltaY * sensitivity, minZoom), maxZoom);
-      updateStateClamped({ ...currentState, zoom: newZoom }, imageMeta.ar);
-    },
-    [image, imageMeta, minZoom, maxZoom, updateStateClamped],
-  );
-
   const handleZoomSliderChange = useCallback(
     (v: number) => {
-      if (!imageMeta) return;
+      if (!image) return;
       const currentState = useStore.getState().editorState;
-      updateStateClamped({ ...currentState, zoom: minZoom + v }, imageMeta.ar);
+      updateStateClamped({ ...currentState, zoom: minZoom + v }, ar);
     },
-    [imageMeta, minZoom, updateStateClamped],
+    [image, ar, minZoom, updateStateClamped],
   );
 
   const handleRotationSliderChange = useCallback(
@@ -354,7 +224,7 @@ export const EditorPanel = () => {
                 onPointerLeave={handlePointerUp}
                 onWheel={handleWheel}
               >
-                <EditorCanvas image={image} onImageLoad={handleImageLoad} />
+                <EditorCanvas image={image} />
               </div>
 
               <GridOverlay isRoundedSquare={isRoundedSquare} />

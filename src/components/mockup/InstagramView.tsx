@@ -15,6 +15,7 @@ import {
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
+import { PostImage } from './Shared';
 
 const isDark = true;
 const bg = isDark ? 'bg-black' : 'bg-white';
@@ -32,18 +33,6 @@ const BottomNav = () => (
     </div>
   </div>
 );
-
-const PostImage = memo(() => {
-  const image = useStore((state) => state.image);
-  if (!image) {
-    return (
-      <div className="w-full aspect-square flex items-center justify-center text-gray-700 bg-gray-900">
-        <span className="text-sm">No Image</span>
-      </div>
-    );
-  }
-  return <img src={image.url} className="w-full h-auto object-contain max-h-[400px]" alt="Post" />;
-});
 
 const StoryView = memo(() => (
   <div className="w-full h-full bg-gradient-to-tr from-indigo-900 via-purple-900 to-orange-900 relative flex flex-col">
@@ -123,7 +112,10 @@ const FeedView = memo(() => (
         </div>
 
         <div className="w-full bg-gray-900 flex items-center justify-center overflow-hidden">
-          <PostImage />
+          <PostImage
+            containerClass="w-full aspect-square flex items-center justify-center text-gray-700 bg-gray-900"
+            imageClass="w-full h-auto object-contain max-h-[400px]"
+          />
         </div>
 
         <div className="p-3">

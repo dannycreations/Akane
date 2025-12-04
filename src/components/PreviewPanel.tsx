@@ -10,7 +10,7 @@ export const PreviewPanel = () => {
   const setPerspective = useStore((state) => state.setPerspective);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [prerender, setPrerender] = useState(false);
 
   const config = getPlatformConfig(platform);
@@ -28,7 +28,6 @@ export const PreviewPanel = () => {
   };
 
   useEffect(() => {
-    // Start prerendering other views in background after initial render
     const timer = setTimeout(() => {
       setPrerender(true);
     }, 2000);
@@ -38,7 +37,8 @@ export const PreviewPanel = () => {
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    const content = contentRef.current;
+    if (!container || !content) return;
 
     let rafId: number;
 
@@ -57,8 +57,9 @@ export const PreviewPanel = () => {
         const scaleY = (height - MARGIN) / PHONE_HEIGHT;
 
         const newScale = Math.min(1, scaleX, scaleY);
+        const finalScale = Math.max(0.3, newScale);
 
-        setScale(Math.max(0.3, newScale));
+        content.style.setProperty('--preview-scale', finalScale.toString());
       });
     });
 
@@ -86,7 +87,11 @@ export const PreviewPanel = () => {
         </button>
       </div>
 
-      <div style={{ transform: `scale(${scale})` }} className="transition-transform duration-300 ease-out origin-center will-change-transform">
+      <div
+        ref={contentRef}
+        style={{ transform: 'scale(var(--preview-scale, 1))' }}
+        className="transition-transform duration-300 ease-out origin-center will-change-transform"
+      >
         <div className="relative w-[340px] h-[680px] bg-black rounded-[3rem] border-8 border-slate-800 shadow-2xl overflow-hidden ring-1 ring-white/10">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-b-2xl z-50 flex items-center justify-center gap-2">
             <div className="w-16 h-3 bg-slate-900/50 rounded-full" />

@@ -4,15 +4,7 @@ import { LuBell, LuEllipsis, LuGlobe, LuHouse, LuImage, LuMessageCircle, LuSearc
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
-
-const PostImage = memo(() => {
-  const image = useStore((state) => state.image);
-
-  if (!image) {
-    return <div className="h-64 w-full flex items-center justify-center text-[#b0b3b8]">No image</div>;
-  }
-  return <img src={image.url} alt="Post content" className="w-full h-full object-contain" />;
-});
+import { PostImage } from './Shared';
 
 const ProfileView = memo(() => (
   <div className="w-full h-full bg-[#18191a] text-[#e4e6eb] font-sans overflow-y-auto">

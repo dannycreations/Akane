@@ -16,6 +16,7 @@ import {
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { CroppedPreview } from '../CroppedPreview';
+import { PostImage } from './Shared';
 
 const BottomNav = () => (
   <div className="h-[52px] bg-[#1b1f23] border-t border-[#31363c] flex items-center justify-between px-6 shrink-0 z-50">
@@ -41,18 +42,6 @@ const BottomNav = () => (
     </div>
   </div>
 );
-
-const PostImage = memo(() => {
-  const image = useStore((state) => state.image);
-  if (!image) {
-    return (
-      <div className="w-full aspect-video flex items-center justify-center">
-        <span className="text-[#90959c] text-sm">Post Media</span>
-      </div>
-    );
-  }
-  return <img src={image.url} className="w-full h-auto max-h-[500px] object-contain" alt="Post content" />;
-});
 
 const ProfileView = memo(() => (
   <div className="w-full h-full bg-[#000000] text-white font-sans flex flex-col relative overflow-hidden">
@@ -184,7 +173,11 @@ const FeedView = memo(() => (
         </div>
 
         <div className="w-full bg-[#293038] flex items-center justify-center overflow-hidden mb-2">
-          <PostImage />
+          <PostImage
+            containerClass="w-full aspect-video flex items-center justify-center"
+            imageClass="w-full h-auto max-h-[500px] object-contain"
+            fallbackText="Post Media"
+          />
         </div>
 
         <div className="px-3 py-2 flex items-center justify-between text-xs text-[#90959c] border-b border-[#31363c]">

@@ -8,4 +8,6 @@ export interface EditorState {
 export interface ImageSource {
   readonly url: string;
   readonly name: string;
+  readonly width: number;
+  readonly height: number;
 }
