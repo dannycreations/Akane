@@ -1,8 +1,10 @@
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { startTransition, Suspense, useEffect, useRef, useState } from 'react';
 import { LuArrowLeft, LuArrowRight, LuBattery, LuSignal, LuWifi } from 'react-icons/lu';
 
 import { useStore } from '../stores/useStore';
 import { getPlatformConfig, PLATFORMS } from './mockup';
+
+import type { Platform } from '../app/platforms';
 
 export const PreviewPanel = () => {
   const platform = useStore((state) => state.platform);
@@ -11,7 +13,31 @@ export const PreviewPanel = () => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const [prerender, setPrerender] = useState(false);
+  const [visited, setVisited] = useState<Set<Platform>>(() => new Set([platform]));
+
+  useEffect(() => {
+    setVisited((prev) => {
+      if (prev.has(platform)) return prev;
+      const next = new Set(prev);
+      next.add(platform);
+      return next;
+    });
+  }, [platform]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      startTransition(() => {
+        setVisited((prev) => {
+          if (prev.size === PLATFORMS.length) return prev;
+          const next = new Set(prev);
+          PLATFORMS.forEach((p) => next.add(p.id));
+          return next;
+        });
+      });
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const config = getPlatformConfig(platform);
   const perspectives = config.perspectives;
@@ -28,14 +54,6 @@ export const PreviewPanel = () => {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setPrerender(true);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
     const container = containerRef.current;
     const content = contentRef.current;
     if (!container || !content) return;
@@ -43,6 +61,10 @@ export const PreviewPanel = () => {
     let rafId: number;
 
     const observer = new ResizeObserver((entries) => {
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+
       rafId = window.requestAnimationFrame(() => {
         const entry = entries[0];
         if (!entry) return;
@@ -66,7 +88,9 @@ export const PreviewPanel = () => {
     observer.observe(container);
     return () => {
       observer.disconnect();
-      window.cancelAnimationFrame(rafId);
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
     };
   }, []);
 
@@ -109,7 +133,7 @@ export const PreviewPanel = () => {
           <div className="relative h-full w-full bg-slate-950 pt-8">
             {PLATFORMS.map((p) => {
               const isActive = p.id === platform;
-              const shouldRender = isActive || prerender;
+              const shouldRender = visited.has(p.id);
 
               if (!shouldRender) return null;
               const View = p.node;
