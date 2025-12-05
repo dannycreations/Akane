@@ -4,6 +4,7 @@ import { LuCirclePlus, LuGift, LuHash, LuMenu, LuPhone, LuSearch, LuSettings, Lu
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { ProfileImage } from '../shared/Image';
+import { Navigation } from '../shared/Navigation';
 
 const bgMain = 'bg-[#1e1f22]';
 const bgSidebar = 'bg-[#2b2d31]';
@@ -12,31 +13,33 @@ const textMain = 'text-[#dbdee1]';
 const textMuted = 'text-[#949ba4]';
 
 const BottomNav = () => (
-  <div className={`h-[56px] ${bgSidebar} flex items-center justify-around px-2 shrink-0 z-50 border-t border-[#1e1f22]`}>
-    <div className="flex flex-col items-center gap-1 group cursor-pointer">
-      <div className="text-white bg-[#5865f2] p-1 rounded-full">
-        <div className="w-5 h-5 flex items-center justify-center font-bold text-[10px]">D</div>
+  <Navigation className={`${bgSidebar} border-t border-[#1e1f22]`} safeAreaClassName="pb-6">
+    <div className="h-[56px] flex items-center justify-around px-2">
+      <div className="flex flex-col items-center gap-1 group cursor-pointer">
+        <div className="text-white bg-[#5865f2] p-1 rounded-full">
+          <div className="w-5 h-5 flex items-center justify-center font-bold text-[10px]">D</div>
+        </div>
+        <span className="text-[10px] text-white font-medium">Servers</span>
       </div>
-      <span className="text-[10px] text-white font-medium">Servers</span>
-    </div>
-    <div className="flex flex-col items-center gap-1 group cursor-pointer text-[#949ba4] hover:text-[#dbdee1]">
-      <LuUsers size={24} />
-      <span className="text-[10px] font-medium">Friends</span>
-    </div>
-    <div className="flex flex-col items-center gap-1 group cursor-pointer text-[#949ba4] hover:text-[#dbdee1]">
-      <div className="relative">
-        <LuSearch size={24} />
-        <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#23a559] rounded-full border-2 border-[#2b2d31]"></div>
+      <div className="flex flex-col items-center gap-1 group cursor-pointer text-[#949ba4] hover:text-[#dbdee1]">
+        <LuUsers size={24} />
+        <span className="text-[10px] font-medium">Friends</span>
       </div>
-      <span className="text-[10px] font-medium">Search</span>
-    </div>
-    <div className="flex flex-col items-center gap-1 group cursor-pointer text-[#dbdee1]">
-      <div className="relative w-6 h-6 rounded-full overflow-hidden ring-2 ring-[#23a559]">
-        <ProfileImage />
+      <div className="flex flex-col items-center gap-1 group cursor-pointer text-[#949ba4] hover:text-[#dbdee1]">
+        <div className="relative">
+          <LuSearch size={24} />
+          <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[#23a559] rounded-full border-2 border-[#2b2d31]"></div>
+        </div>
+        <span className="text-[10px] font-medium">Search</span>
       </div>
-      <span className="text-[10px] font-medium">You</span>
+      <div className="flex flex-col items-center gap-1 group cursor-pointer text-[#dbdee1]">
+        <div className="relative w-6 h-6 rounded-full overflow-hidden ring-2 ring-[#23a559]">
+          <ProfileImage />
+        </div>
+        <span className="text-[10px] font-medium">You</span>
+      </div>
     </div>
-  </div>
+  </Navigation>
 );
 
 const NitroBadge = () => (
@@ -172,21 +175,23 @@ const ChatView = memo(() => (
       </div>
     </div>
 
-    <div className={`px-4 pb-4 pt-2 ${bgMain} shrink-0`}>
-      <div className={`flex items-center gap-2 bg-[#383a40] rounded-full px-4 py-2.5`}>
-        <div className="bg-[#b5bac1] rounded-full p-0.5 cursor-pointer hover:text-white transition-colors">
-          <LuCirclePlus size={20} className="text-[#383a40]" fill="currentColor" />
+    <Navigation className={bgMain} safeAreaClassName="pb-4">
+      <div className="px-4 pt-2">
+        <div className={`flex items-center gap-2 bg-[#383a40] rounded-full px-4 py-2.5`}>
+          <div className="bg-[#b5bac1] rounded-full p-0.5 cursor-pointer hover:text-white transition-colors">
+            <LuCirclePlus size={20} className="text-[#383a40]" fill="currentColor" />
+          </div>
+          <input
+            type="text"
+            placeholder="Message #general"
+            className="bg-transparent border-none outline-none text-[#dbdee1] placeholder-[#949ba4] flex-1 min-w-0"
+          />
+          <LuGift size={24} className="text-[#b5bac1] cursor-pointer hover:text-[#dbdee1]" />
+          <LuSticker size={24} className="text-[#b5bac1] cursor-pointer hover:text-[#dbdee1]" />
+          <LuSmile size={24} className="text-[#b5bac1] cursor-pointer hover:text-[#dbdee1]" />
         </div>
-        <input
-          type="text"
-          placeholder="Message #general"
-          className="bg-transparent border-none outline-none text-[#dbdee1] placeholder-[#949ba4] flex-1 min-w-0"
-        />
-        <LuGift size={24} className="text-[#b5bac1] cursor-pointer hover:text-[#dbdee1]" />
-        <LuSticker size={24} className="text-[#b5bac1] cursor-pointer hover:text-[#dbdee1]" />
-        <LuSmile size={24} className="text-[#b5bac1] cursor-pointer hover:text-[#dbdee1]" />
       </div>
-    </div>
+    </Navigation>
   </div>
 ));
 

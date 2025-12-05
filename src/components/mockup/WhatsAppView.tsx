@@ -4,6 +4,7 @@ import { LuArrowLeft, LuCircleCheck, LuEllipsisVertical, LuImage, LuPhone, LuSen
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { ProfileImage } from '../shared/Image';
+import { Navigation } from '../shared/Navigation';
 
 const ProfileView = memo(() => (
   <div className="w-full h-full bg-[#0b141a] text-[#e9edef] flex flex-col font-sans">
@@ -85,14 +86,16 @@ const ChatView = memo(() => (
       </div>
     </div>
 
-    <div className="bg-[#202c33] flex items-center px-2 pt-2 pb-8 gap-2 shrink-0 relative z-20">
-      <div className="p-2 bg-[#2a3942] rounded-full flex-1 flex items-center px-4">
-        <span className="text-[#8696a0] text-sm">Message</span>
+    <Navigation className="bg-[#202c33]" safeAreaClassName="pb-8">
+      <div className="flex items-center px-2 pt-2 gap-2 relative z-20">
+        <div className="p-2 bg-[#2a3942] rounded-full flex-1 flex items-center px-4">
+          <span className="text-[#8696a0] text-sm">Message</span>
+        </div>
+        <div className="w-10 h-10 bg-[#00a884] rounded-full flex items-center justify-center">
+          <LuSend size={18} className="text-white ml-0.5" />
+        </div>
       </div>
-      <div className="w-10 h-10 bg-[#00a884] rounded-full flex items-center justify-center">
-        <LuSend size={18} className="text-white ml-0.5" />
-      </div>
-    </div>
+    </Navigation>
   </div>
 ));
 

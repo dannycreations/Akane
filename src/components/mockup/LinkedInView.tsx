@@ -16,30 +16,33 @@ import {
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
+import { Navigation } from '../shared/Navigation';
 
 const BottomNav = () => (
-  <div className="h-[52px] bg-[#1b1f23] border-t border-[#31363c] flex items-center justify-between px-6 shrink-0 z-50">
-    <div className="flex flex-col items-center gap-1 text-white">
-      <LuHouse size={20} fill="currentColor" />
-      <span className="text-[10px] font-medium">Home</span>
+  <Navigation className="bg-[#1b1f23] border-t border-[#31363c]" safeAreaClassName="pb-6">
+    <div className="h-[52px] flex items-center justify-between px-6">
+      <div className="flex flex-col items-center gap-1 text-white">
+        <LuHouse size={20} fill="currentColor" />
+        <span className="text-[10px] font-medium">Home</span>
+      </div>
+      <div className="flex flex-col items-center gap-1 text-[#90959c]">
+        <LuUsers size={20} />
+        <span className="text-[10px] font-medium">Network</span>
+      </div>
+      <div className="flex flex-col items-center gap-1 text-[#90959c]">
+        <LuSquarePlus size={20} />
+        <span className="text-[10px] font-medium">Post</span>
+      </div>
+      <div className="flex flex-col items-center gap-1 text-[#90959c]">
+        <LuBell size={20} />
+        <span className="text-[10px] font-medium">Notifs</span>
+      </div>
+      <div className="flex flex-col items-center gap-1 text-[#90959c]">
+        <LuBriefcase size={20} />
+        <span className="text-[10px] font-medium">Jobs</span>
+      </div>
     </div>
-    <div className="flex flex-col items-center gap-1 text-[#90959c]">
-      <LuUsers size={20} />
-      <span className="text-[10px] font-medium">Network</span>
-    </div>
-    <div className="flex flex-col items-center gap-1 text-[#90959c]">
-      <LuSquarePlus size={20} />
-      <span className="text-[10px] font-medium">Post</span>
-    </div>
-    <div className="flex flex-col items-center gap-1 text-[#90959c]">
-      <LuBell size={20} />
-      <span className="text-[10px] font-medium">Notifs</span>
-    </div>
-    <div className="flex flex-col items-center gap-1 text-[#90959c]">
-      <LuBriefcase size={20} />
-      <span className="text-[10px] font-medium">Jobs</span>
-    </div>
-  </div>
+  </Navigation>
 );
 
 const ProfileView = memo(() => (

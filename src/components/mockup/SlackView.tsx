@@ -4,6 +4,7 @@ import { LuChevronDown, LuClock, LuEllipsis, LuHash, LuMessageSquare, LuPapercli
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { ProfileImage } from '../shared/Image';
+import { Navigation } from '../shared/Navigation';
 
 const bgMain = 'bg-[#1A1D21]';
 const textPrimary = 'text-[#D1D2D3]';
@@ -155,47 +156,53 @@ const ChatView = memo(() => (
         </div>
       </div>
 
-      <div className="px-4 pb-4 pt-2">
-        <div className="border border-[#56585B] rounded-xl bg-[#222529] focus-within:border-[#ABABAD] transition-colors">
-          <div className="flex items-center gap-1 p-1 bg-[#2B2D31] rounded-t-xl border-b border-[#36373A]">
-            <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
-              <span className="font-bold text-xs">B</span>
+      <Navigation className={bgMain} safeAreaClassName="pb-4">
+        <div className="px-4 pt-2">
+          <div className="border border-[#56585B] rounded-xl bg-[#222529] focus-within:border-[#ABABAD] transition-colors">
+            <div className="flex items-center gap-1 p-1 bg-[#2B2D31] rounded-t-xl border-b border-[#36373A]">
+              <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
+                <span className="font-bold text-xs">B</span>
+              </div>
+              <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
+                <span className="italic text-xs">I</span>
+              </div>
+              <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
+                <span className="line-through text-xs">S</span>
+              </div>
+              <div className="w-px h-4 bg-[#56585B] mx-1"></div>
+              <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
+                <span className="text-xs">Link</span>
+              </div>
             </div>
-            <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
-              <span className="italic text-xs">I</span>
-            </div>
-            <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
-              <span className="line-through text-xs">S</span>
-            </div>
-            <div className="w-px h-4 bg-[#56585B] mx-1"></div>
-            <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
-              <span className="text-xs">Link</span>
+
+            <input
+              type="text"
+              placeholder="Message #general"
+              className="w-full bg-transparent text-[#D1D2D3] p-3 outline-none placeholder-[#616061]"
+            />
+
+            <div className="flex justify-between items-center p-2">
+              <div className="flex gap-2 text-[#ABABAD]">
+                <div className="p-1.5 hover:bg-[#35373B] rounded-full cursor-pointer">
+                  <LuUserPlus size={16} />
+                </div>
+                <div className="p-1.5 hover:bg-[#35373B] rounded-full cursor-pointer">
+                  <LuSmile size={16} />
+                </div>
+                <div className="p-1.5 hover:bg-[#35373B] rounded-full cursor-pointer">
+                  <LuPaperclip size={16} />
+                </div>
+              </div>
+              <div className="p-2 bg-[#007A5A] rounded hover:bg-[#148567] transition-colors cursor-pointer text-white">
+                <LuSend size={16} className="ml-0.5" />
+              </div>
             </div>
           </div>
-
-          <input type="text" placeholder="Message #general" className="w-full bg-transparent text-[#D1D2D3] p-3 outline-none placeholder-[#616061]" />
-
-          <div className="flex justify-between items-center p-2">
-            <div className="flex gap-2 text-[#ABABAD]">
-              <div className="p-1.5 hover:bg-[#35373B] rounded-full cursor-pointer">
-                <LuUserPlus size={16} />
-              </div>
-              <div className="p-1.5 hover:bg-[#35373B] rounded-full cursor-pointer">
-                <LuSmile size={16} />
-              </div>
-              <div className="p-1.5 hover:bg-[#35373B] rounded-full cursor-pointer">
-                <LuPaperclip size={16} />
-              </div>
-            </div>
-            <div className="p-2 bg-[#007A5A] rounded hover:bg-[#148567] transition-colors cursor-pointer text-white">
-              <LuSend size={16} className="ml-0.5" />
-            </div>
+          <div className="text-center mt-2 text-[11px] text-[#616061]">
+            <strong>Tip:</strong> Press Enter to send
           </div>
         </div>
-        <div className="text-center mt-2 text-[11px] text-[#616061]">
-          <strong>Tip:</strong> Press Enter to send
-        </div>
-      </div>
+      </Navigation>
     </div>
   </div>
 ));

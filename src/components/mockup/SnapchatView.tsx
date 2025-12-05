@@ -17,27 +17,30 @@ import {
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
+import { Navigation } from '../shared/Navigation';
 
 const BottomNav = ({ active = 'chat' }: { active?: string }) => (
-  <div className="h-[72px] bg-black/95 backdrop-blur-xl border-t border-white/10 flex items-center justify-between px-6 shrink-0 z-50 rounded-b-[2.5rem]">
-    <div className={`flex flex-col items-center gap-1 ${active === 'map' ? 'text-[#00FF00]' : 'text-[#666]'}`}>
-      <LuMapPin size={26} strokeWidth={2.5} />
-    </div>
-    <div className={`flex flex-col items-center gap-1 ${active === 'chat' ? 'text-[#3E95FF]' : 'text-[#666]'}`}>
-      <LuMessageSquare size={26} strokeWidth={2.5} />
-    </div>
-    <div className="flex flex-col items-center justify-center -mt-6">
-      <div className="w-16 h-16 bg-[#FFFC00] rounded-full border-4 border-black flex items-center justify-center shadow-[0_0_15px_rgba(255,252,0,0.3)]">
-        <LuCamera size={32} className="text-black" />
+  <Navigation className="bg-black/95 backdrop-blur-xl border-t border-white/10" safeAreaClassName="pb-6">
+    <div className="h-[72px] flex items-center justify-between px-6">
+      <div className={`flex flex-col items-center gap-1 ${active === 'map' ? 'text-[#00FF00]' : 'text-[#666]'}`}>
+        <LuMapPin size={26} strokeWidth={2.5} />
+      </div>
+      <div className={`flex flex-col items-center gap-1 ${active === 'chat' ? 'text-[#3E95FF]' : 'text-[#666]'}`}>
+        <LuMessageSquare size={26} strokeWidth={2.5} />
+      </div>
+      <div className="flex flex-col items-center justify-center -mt-6">
+        <div className="w-16 h-16 bg-[#FFFC00] rounded-full border-4 border-black flex items-center justify-center shadow-[0_0_15px_rgba(255,252,0,0.3)]">
+          <LuCamera size={32} className="text-black" />
+        </div>
+      </div>
+      <div className={`flex flex-col items-center gap-1 ${active === 'stories' ? 'text-[#A05DCD]' : 'text-[#666]'}`}>
+        <LuUsers size={26} strokeWidth={2.5} />
+      </div>
+      <div className={`flex flex-col items-center gap-1 ${active === 'spotlight' ? 'text-[#FF0000]' : 'text-[#666]'}`}>
+        <LuPlay size={26} strokeWidth={2.5} />
       </div>
     </div>
-    <div className={`flex flex-col items-center gap-1 ${active === 'stories' ? 'text-[#A05DCD]' : 'text-[#666]'}`}>
-      <LuUsers size={26} strokeWidth={2.5} />
-    </div>
-    <div className={`flex flex-col items-center gap-1 ${active === 'spotlight' ? 'text-[#FF0000]' : 'text-[#666]'}`}>
-      <LuPlay size={26} strokeWidth={2.5} />
-    </div>
-  </div>
+  </Navigation>
 );
 
 const ProfileView = memo(() => (

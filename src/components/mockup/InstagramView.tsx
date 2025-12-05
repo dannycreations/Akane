@@ -15,6 +15,7 @@ import {
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
+import { Navigation } from '../shared/Navigation';
 
 const isDark = true;
 const bg = isDark ? 'bg-black' : 'bg-white';
@@ -22,15 +23,17 @@ const text = isDark ? 'text-white' : 'text-black';
 const border = isDark ? 'border-gray-800' : 'border-gray-200';
 
 const BottomNav = () => (
-  <div className={`h-[50px] ${bg} border-t ${border} flex items-center justify-between px-6 shrink-0 z-50`}>
-    <LuHouse size={24} className={text} />
-    <LuSearch size={24} className={text} />
-    <LuSquarePlus size={24} className={text} />
-    <LuClapperboard size={24} className={text} />
-    <div className="w-6 h-6 rounded-full overflow-hidden ring-1 ring-gray-700">
-      <ProfileImage className="w-full h-full" />
+  <Navigation className={`${bg} border-t ${border}`} safeAreaClassName="pb-5">
+    <div className="h-[50px] flex items-center justify-between px-6">
+      <LuHouse size={24} className={text} />
+      <LuSearch size={24} className={text} />
+      <LuSquarePlus size={24} className={text} />
+      <LuClapperboard size={24} className={text} />
+      <div className="w-6 h-6 rounded-full overflow-hidden ring-1 ring-gray-700">
+        <ProfileImage className="w-full h-full" />
+      </div>
     </div>
-  </div>
+  </Navigation>
 );
 
 const StoryView = memo(() => (

@@ -4,6 +4,7 @@ import { LuArrowLeft, LuCheck, LuEllipsisVertical, LuMic, LuPaperclip, LuPhone, 
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { ProfileImage } from '../shared/Image';
+import { Navigation } from '../shared/Navigation';
 
 const bgMain = 'bg-[#17212b]';
 const bgContent = 'bg-[#0e1621]';
@@ -140,22 +141,24 @@ const ChatView = memo(() => (
       </div>
     </div>
 
-    <div className={`${headerBg} px-2 pt-2 pb-8 flex items-end gap-2 shrink-0 z-20`}>
-      <div className="p-2.5 hover:bg-[#232e3c] rounded-full cursor-pointer transition-colors text-[#7f91a4] shrink-0">
-        <LuPaperclip size={24} />
+    <Navigation className={headerBg} safeAreaClassName="pb-8">
+      <div className="px-2 pt-2 flex items-end gap-2 relative z-20">
+        <div className="p-2.5 hover:bg-[#232e3c] rounded-full cursor-pointer transition-colors text-[#7f91a4] shrink-0">
+          <LuPaperclip size={24} />
+        </div>
+        <div className="flex-1 bg-[#0e1621] rounded-2xl min-h-[44px] flex items-center px-3 gap-2 border border-black/10 min-w-0">
+          <input
+            type="text"
+            placeholder="Message"
+            className="bg-transparent text-white text-[16px] placeholder-[#6c7883] flex-1 outline-none py-2 min-w-0"
+          />
+          <LuSmile size={24} className="text-[#7f91a4] hover:text-[#dbdee1] cursor-pointer shrink-0" />
+        </div>
+        <div className="p-3 bg-[#2b5278] hover:bg-[#34608b] rounded-full cursor-pointer text-white shadow-md transition-colors shrink-0">
+          <LuMic size={24} />
+        </div>
       </div>
-      <div className="flex-1 bg-[#0e1621] rounded-2xl min-h-[44px] flex items-center px-3 gap-2 border border-black/10 min-w-0">
-        <input
-          type="text"
-          placeholder="Message"
-          className="bg-transparent text-white text-[16px] placeholder-[#6c7883] flex-1 outline-none py-2 min-w-0"
-        />
-        <LuSmile size={24} className="text-[#7f91a4] hover:text-[#dbdee1] cursor-pointer shrink-0" />
-      </div>
-      <div className="p-3 bg-[#2b5278] hover:bg-[#34608b] rounded-full cursor-pointer text-white shadow-md transition-colors shrink-0">
-        <LuMic size={24} />
-      </div>
-    </div>
+    </Navigation>
   </div>
 ));
 

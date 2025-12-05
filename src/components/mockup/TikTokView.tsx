@@ -17,38 +17,41 @@ import {
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
+import { Navigation } from '../shared/Navigation';
 
 const BottomNav = ({ active = 'home' }: { active?: string }) => (
-  <div className="h-[50px] bg-black border-t border-white/10 flex items-center justify-between px-4 shrink-0 z-50 text-[10px] font-medium text-gray-400">
-    <div className={`flex flex-col items-center gap-1 cursor-pointer ${active === 'home' ? 'text-white' : ''}`}>
-      <LuHouse size={22} strokeWidth={active === 'home' ? 3 : 2} />
-      <span>Home</span>
-    </div>
-    <div className="flex flex-col items-center gap-1 cursor-pointer hover:text-white transition-colors">
-      <div className="relative">
-        <LuSearch size={22} />
-        <div className="absolute top-0 right-0 w-2 h-2 bg-[#fe2c55] rounded-full border border-black"></div>
+  <Navigation className="bg-black border-t border-white/10" safeAreaClassName="pb-6">
+    <div className="h-[50px] flex items-center justify-between px-4 text-[10px] font-medium text-gray-400">
+      <div className={`flex flex-col items-center gap-1 cursor-pointer ${active === 'home' ? 'text-white' : ''}`}>
+        <LuHouse size={22} strokeWidth={active === 'home' ? 3 : 2} />
+        <span>Home</span>
       </div>
-      <span>Shop</span>
-    </div>
-    <div className="flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition-opacity px-2">
-      <div className="w-[45px] h-[30px] relative flex items-center justify-center">
-        <div className="absolute left-0 top-0 bottom-0 w-[80%] bg-[#25f4ee] rounded-lg"></div>
-        <div className="absolute right-0 top-0 bottom-0 w-[80%] bg-[#fe2c55] rounded-lg"></div>
-        <div className="absolute left-[2px] right-[2px] top-0 bottom-0 bg-white rounded-lg flex items-center justify-center">
-          <LuPlus size={20} className="text-black" strokeWidth={3} />
+      <div className="flex flex-col items-center gap-1 cursor-pointer hover:text-white transition-colors">
+        <div className="relative">
+          <LuSearch size={22} />
+          <div className="absolute top-0 right-0 w-2 h-2 bg-[#fe2c55] rounded-full border border-black"></div>
+        </div>
+        <span>Shop</span>
+      </div>
+      <div className="flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition-opacity px-2">
+        <div className="w-[45px] h-[30px] relative flex items-center justify-center">
+          <div className="absolute left-0 top-0 bottom-0 w-[80%] bg-[#25f4ee] rounded-lg"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-[80%] bg-[#fe2c55] rounded-lg"></div>
+          <div className="absolute left-[2px] right-[2px] top-0 bottom-0 bg-white rounded-lg flex items-center justify-center">
+            <LuPlus size={20} className="text-black" strokeWidth={3} />
+          </div>
         </div>
       </div>
+      <div className="flex flex-col items-center gap-1 cursor-pointer hover:text-white transition-colors">
+        <LuMessageSquare size={22} />
+        <span>Inbox</span>
+      </div>
+      <div className={`flex flex-col items-center gap-1 cursor-pointer ${active === 'profile' ? 'text-white' : ''}`}>
+        <LuUser size={22} strokeWidth={active === 'profile' ? 3 : 2} />
+        <span>Profile</span>
+      </div>
     </div>
-    <div className="flex flex-col items-center gap-1 cursor-pointer hover:text-white transition-colors">
-      <LuMessageSquare size={22} />
-      <span>Inbox</span>
-    </div>
-    <div className={`flex flex-col items-center gap-1 cursor-pointer ${active === 'profile' ? 'text-white' : ''}`}>
-      <LuUser size={22} strokeWidth={active === 'profile' ? 3 : 2} />
-      <span>Profile</span>
-    </div>
-  </div>
+  </Navigation>
 );
 
 const ProfileView = memo(() => (

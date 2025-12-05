@@ -21,6 +21,7 @@ import {
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
 import { ProfileImage } from '../shared/Image';
+import { Navigation } from '../shared/Navigation';
 
 const VerifiedBadge = () => (
   <svg viewBox="0 0 22 22" className="w-[18px] h-[18px] text-[#1d9bf0] fill-current ml-1">
@@ -39,16 +40,18 @@ const XLogo = () => (
 );
 
 const BottomNav = () => (
-  <div className="h-[52px] bg-black border-t border-[#2f3336] flex items-center justify-between px-6 shrink-0 z-50">
-    <LuHouse size={26} className="text-white fill-current" />
-    <LuSearch size={26} className="text-[#71767b]" />
-    <div className="w-6 h-6 border-2 border-[#71767b] rounded flex items-center justify-center">
-      <div className="w-3 h-0.5 bg-[#71767b] rotate-45"></div>
+  <Navigation className="bg-black border-t border-[#2f3336]" safeAreaClassName="pb-6">
+    <div className="h-[52px] flex items-center justify-between px-6">
+      <LuHouse size={26} className="text-white fill-current" />
+      <LuSearch size={26} className="text-[#71767b]" />
+      <div className="w-6 h-6 border-2 border-[#71767b] rounded flex items-center justify-center">
+        <div className="w-3 h-0.5 bg-[#71767b] rotate-45"></div>
+      </div>
+      <LuUsers size={26} className="text-[#71767b]" />
+      <LuBell size={26} className="text-[#71767b]" />
+      <LuMail size={26} className="text-[#71767b]" />
     </div>
-    <LuUsers size={26} className="text-[#71767b]" />
-    <LuBell size={26} className="text-[#71767b]" />
-    <LuMail size={26} className="text-[#71767b]" />
-  </div>
+  </Navigation>
 );
 
 const ProfileView = memo(() => (
