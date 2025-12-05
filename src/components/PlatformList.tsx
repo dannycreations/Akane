@@ -1,8 +1,9 @@
-import { memo } from 'react';
+import { memo, useRef } from 'react';
 
 import { PLATFORM_METADATA } from '../app/platforms';
 import { useStore } from '../stores/useStore';
 
+import type { WheelEvent } from 'react';
 import type { Platform, PlatformMetadata } from '../app/platforms';
 
 interface PlatformListProps {
@@ -52,30 +53,30 @@ const PlatformItem = memo(
 export const PlatformList = ({ orientation = 'vertical' }: PlatformListProps) => {
   const selected = useStore((state) => state.platform);
   const setPlatform = useStore((state) => state.setPlatform);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const isVertical = orientation === 'vertical';
 
-  const containerClass = `
-    relative z-10 flex bg-slate-950 shadow-2xl
-    ${
-      isVertical
-        ? 'h-full w-24 flex-col items-center justify-center border-r border-slate-800 py-8'
-        : 'h-20 w-full flex-row items-center justify-center border-t border-slate-800'
+  const handleWheel = (e: WheelEvent) => {
+    if (isVertical || !scrollRef.current) return;
+    if (e.deltaY !== 0) {
+      scrollRef.current.scrollLeft += e.deltaY;
     }
+  };
+
+  const containerClass = `
+    relative z-10 bg-slate-950 shadow-2xl
+    ${isVertical ? 'flex h-full w-24 flex-col items-center justify-center border-r border-slate-800 py-8' : 'h-20 w-full border-t border-slate-800'}
   `;
 
   const scrollContainerClass = `
-    flex min-h-0 min-w-0 items-center scroll-smooth
-    ${
-      isVertical
-        ? 'w-full max-h-full flex-col gap-6 overflow-y-auto py-2 no-scrollbar'
-        : 'w-fit max-w-full flex-row gap-6 overflow-x-auto px-6 no-scrollbar'
-    }
+    flex items-center scroll-smooth no-scrollbar
+    ${isVertical ? 'w-full max-h-full flex-col gap-6 overflow-y-auto py-2' : 'h-full w-full flex-row gap-6 overflow-x-auto overflow-y-hidden px-6'}
   `;
 
   return (
     <div className={containerClass}>
-      <div className={scrollContainerClass}>
+      <div ref={scrollRef} className={scrollContainerClass} onWheel={handleWheel}>
         {PLATFORM_METADATA.map((p) => (
           <PlatformItem key={p.id} p={p} isSelected={selected === p.id} isVertical={isVertical} onSelect={setPlatform} />
         ))}
