@@ -27,7 +27,7 @@ export const ProfileImage = memo(({ size, className }: ProfileImageProps) => {
   }
 
   return (
-    <div className={`overflow-hidden relative bg-slate-800 flex-shrink-0 select-none ${className ?? ''}`} style={containerStyle}>
+    <div className={`relative flex-shrink-0 select-none overflow-hidden bg-slate-800 ${className ?? ''}`} style={containerStyle}>
       <EditorImage />
     </div>
   );
@@ -41,8 +41,8 @@ interface PostImageProps {
 
 export const PostImage = memo(
   ({
-    containerClass = 'h-64 w-full flex items-center justify-center text-[#b0b3b8]',
-    imageClass = 'w-full h-full object-contain',
+    containerClass = 'flex h-64 w-full items-center justify-center text-[#b0b3b8]',
+    imageClass = 'block h-full w-full object-contain',
     fallbackText,
   }: PostImageProps) => {
     const image = useStore((state) => state.image);
@@ -67,7 +67,7 @@ export const PostImage = memo(
 
     return (
       <div className={containerClass}>
-        <img src={image.url} className={`pointer-events-none select-none block ${imageClass}`} draggable={false} decoding="async" style={style} />
+        <img src={image.url} className={`pointer-events-none block select-none ${imageClass}`} draggable={false} decoding="async" style={style} />
       </div>
     );
   },
@@ -89,10 +89,10 @@ export const EditorImage = memo(({ image: imageProp, className, style, imgClassN
   if (!image) return null;
 
   return (
-    <div className={`w-full h-full origin-center will-change-transform ${className ?? ''}`} style={{ ...TRANSFORM_STYLE, ...style }}>
+    <div className={`h-full w-full origin-center will-change-transform ${className ?? ''}`} style={{ ...TRANSFORM_STYLE, ...style }}>
       <img
         src={image.url}
-        className={imgClassName ?? 'w-full h-full object-contain pointer-events-none select-none block'}
+        className={imgClassName ?? 'pointer-events-none block h-full w-full select-none object-contain'}
         draggable={false}
         decoding="async"
       />

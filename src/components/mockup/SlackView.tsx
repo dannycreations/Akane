@@ -12,71 +12,71 @@ const textSecondary = 'text-[#ABABAD]';
 const border = 'border-[#36373A]';
 
 const ProfileView = memo(() => (
-  <div className={`w-full h-full ${bgMain} ${textPrimary} font-sans flex flex-col relative overflow-hidden`}>
-    <div className={`h-14 flex items-center justify-between px-4 border-b ${border} bg-[#1A1D21] z-20`}>
-      <h2 className="font-bold text-lg">Profile</h2>
-      <div className="p-2 hover:bg-[#35373B] rounded-lg cursor-pointer">
+  <div className={`relative flex h-full w-full flex-col overflow-hidden font-sans ${bgMain} ${textPrimary}`}>
+    <div className={`z-20 flex h-14 items-center justify-between border-b bg-[#1A1D21] px-4 ${border}`}>
+      <h2 className="text-lg font-bold">Profile</h2>
+      <div className="cursor-pointer rounded-lg p-2 hover:bg-[#35373B]">
         <LuX size={20} className={textSecondary} />
       </div>
     </div>
 
-    <div className="flex-1 overflow-y-auto no-scrollbar p-6">
-      <div className="flex flex-col items-center mb-6">
-        <div className="relative group cursor-pointer">
-          <div className="w-[180px] h-[180px] rounded-3xl overflow-hidden shadow-2xl ring-4 ring-[#1A1D21]">
-            <ProfileImage className="w-full h-full" />
+    <div className="flex-1 overflow-y-auto p-6 no-scrollbar">
+      <div className="mb-6 flex flex-col items-center">
+        <div className="group relative cursor-pointer">
+          <div className="h-[180px] w-[180px] overflow-hidden rounded-3xl shadow-2xl ring-4 ring-[#1A1D21]">
+            <ProfileImage className="h-full w-full" />
           </div>
-          <div className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-[#1A1D21] flex items-center justify-center">
-            <div className="w-5 h-5 rounded-full bg-[#2BAC76] border-2 border-[#1A1D21]"></div>
+          <div className="absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-[#1A1D21]">
+            <div className="h-5 w-5 rounded-full border-2 border-[#1A1D21] bg-[#2BAC76]"></div>
           </div>
         </div>
 
-        <h1 className="text-2xl font-bold mt-4">Your Name</h1>
-        <div className={`${textSecondary} mt-1`}>Job Title</div>
+        <h1 className="mt-4 text-2xl font-bold">Your Name</h1>
+        <div className={`mt-1 ${textSecondary}`}>Job Title</div>
 
-        <button className="mt-4 flex items-center gap-2 px-4 py-1.5 rounded-lg border border-[#56585B] hover:bg-[#35373B] transition-colors w-full justify-center max-w-[240px]">
+        <button className="mt-4 flex w-full max-w-[240px] justify-center gap-2 rounded-lg border border-[#56585B] px-4 py-1.5 transition-colors hover:bg-[#35373B]">
           <LuSmile size={16} />
           <span className="text-sm">Update your status</span>
         </button>
       </div>
 
-      <div className="flex gap-3 mb-8 justify-center">
-        <button className="flex-1 bg-transparent border border-[#56585B] rounded-lg py-2 px-4 font-semibold text-sm hover:bg-[#35373B] transition-colors flex items-center justify-center gap-2">
+      <div className="mb-8 flex justify-center gap-3">
+        <button className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#56585B] bg-transparent px-4 py-2 text-sm font-semibold transition-colors hover:bg-[#35373B]">
           <LuMessageSquare size={16} /> Message
         </button>
-        <button className="flex-1 bg-transparent border border-[#56585B] rounded-lg py-2 px-4 font-semibold text-sm hover:bg-[#35373B] transition-colors flex items-center justify-center gap-2">
+        <button className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#56585B] bg-transparent px-4 py-2 text-sm font-semibold transition-colors hover:bg-[#35373B]">
           <LuVideo size={16} /> Huddle
         </button>
-        <button className="w-10 flex items-center justify-center border border-[#56585B] rounded-lg hover:bg-[#35373B]">
+        <button className="flex w-10 items-center justify-center rounded-lg border border-[#56585B] hover:bg-[#35373B]">
           <LuEllipsis size={16} />
         </button>
       </div>
 
-      <div className="bg-[#222529] rounded-2xl p-4 space-y-5 border border-[#36373A]">
+      <div className="space-y-5 rounded-2xl border border-[#36373A] bg-[#222529] p-4">
         <div>
-          <label className="text-xs font-bold uppercase text-[#ABABAD] mb-1 block">Contact Info</label>
-          <div className="flex items-center gap-3 mt-2">
-            <div className="w-8 h-8 rounded bg-[#35373B] flex items-center justify-center">
+          <label className="mb-1 block text-xs font-bold uppercase text-[#ABABAD]">Contact Info</label>
+          <div className="mt-2 flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded bg-[#35373B]">
               <LuMessageSquare size={16} className="#ABABAD" />
             </div>
             <div>
-              <div className="text-sm text-[#36C5F0] hover:underline cursor-pointer">user@company.com</div>
+              <div className="cursor-pointer text-sm text-[#36C5F0] hover:underline">user@company.com</div>
               <div className="text-xs text-[#ABABAD]">Email</div>
             </div>
           </div>
         </div>
 
-        <div className="h-px bg-[#36373A] w-full" />
+        <div className="h-px w-full bg-[#36373A]" />
 
         <div className="flex items-start gap-4">
           <div className="flex-1">
-            <label className="text-xs font-bold uppercase text-[#ABABAD] mb-1 block">Local Time</label>
-            <div className="text-sm flex items-center gap-2">
+            <label className="mb-1 block text-xs font-bold uppercase text-[#ABABAD]">Local Time</label>
+            <div className="flex items-center gap-2 text-sm">
               <LuClock size={14} className={textSecondary} /> 10:42 AM
             </div>
           </div>
           <div className="flex-1">
-            <label className="text-xs font-bold uppercase text-[#ABABAD] mb-1 block">Pronouns</label>
+            <label className="mb-1 block text-xs font-bold uppercase text-[#ABABAD]">Pronouns</label>
             <div className="text-sm">they/them</div>
           </div>
         </div>
@@ -86,69 +86,69 @@ const ProfileView = memo(() => (
 ));
 
 const ChatView = memo(() => (
-  <div className={`w-full h-full ${bgMain} ${textPrimary} font-sans flex flex-col relative`}>
-    <div className="absolute left-0 top-0 bottom-0 w-[60px] bg-[#121417] border-r border-[#2B2D31] flex flex-col items-center py-4 gap-4 z-10">
-      <div className="w-10 h-10 bg-[#36373A] rounded-lg flex items-center justify-center font-bold">W</div>
-      <div className="w-10 h-10 bg-transparent border border-[#36373A] rounded-lg flex items-center justify-center hover:bg-[#36373A] cursor-pointer">
-        <div className="w-5 h-5 bg-[#ABABAD] rounded-sm"></div>
+  <div className={`relative flex h-full w-full flex-col font-sans ${bgMain} ${textPrimary}`}>
+    <div className="absolute bottom-0 left-0 top-0 z-10 flex w-[60px] flex-col items-center border-r border-[#2B2D31] bg-[#121417] py-4 gap-4">
+      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#36373A] font-bold">W</div>
+      <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-[#36373A] bg-transparent hover:bg-[#36373A]">
+        <div className="h-5 w-5 rounded-sm bg-[#ABABAD]"></div>
       </div>
-      <div className="mt-auto w-8 h-8 rounded bg-indigo-500 overflow-hidden">
-        <ProfileImage className="w-full h-full" />
+      <div className="mt-auto h-8 w-8 overflow-hidden rounded bg-indigo-500">
+        <ProfileImage className="h-full w-full" />
       </div>
     </div>
 
-    <div className="flex-1 ml-[60px] flex flex-col min-w-0">
-      <div className={`h-12 border-b ${border} flex items-center justify-between px-4 shrink-0`}>
-        <div className="flex items-center gap-1 font-bold text-lg">
+    <div className="ml-[60px] flex flex-1 min-w-0 flex-col">
+      <div className={`flex h-12 shrink-0 items-center justify-between border-b px-4 ${border}`}>
+        <div className="flex items-center gap-1 text-lg font-bold">
           <LuHash size={20} className={textSecondary} />
           general
           <LuChevronDown size={14} className={textSecondary} />
         </div>
-        <div className="flex -space-x-2">
-          <div className="w-6 h-6 rounded bg-yellow-500 border border-[#1A1D21] flex items-center justify-center text-[10px] font-bold text-black">
+        <div className="-space-x-2 flex">
+          <div className="flex h-6 w-6 items-center justify-center rounded border border-[#1A1D21] bg-yellow-500 text-[10px] font-bold text-black">
             T
           </div>
-          <div className="w-6 h-6 rounded bg-blue-500 border border-[#1A1D21] flex items-center justify-center text-[10px] font-bold text-white">
+          <div className="flex h-6 w-6 items-center justify-center rounded border border-[#1A1D21] bg-blue-500 text-[10px] font-bold text-white">
             U
           </div>
-          <div className="w-6 h-6 rounded bg-[#35373B] border border-[#1A1D21] flex items-center justify-center text-[10px] font-bold text-[#ABABAD]">
+          <div className="flex h-6 w-6 items-center justify-center rounded border border-[#1A1D21] bg-[#35373B] text-[10px] font-bold text-[#ABABAD]">
             +5
           </div>
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        <div className="relative flex items-center justify-center my-4">
-          <div className="absolute h-px bg-[#36373A] w-full top-1/2"></div>
-          <span className="relative bg-[#1A1D21] px-3 text-xs font-bold text-[#ABABAD] rounded-full border border-[#36373A]">Today</span>
+      <div className="flex-1 space-y-6 overflow-y-auto p-4">
+        <div className="relative my-4 flex items-center justify-center">
+          <div className="absolute top-1/2 h-px w-full bg-[#36373A]"></div>
+          <span className="relative rounded-full border border-[#36373A] bg-[#1A1D21] px-3 text-xs font-bold text-[#ABABAD]">Today</span>
         </div>
 
-        <div className="flex gap-3 group hover:bg-[#222529] -mx-4 px-4 py-1 transition-colors">
-          <div className="w-9 h-9 rounded bg-indigo-500 overflow-hidden shrink-0 mt-1 cursor-pointer hover:opacity-80">
-            <ProfileImage className="w-full h-full" />
+        <div className="group -mx-4 flex gap-3 px-4 py-1 transition-colors hover:bg-[#222529]">
+          <div className="mt-1 h-9 w-9 shrink-0 cursor-pointer overflow-hidden rounded bg-indigo-500 hover:opacity-80">
+            <ProfileImage className="h-full w-full" />
           </div>
-          <div className="flex-1 min-w-0">
+          <div className="min-w-0 flex-1">
             <div className="flex items-baseline gap-2">
-              <span className="font-bold hover:underline cursor-pointer">Your Name</span>
+              <span className="cursor-pointer font-bold hover:underline">Your Name</span>
               <span className="text-xs text-[#ABABAD]">10:42 AM</span>
             </div>
             <p className="text-[15px] leading-relaxed">
               Just pushed the new updates to production! 🚀 <br />
               The new profile preview component is looking crisp. Check it out when you can.
             </p>
-            <div className="flex gap-1 mt-1">
-              <div className="bg-[#222529] border border-[#36373A] rounded-full px-1.5 py-0.5 flex items-center gap-1 cursor-pointer hover:border-[#ABABAD]">
-                <span>🔥</span> <span className="text-xs text-[#36C5F0] font-bold">2</span>
+            <div className="mt-1 flex gap-1">
+              <div className="flex cursor-pointer items-center gap-1 rounded-full border border-[#36373A] bg-[#222529] px-1.5 py-0.5 hover:border-[#ABABAD]">
+                <span>🔥</span> <span className="text-xs font-bold text-[#36C5F0]">2</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex gap-3 group hover:bg-[#222529] -mx-4 px-4 py-1 transition-colors">
-          <div className="w-9 h-9 rounded bg-pink-500 shrink-0 mt-1 flex items-center justify-center font-bold text-white">T</div>
-          <div className="flex-1 min-w-0">
+        <div className="group -mx-4 flex gap-3 px-4 py-1 transition-colors hover:bg-[#222529]">
+          <div className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded bg-pink-500 font-bold text-white">T</div>
+          <div className="min-w-0 flex-1">
             <div className="flex items-baseline gap-2">
-              <span className="font-bold hover:underline cursor-pointer">Teammate</span>
+              <span className="cursor-pointer font-bold hover:underline">Teammate</span>
               <span className="text-xs text-[#ABABAD]">10:45 AM</span>
             </div>
             <p className="text-[15px] leading-relaxed">Nice work! The rounded square crop for Slack is a nice touch. 👌</p>
@@ -158,19 +158,19 @@ const ChatView = memo(() => (
 
       <Navigation className={bgMain} safeAreaClassName="pb-4">
         <div className="px-4 pt-2">
-          <div className="border border-[#56585B] rounded-xl bg-[#222529] focus-within:border-[#ABABAD] transition-colors">
-            <div className="flex items-center gap-1 p-1 bg-[#2B2D31] rounded-t-xl border-b border-[#36373A]">
-              <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
-                <span className="font-bold text-xs">B</span>
+          <div className="rounded-xl border border-[#56585B] bg-[#222529] transition-colors focus-within:border-[#ABABAD]">
+            <div className="flex items-center gap-1 rounded-t-xl border-b border-[#36373A] bg-[#2B2D31] p-1">
+              <div className="cursor-pointer rounded p-1 hover:bg-[#3F4145]">
+                <span className="text-xs font-bold">B</span>
               </div>
-              <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
-                <span className="italic text-xs">I</span>
+              <div className="cursor-pointer rounded p-1 hover:bg-[#3F4145]">
+                <span className="text-xs italic">I</span>
               </div>
-              <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
-                <span className="line-through text-xs">S</span>
+              <div className="cursor-pointer rounded p-1 hover:bg-[#3F4145]">
+                <span className="text-xs line-through">S</span>
               </div>
-              <div className="w-px h-4 bg-[#56585B] mx-1"></div>
-              <div className="p-1 hover:bg-[#3F4145] rounded cursor-pointer">
+              <div className="mx-1 h-4 w-px bg-[#56585B]"></div>
+              <div className="cursor-pointer rounded p-1 hover:bg-[#3F4145]">
                 <span className="text-xs">Link</span>
               </div>
             </div>
@@ -178,27 +178,27 @@ const ChatView = memo(() => (
             <input
               type="text"
               placeholder="Message #general"
-              className="w-full bg-transparent text-[#D1D2D3] p-3 outline-none placeholder-[#616061]"
+              className="w-full bg-transparent p-3 text-[#D1D2D3] outline-none placeholder-[#616061]"
             />
 
-            <div className="flex justify-between items-center p-2">
+            <div className="flex items-center justify-between p-2">
               <div className="flex gap-2 text-[#ABABAD]">
-                <div className="p-1.5 hover:bg-[#35373B] rounded-full cursor-pointer">
+                <div className="cursor-pointer rounded-full p-1.5 hover:bg-[#35373B]">
                   <LuUserPlus size={16} />
                 </div>
-                <div className="p-1.5 hover:bg-[#35373B] rounded-full cursor-pointer">
+                <div className="cursor-pointer rounded-full p-1.5 hover:bg-[#35373B]">
                   <LuSmile size={16} />
                 </div>
-                <div className="p-1.5 hover:bg-[#35373B] rounded-full cursor-pointer">
+                <div className="cursor-pointer rounded-full p-1.5 hover:bg-[#35373B]">
                   <LuPaperclip size={16} />
                 </div>
               </div>
-              <div className="p-2 bg-[#007A5A] rounded hover:bg-[#148567] transition-colors cursor-pointer text-white">
+              <div className="cursor-pointer rounded bg-[#007A5A] p-2 text-white transition-colors hover:bg-[#148567]">
                 <LuSend size={16} className="ml-0.5" />
               </div>
             </div>
           </div>
-          <div className="text-center mt-2 text-[11px] text-[#616061]">
+          <div className="mt-2 text-center text-[11px] text-[#616061]">
             <strong>Tip:</strong> Press Enter to send
           </div>
         </div>
@@ -212,11 +212,11 @@ export const SlackView = () => {
   const isProfile = perspective === Perspective.Profile;
 
   return (
-    <div className="w-full h-full relative">
-      <div className="w-full h-full" style={{ display: isProfile ? 'block' : 'none' }}>
+    <div className="relative h-full w-full">
+      <div className="h-full w-full" style={{ display: isProfile ? 'block' : 'none' }}>
         <ProfileView />
       </div>
-      <div className="w-full h-full" style={{ display: !isProfile ? 'block' : 'none' }}>
+      <div className="h-full w-full" style={{ display: !isProfile ? 'block' : 'none' }}>
         <ChatView />
       </div>
     </div>

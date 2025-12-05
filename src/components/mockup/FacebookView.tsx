@@ -6,37 +6,37 @@ import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
 
 const ProfileView = memo(() => (
-  <div className="w-full h-full bg-[#18191a] text-[#e4e6eb] font-sans overflow-y-auto">
+  <div className="h-full w-full overflow-y-auto bg-[#18191a] font-sans text-[#e4e6eb]">
     <div className="relative">
-      <div className="h-40 bg-gradient-to-r from-blue-900 to-slate-800 w-full"></div>
+      <div className="h-40 w-full bg-gradient-to-r from-blue-900 to-slate-800"></div>
       <div className="absolute -bottom-12 left-4">
-        <div className="p-1 bg-[#18191a] rounded-full w-[130px] h-[130px]">
-          <ProfileImage className="rounded-full ring-2 ring-gray-700 w-full h-full" />
+        <div className="h-[130px] w-[130px] rounded-full bg-[#18191a] p-1">
+          <ProfileImage className="h-full w-full rounded-full ring-2 ring-gray-700" />
         </div>
-        <div className="absolute bottom-2 right-2 bg-[#3a3b3c] p-1.5 rounded-full border-2 border-[#18191a]">
+        <div className="absolute bottom-2 right-2 rounded-full border-2 border-[#18191a] bg-[#3a3b3c] p-1.5">
           <LuImage size={14} className="text-white" />
         </div>
       </div>
     </div>
 
-    <div className="mt-14 px-4 pb-4 border-b border-[#3e4042]">
+    <div className="mt-14 border-b border-[#3e4042] px-4 pb-4">
       <h1 className="text-2xl font-bold">Your Name</h1>
-      <p className="text-[#b0b3b8] text-sm font-medium">1.2K friends</p>
+      <p className="text-sm font-medium text-[#b0b3b8]">1.2K friends</p>
 
-      <div className="flex gap-2 mt-4">
-        <button className="flex-1 bg-[#2374e1] text-white py-2 rounded-md font-semibold text-sm flex items-center justify-center gap-2">
+      <div className="mt-4 flex gap-2">
+        <button className="flex flex-1 items-center justify-center gap-2 rounded-md bg-[#2374e1] py-2 text-sm font-semibold text-white">
           <span className="text-lg">+</span> Add to Story
         </button>
-        <button className="flex-1 bg-[#3a3b3c] text-white py-2 rounded-md font-semibold text-sm flex items-center justify-center gap-2">
+        <button className="flex flex-1 items-center justify-center gap-2 rounded-md bg-[#3a3b3c] py-2 text-sm font-semibold text-white">
           Edit profile
         </button>
       </div>
     </div>
 
-    <div className="p-4 space-y-4">
-      <div className="bg-[#242526] p-4 rounded-lg">
-        <div className="text-lg font-bold mb-2">Details</div>
-        <div className="space-y-3 text-[#b0b3b8] text-sm">
+    <div className="space-y-4 p-4">
+      <div className="rounded-lg bg-[#242526] p-4">
+        <div className="mb-2 text-lg font-bold">Details</div>
+        <div className="space-y-3 text-sm text-[#b0b3b8]">
           <div className="flex items-center gap-2">
             <div className="w-5" />
             Designer at <strong className="text-white">Workplace</strong>
@@ -56,53 +56,53 @@ const ProfileView = memo(() => (
 ));
 
 const FeedView = memo(() => (
-  <div className="w-full h-full bg-[#18191a] text-[#e4e6eb] font-sans flex flex-col relative">
-    <div className="h-14 bg-[#242526] border-b border-[#3e4042] flex items-center justify-between px-4 shrink-0 z-20">
-      <h1 className="text-[#2374e1] font-bold text-2xl tracking-tighter">facebook</h1>
+  <div className="relative flex h-full w-full flex-col bg-[#18191a] font-sans text-[#e4e6eb]">
+    <div className="z-20 flex h-14 shrink-0 items-center justify-between border-b border-[#3e4042] bg-[#242526] px-4">
+      <h1 className="text-2xl font-bold tracking-tighter text-[#2374e1]">facebook</h1>
       <div className="flex gap-2">
-        <div className="w-9 h-9 bg-[#3a3b3c] rounded-full flex items-center justify-center">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#3a3b3c]">
           <LuSearch size={18} />
         </div>
-        <div className="w-9 h-9 bg-[#3a3b3c] rounded-full flex items-center justify-center">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#3a3b3c]">
           <LuMessageCircle size={18} />
         </div>
       </div>
     </div>
 
-    <div className="h-12 bg-[#242526] border-b border-[#3e4042] flex items-center justify-around px-2 shrink-0 z-10">
-      <div className="h-full flex items-center border-b-2 border-[#2374e1] px-4 text-[#2374e1]">
+    <div className="z-10 flex h-12 shrink-0 items-center justify-around border-b border-[#3e4042] bg-[#242526] px-2">
+      <div className="flex h-full items-center border-b-2 border-[#2374e1] px-4 text-[#2374e1]">
         <LuHouse size={24} fill="currentColor" />
       </div>
-      <div className="h-full flex items-center px-4 text-[#b0b3b8]">
+      <div className="flex h-full items-center px-4 text-[#b0b3b8]">
         <LuUsers size={24} />
       </div>
-      <div className="h-full flex items-center px-4 text-[#b0b3b8]">
+      <div className="flex h-full items-center px-4 text-[#b0b3b8]">
         <LuTv size={24} />
       </div>
-      <div className="h-full flex items-center px-4 text-[#b0b3b8]">
+      <div className="flex h-full items-center px-4 text-[#b0b3b8]">
         <LuBell size={24} />
       </div>
     </div>
 
-    <div className="flex-1 overflow-y-auto no-scrollbar pt-2">
-      <div className="bg-[#242526] p-3 mb-2">
+    <div className="flex-1 overflow-y-auto pt-2 no-scrollbar">
+      <div className="mb-2 bg-[#242526] p-3">
         <div className="flex gap-3">
-          <div className="shrink-0 w-10 h-10">
-            <ProfileImage className="rounded-full w-full h-full" />
+          <div className="h-10 w-10 shrink-0">
+            <ProfileImage className="h-full w-full rounded-full" />
           </div>
-          <div className="flex-1 bg-[#3a3b3c] rounded-full flex items-center px-4 text-[#b0b3b8] text-sm">What's on your mind?</div>
+          <div className="flex flex-1 items-center rounded-full bg-[#3a3b3c] px-4 text-sm text-[#b0b3b8]">What's on your mind?</div>
         </div>
       </div>
 
       <div className="bg-[#242526] pb-2">
-        <div className="p-3 flex items-start justify-between">
+        <div className="flex items-start justify-between p-3">
           <div className="flex gap-2">
-            <div className="shrink-0 w-10 h-10">
-              <ProfileImage className="rounded-full w-full h-full" />
+            <div className="h-10 w-10 shrink-0">
+              <ProfileImage className="h-full w-full rounded-full" />
             </div>
             <div>
-              <div className="text-[#e4e6eb] font-semibold text-sm leading-tight">Your Name</div>
-              <div className="text-[#b0b3b8] text-xs flex items-center gap-1 mt-0.5">
+              <div className="text-sm font-semibold leading-tight text-[#e4e6eb]">Your Name</div>
+              <div className="mt-0.5 flex items-center gap-1 text-xs text-[#b0b3b8]">
                 <span>Just now</span>
                 <span>·</span>
                 <LuGlobe size={10} />
@@ -115,12 +115,12 @@ const FeedView = memo(() => (
         <div className="px-3 pb-3 text-sm text-[#e4e6eb]">New profile picture! What do you guys think? 😎</div>
 
         <div className="w-full">
-          <PostImage containerClass="w-full" imageClass="w-full h-auto block" />
+          <PostImage containerClass="w-full" imageClass="block h-auto w-full" />
         </div>
 
-        <div className="px-3 py-2 flex items-center justify-between text-[#b0b3b8] text-sm border-b border-[#3e4042]">
+        <div className="flex items-center justify-between border-b border-[#3e4042] px-3 py-2 text-sm text-[#b0b3b8]">
           <div className="flex items-center gap-1">
-            <div className="w-4 h-4 bg-[#2374e1] rounded-full flex items-center justify-center">
+            <div className="flex h-4 w-4 items-center justify-center rounded-full bg-[#2374e1]">
               <LuThumbsUp size={10} fill="white" className="text-white" />
             </div>
             <span>12</span>
@@ -131,14 +131,14 @@ const FeedView = memo(() => (
           </div>
         </div>
 
-        <div className="px-2 py-1 flex justify-between items-center text-[#b0b3b8]">
-          <button className="flex-1 flex items-center justify-center gap-2 py-2 hover:bg-[#3a3b3c] rounded-md transition-colors font-medium text-sm">
+        <div className="flex items-center justify-between px-2 py-1 text-[#b0b3b8]">
+          <button className="flex flex-1 items-center justify-center gap-2 rounded-md py-2 text-sm font-medium transition-colors hover:bg-[#3a3b3c]">
             <LuThumbsUp size={18} /> Like
           </button>
-          <button className="flex-1 flex items-center justify-center gap-2 py-2 hover:bg-[#3a3b3c] rounded-md transition-colors font-medium text-sm">
+          <button className="flex flex-1 items-center justify-center gap-2 rounded-md py-2 text-sm font-medium transition-colors hover:bg-[#3a3b3c]">
             <LuMessageCircle size={18} /> Comment
           </button>
-          <button className="flex-1 flex items-center justify-center gap-2 py-2 hover:bg-[#3a3b3c] rounded-md transition-colors font-medium text-sm">
+          <button className="flex flex-1 items-center justify-center gap-2 rounded-md py-2 text-sm font-medium transition-colors hover:bg-[#3a3b3c]">
             <LuShare2 size={18} /> Share
           </button>
         </div>
@@ -152,11 +152,11 @@ export const FacebookView = () => {
   const isProfile = perspective === Perspective.Profile;
 
   return (
-    <div className="w-full h-full relative">
-      <div className="w-full h-full" style={{ display: isProfile ? 'block' : 'none' }}>
+    <div className="relative h-full w-full">
+      <div className="h-full w-full" style={{ display: isProfile ? 'block' : 'none' }}>
         <ProfileView />
       </div>
-      <div className="w-full h-full" style={{ display: !isProfile ? 'block' : 'none' }}>
+      <div className="h-full w-full" style={{ display: !isProfile ? 'block' : 'none' }}>
         <FeedView />
       </div>
     </div>

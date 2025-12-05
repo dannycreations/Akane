@@ -24,9 +24,9 @@ const PlatformItem = memo(
     const Icon = p.icon;
 
     const buttonClass = `
-    relative group flex items-center justify-center rounded-2xl transition-all duration-300 flex-shrink-0 cursor-pointer
+    relative group flex shrink-0 cursor-pointer items-center justify-center rounded-2xl transition-all duration-300
     ${isVertical ? 'w-14 h-14' : 'w-12 h-12'}
-    ${isSelected ? 'bg-slate-800 shadow-[0_0_20px_rgba(99,102,241,0.3)] scale-110' : 'hover:bg-slate-900'}
+    ${isSelected ? 'scale-110 bg-slate-800 shadow-[0_0_20px_rgba(99,102,241,0.3)]' : 'hover:bg-slate-900'}
   `;
 
     const iconClass = `
@@ -36,11 +36,11 @@ const PlatformItem = memo(
 
     return (
       <button onClick={() => onSelect(p.id)} className={buttonClass}>
-        {isSelected && isVertical && <div className="absolute left-0 w-1 h-8 bg-indigo-500 rounded-r-full animate-pulse" />}
-        {isSelected && !isVertical && <div className="absolute bottom-0 h-1 w-8 bg-indigo-500 rounded-t-full animate-pulse" />}
+        {isSelected && isVertical && <div className="absolute left-0 h-8 w-1 animate-pulse rounded-r-full bg-indigo-500" />}
+        {isSelected && !isVertical && <div className="absolute bottom-0 h-1 w-8 animate-pulse rounded-t-full bg-indigo-500" />}
         <Icon size={isVertical ? 28 : 24} className={iconClass} />
         {isVertical && (
-          <div className="absolute left-full ml-4 px-2 py-1 bg-slate-800 text-xs text-white rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
+          <div className="absolute left-full z-50 ml-4 whitespace-nowrap rounded bg-slate-800 px-2 py-1 text-xs text-white opacity-0 transition-opacity pointer-events-none group-hover:opacity-100">
             {p.name}
           </div>
         )}
@@ -56,20 +56,20 @@ export const PlatformList = ({ orientation = 'vertical' }: PlatformListProps) =>
   const isVertical = orientation === 'vertical';
 
   const containerClass = `
-    bg-slate-950 flex z-10 shadow-2xl relative
+    relative z-10 flex bg-slate-950 shadow-2xl
     ${
       isVertical
-        ? 'h-full w-24 flex-col py-8 border-r border-slate-800 items-center justify-center'
-        : 'w-full h-20 flex-row items-center border-t border-slate-800 justify-center'
+        ? 'h-full w-24 flex-col items-center justify-center border-r border-slate-800 py-8'
+        : 'h-20 w-full flex-row items-center justify-center border-t border-slate-800'
     }
   `;
 
   const scrollContainerClass = `
-    flex items-center min-w-0 min-h-0 scroll-smooth
+    flex min-h-0 min-w-0 items-center scroll-smooth
     ${
       isVertical
-        ? 'flex-col gap-6 overflow-y-auto no-scrollbar py-2 w-full max-h-full'
-        : 'flex-row gap-6 overflow-x-auto no-scrollbar px-6 w-fit max-w-full'
+        ? 'w-full max-h-full flex-col gap-6 overflow-y-auto py-2 no-scrollbar'
+        : 'w-fit max-w-full flex-row gap-6 overflow-x-auto px-6 no-scrollbar'
     }
   `;
 

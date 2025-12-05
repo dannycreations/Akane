@@ -9,5 +9,5 @@ interface NavigationProps {
 }
 
 export const Navigation = memo(({ children, className = '', safeAreaClassName = 'pb-8' }: NavigationProps) => {
-  return <div className={`w-full shrink-0 z-50 ${className} ${safeAreaClassName}`}>{children}</div>;
+  return <div className={`z-50 w-full shrink-0 ${className} ${safeAreaClassName}`}>{children}</div>;
 });

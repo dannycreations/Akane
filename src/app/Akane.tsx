@@ -48,26 +48,26 @@ export const Akane = () => {
   }, []);
 
   const getTabButtonClass = (isActive: boolean) => {
-    const baseClass = 'flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap';
+    const baseClass = 'flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-lg py-2 text-sm font-medium transition-all';
     const activeClass = 'bg-indigo-600 text-white shadow-lg';
     const inactiveClass = 'text-slate-400 hover:text-slate-200';
     return `${baseClass} ${isActive ? activeClass : inactiveClass}`;
   };
 
   const editorPanelContainerClass = `
-    flex-1 z-10 shadow-xl border-r border-slate-800 min-w-0 overflow-hidden
+    z-10 flex flex-1 min-w-0 overflow-hidden border-r border-slate-800 shadow-xl
     ${activeTab === 'editor' ? 'flex' : 'hidden lg:flex'}
   `;
 
   const previewPanelContainerClass = `
-    flex-1 z-0 bg-gradient-to-br from-slate-900 to-slate-950 min-w-0 flex flex-col overflow-hidden
+    z-0 flex flex-1 flex-col min-w-0 overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950
     ${activeTab === 'preview' ? 'flex' : 'hidden lg:flex'}
   `;
 
   return (
-    <div ref={rootRef} className="flex flex-col lg:flex-row h-screen w-screen bg-slate-950 overflow-hidden font-sans">
-      <div className="lg:hidden flex-none bg-slate-950 border-b border-slate-800 p-3 z-30">
-        <div className="flex bg-slate-900 p-1 rounded-xl">
+    <div ref={rootRef} className="flex h-screen w-screen flex-col overflow-hidden bg-slate-950 font-sans lg:flex-row">
+      <div className="z-30 flex-none border-b border-slate-800 bg-slate-950 p-3 lg:hidden">
+        <div className="flex rounded-xl bg-slate-900 p-1">
           <button onClick={() => setActiveTab('editor')} className={getTabButtonClass(activeTab === 'editor')}>
             <LuPencil size={16} />
             Edit
@@ -83,14 +83,14 @@ export const Akane = () => {
         <EditorPanel />
       </div>
 
-      <div className="hidden lg:block flex-none z-20 h-full">
+      <div className="z-20 hidden h-full flex-none lg:block">
         <PlatformList orientation="vertical" />
       </div>
 
       <div className={previewPanelContainerClass}>
         <PreviewPanel />
 
-        <div className="lg:hidden flex-none z-20 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+        <div className="z-20 flex-none shadow-[0_-4px_20px_rgba(0,0,0,0.5)] lg:hidden">
           <PlatformList orientation="horizontal" />
         </div>
       </div>

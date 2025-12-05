@@ -10,21 +10,21 @@ import { EditorImage } from './shared/Image';
 
 import type { ChangeEvent } from 'react';
 
-const GRID_LINE_CLASS = 'absolute bg-white/30 pointer-events-none shadow-[0_0_2px_rgba(0,0,0,0.2)]';
+const GRID_LINE_CLASS = 'pointer-events-none absolute bg-white/30 shadow-[0_0_2px_rgba(0,0,0,0.2)]';
 
 const GridOverlay = memo(({ isRoundedSquare }: { readonly isRoundedSquare: boolean }) => {
   const style = { borderRadius: isRoundedSquare ? '1.5rem' : '50%' };
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-10 transition-all duration-300 ease-in-out" style={style}>
+    <div className="pointer-events-none absolute inset-0 z-10 select-none overflow-hidden transition-all duration-300 ease-in-out" style={style}>
       <div
         className="absolute inset-0 border border-white/20 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 ease-in-out"
         style={style}
       />
-      <div className={`${GRID_LINE_CLASS} left-1/3 top-0 bottom-0 w-px`} />
-      <div className={`${GRID_LINE_CLASS} left-2/3 top-0 bottom-0 w-px`} />
-      <div className={`${GRID_LINE_CLASS} top-1/3 left-0 right-0 h-px`} />
-      <div className={`${GRID_LINE_CLASS} top-2/3 left-0 right-0 h-px`} />
+      <div className={`${GRID_LINE_CLASS} bottom-0 left-1/3 top-0 w-px`} />
+      <div className={`${GRID_LINE_CLASS} bottom-0 left-2/3 top-0 w-px`} />
+      <div className={`${GRID_LINE_CLASS} left-0 right-0 top-1/3 h-px`} />
+      <div className={`${GRID_LINE_CLASS} left-0 right-0 top-2/3 h-px`} />
     </div>
   );
 });
@@ -47,10 +47,10 @@ const EditorControls = memo(
     const rotation = useStore((state) => state.editorState.rotation);
 
     return (
-      <div className="mt-2 shrink-0 bg-slate-800/80 p-3 rounded-xl border border-slate-700/50 backdrop-blur-md z-20">
+      <div className="z-20 mt-2 shrink-0 rounded-xl border border-slate-700/50 bg-slate-800/80 p-3 backdrop-blur-md">
         <div className="grid grid-cols-1 gap-2 sm:gap-4">
           <div className="flex items-center gap-3">
-            <LuZoomIn size={16} className={`text-indigo-400 flex-shrink-0 ${disabled ? 'opacity-50' : ''}`} />
+            <LuZoomIn size={16} className={`flex-shrink-0 text-indigo-400 ${disabled ? 'opacity-50' : ''}`} />
             <Slider
               label="ZOOM"
               min={0}
@@ -61,7 +61,7 @@ const EditorControls = memo(
             />
           </div>
           <div className="flex items-center gap-3">
-            <LuRotateCw size={16} className={`text-indigo-400 flex-shrink-0 ${disabled ? 'opacity-50' : ''}`} />
+            <LuRotateCw size={16} className={`flex-shrink-0 text-indigo-400 ${disabled ? 'opacity-50' : ''}`} />
             <Slider label="ROTATE" min={-180} max={180} value={rotation} onChange={onRotationChange} />
           </div>
         </div>
@@ -160,11 +160,11 @@ export const EditorPanel = () => {
   }, [image, platform]);
 
   const buttonBaseClass =
-    'flex items-center gap-2 transition-colors text-xs font-medium whitespace-nowrap cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed bg-slate-900/50 rounded-lg px-2 py-1';
+    'flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg bg-slate-900/50 px-2 py-1 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-30';
 
   return (
-    <div className="flex flex-col h-full w-full bg-slate-900 border-r border-slate-800 p-2 relative select-none">
-      <div className="flex justify-between items-center mb-1 shrink-0 z-20">
+    <div className="relative flex h-full w-full flex-col select-none border-r border-slate-800 bg-slate-900 p-2">
+      <div className="z-20 mb-1 flex shrink-0 items-center justify-between">
         <button onClick={() => setImage(null)} disabled={!image} className={`${buttonBaseClass} text-slate-400 hover:text-red-400`}>
           <LuX size={16} />
           <span className="sm:inline">CLOSE</span>
@@ -175,32 +175,32 @@ export const EditorPanel = () => {
         </button>
       </div>
 
-      <div className="flex-1 w-full min-h-0 flex items-center justify-center relative p-2 overflow-hidden">
+      <div className="relative flex flex-1 w-full min-h-0 items-center justify-center overflow-hidden p-2">
         {!image ? (
           <div
-            className="border-2 border-dashed border-slate-700 rounded-3xl w-full max-w-[min(100%,320px)] aspect-square flex flex-col items-center justify-center cursor-pointer hover:border-indigo-500 hover:bg-slate-800/30 transition-all group"
+            className="group flex aspect-square w-full max-w-[min(100%,320px)] cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-700 transition-all hover:border-indigo-500 hover:bg-slate-800/30"
             onClick={() => fileInputRef.current?.click()}
           >
-            <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-slate-800 transition-transform group-hover:scale-110">
               <LuUpload className="text-indigo-400" size={24} />
             </div>
-            <p className="text-slate-300 font-medium text-center px-4 text-sm">Upload Photo</p>
-            <p className="text-slate-500 text-xs mt-2">Supports JPG, PNG</p>
+            <p className="px-4 text-center text-sm font-medium text-slate-300">Upload Photo</p>
+            <p className="mt-2 text-xs text-slate-500">Supports JPG, PNG</p>
             <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
           </div>
         ) : (
-          <div className="relative flex items-center justify-center max-w-full max-h-full aspect-square w-auto h-auto">
+          <div className="relative flex h-auto max-h-full w-auto max-w-full aspect-square items-center justify-center">
             <img
               src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwMCIgaGVpZ2h0PSIxMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjwvc3ZnPg=="
-              className="block max-w-full max-h-full w-auto h-auto opacity-0 pointer-events-none select-none"
+              className="pointer-events-none block h-auto max-h-full w-auto max-w-full select-none opacity-0"
               style={{ minWidth: '0', minHeight: '0', objectFit: 'contain' }}
               draggable={false}
             />
 
-            <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+            <div className="absolute inset-0 flex h-full w-full items-center justify-center">
               <div
                 ref={containerRef}
-                className="w-full h-full overflow-hidden bg-slate-950 shadow-2xl relative cursor-move ring-4 ring-indigo-500/20 touch-none transition-all duration-300 ease-in-out"
+                className="relative h-full w-full touch-none cursor-move overflow-hidden bg-slate-950 shadow-2xl ring-4 ring-indigo-500/20 transition-all duration-300 ease-in-out"
                 style={{ borderRadius: isRoundedSquare ? '1.5rem' : '50%' }}
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
@@ -213,8 +213,8 @@ export const EditorPanel = () => {
 
               <GridOverlay isRoundedSquare={isRoundedSquare} />
 
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center pointer-events-none z-20">
-                <span className="bg-black/50 backdrop-blur-md text-white/70 px-3 py-1 rounded-full text-[10px] font-medium tracking-widest uppercase border border-white/10 shadow-lg">
+              <div className="pointer-events-none absolute bottom-4 left-0 right-0 z-20 flex justify-center">
+                <span className="rounded-full border border-white/10 bg-black/50 px-3 py-1 text-[10px] font-medium uppercase tracking-widest text-white/70 shadow-lg backdrop-blur-md">
                   Drag to Reposition
                 </span>
               </div>

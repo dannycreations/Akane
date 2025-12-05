@@ -7,25 +7,25 @@ import { ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
 
 const ProfileView = memo(() => (
-  <div className="w-full h-full bg-[#0b141a] text-[#e9edef] flex flex-col font-sans">
-    <div className="p-4 flex items-center gap-4 text-xl">
+  <div className="flex h-full w-full flex-col bg-[#0b141a] font-sans text-[#e9edef]">
+    <div className="flex items-center gap-4 p-4 text-xl">
       <LuArrowLeft size={24} />
-      <span className="font-medium flex-1">Profile</span>
+      <span className="flex-1 font-medium">Profile</span>
       <LuEllipsisVertical size={24} />
     </div>
-    <div className="flex justify-center my-8 relative group">
-      <div className="w-[180px] h-[180px]">
-        <ProfileImage className="rounded-full ring-4 ring-[#25D366]/20 group-hover:ring-[#25D366] transition-all duration-300 w-full h-full" />
+    <div className="group relative my-8 flex justify-center">
+      <div className="h-[180px] w-[180px]">
+        <ProfileImage className="h-full w-full rounded-full ring-4 ring-[#25D366]/20 transition-all duration-300 group-hover:ring-[#25D366]" />
       </div>
-      <div className="absolute bottom-2 right-14 bg-[#00a884] p-3 rounded-full shadow-lg">
+      <div className="absolute bottom-2 right-14 rounded-full bg-[#00a884] p-3 shadow-lg">
         <LuImage size={20} className="text-white" />
       </div>
     </div>
-    <div className="px-6 space-y-6">
+    <div className="space-y-6 px-6">
       <div className="flex items-center gap-4 text-[#8696a0]">
         <div className="flex-1">
-          <label className="text-sm block mb-1">Name</label>
-          <div className="text-[#e9edef] text-lg flex items-center justify-between">
+          <label className="mb-1 block text-sm">Name</label>
+          <div className="flex items-center justify-between text-lg text-[#e9edef]">
             <span>Your Name</span>
             <span className="text-[#00a884]">
               <LuCircleCheck size={16} />
@@ -35,12 +35,12 @@ const ProfileView = memo(() => (
       </div>
       <div className="h-px bg-[#202c33]" />
       <div className="text-[#8696a0]">
-        <label className="text-sm block mb-1">About</label>
+        <label className="mb-1 block text-sm">About</label>
         <p className="text-[#e9edef]">Living the dream ✨</p>
       </div>
       <div className="h-px bg-[#202c33]" />
       <div className="text-[#8696a0]">
-        <label className="text-sm block mb-1">Phone</label>
+        <label className="mb-1 block text-sm">Phone</label>
         <p className="text-[#e9edef]">+1 234 567 890</p>
       </div>
     </div>
@@ -48,38 +48,38 @@ const ProfileView = memo(() => (
 ));
 
 const ChatView = memo(() => (
-  <div className="w-full h-full bg-[#0b141a] flex flex-col font-sans relative overflow-hidden">
-    <div className="h-16 bg-[#202c33] flex items-center px-2 justify-between shrink-0 shadow-sm relative z-10">
+  <div className="relative flex h-full w-full flex-col overflow-hidden bg-[#0b141a] font-sans">
+    <div className="relative z-10 flex h-16 shrink-0 items-center justify-between bg-[#202c33] px-2 shadow-sm">
       <div className="flex items-center gap-2">
         <LuArrowLeft size={20} className="text-white" />
         <div className="flex items-center gap-2">
-          <div className="w-9 h-9">
-            <ProfileImage className="rounded-full w-full h-full" />
+          <div className="h-9 w-9">
+            <ProfileImage className="h-full w-full rounded-full" />
           </div>
           <div className="flex flex-col">
-            <span className="text-white font-medium text-sm leading-tight">Your Name</span>
-            <span className="text-[#8696a0] text-xs">online</span>
+            <span className="text-sm font-medium leading-tight text-white">Your Name</span>
+            <span className="text-xs text-[#8696a0]">online</span>
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-5 text-white pr-2">
+      <div className="flex items-center gap-5 pr-2 text-white">
         <LuVideo size={22} />
         <LuPhone size={20} />
         <LuEllipsisVertical size={20} />
       </div>
     </div>
 
-    <div className="flex-1 p-4 overflow-y-auto space-y-3 relative z-10">
+    <div className="relative z-10 flex-1 space-y-3 overflow-y-auto p-4">
       <div className="flex justify-start">
-        <div className="bg-[#202c33] text-white p-2 px-3 rounded-tr-lg rounded-bl-lg rounded-br-lg max-w-[80%] text-sm shadow">
+        <div className="max-w-[80%] rounded-bl-lg rounded-br-lg rounded-tr-lg bg-[#202c33] p-2 px-3 text-sm text-white shadow">
           Hey! Check out my new profile pic! 😎
-          <span className="text-[10px] text-[#8696a0] block text-right mt-1">10:42 AM</span>
+          <span className="mt-1 block text-right text-[10px] text-[#8696a0]">10:42 AM</span>
         </div>
       </div>
       <div className="flex justify-end">
-        <div className="bg-[#005c4b] text-white p-2 px-3 rounded-tl-lg rounded-bl-lg rounded-br-lg max-w-[80%] text-sm shadow">
+        <div className="max-w-[80%] rounded-bl-lg rounded-br-lg rounded-tl-lg bg-[#005c4b] p-2 px-3 text-sm text-white shadow">
           Looks amazing! Is that the 2025 style?
-          <span className="text-[10px] text-[#8696a0] block text-right mt-1 flex items-center justify-end gap-1">
+          <span className="mt-1 flex items-center justify-end gap-1 text-right text-[10px] text-[#8696a0]">
             10:43 AM <LuCircleCheck size={10} className="text-[#53bdeb]" />
           </span>
         </div>
@@ -87,12 +87,12 @@ const ChatView = memo(() => (
     </div>
 
     <Navigation className="bg-[#202c33]" safeAreaClassName="pb-8">
-      <div className="flex items-center px-2 pt-2 gap-2 relative z-20">
-        <div className="p-2 bg-[#2a3942] rounded-full flex-1 flex items-center px-4">
-          <span className="text-[#8696a0] text-sm">Message</span>
+      <div className="relative z-20 flex items-center gap-2 px-2 pt-2">
+        <div className="flex flex-1 items-center rounded-full bg-[#2a3942] p-2 px-4">
+          <span className="text-sm text-[#8696a0]">Message</span>
         </div>
-        <div className="w-10 h-10 bg-[#00a884] rounded-full flex items-center justify-center">
-          <LuSend size={18} className="text-white ml-0.5" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#00a884]">
+          <LuSend size={18} className="ml-0.5 text-white" />
         </div>
       </div>
     </Navigation>
@@ -104,11 +104,11 @@ export const WhatsAppView = () => {
   const isProfile = perspective === Perspective.Profile;
 
   return (
-    <div className="w-full h-full relative">
-      <div className="w-full h-full" style={{ display: isProfile ? 'block' : 'none' }}>
+    <div className="relative h-full w-full">
+      <div className="h-full w-full" style={{ display: isProfile ? 'block' : 'none' }}>
         <ProfileView />
       </div>
-      <div className="w-full h-full" style={{ display: !isProfile ? 'block' : 'none' }}>
+      <div className="h-full w-full" style={{ display: !isProfile ? 'block' : 'none' }}>
         <ChatView />
       </div>
     </div>

@@ -71,17 +71,17 @@ export const PreviewPanel = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="flex-1 min-h-0 w-full flex flex-col items-center justify-center relative p-4 lg:p-8 overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-between pointer-events-none z-10 px-4 w-full max-w-[500px]">
+    <div ref={containerRef} className="relative flex flex-1 w-full min-h-0 flex-col items-center justify-center overflow-hidden p-4 lg:p-8">
+      <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 flex w-full max-w-[500px] -translate-x-1/2 -translate-y-1/2 justify-between px-4">
         <button
           onClick={handlePrevPerspective}
-          className={`pointer-events-auto cursor-pointer p-3 rounded-full bg-slate-800/80 text-white hover:bg-indigo-500 transition-all shadow-lg ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
+          className={`pointer-events-auto cursor-pointer rounded-full bg-slate-800/80 p-3 text-white shadow-lg transition-all hover:bg-indigo-500 ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
         >
           <LuArrowLeft size={20} />
         </button>
         <button
           onClick={handleNextPerspective}
-          className={`pointer-events-auto cursor-pointer p-3 rounded-full bg-slate-800/80 text-white hover:bg-indigo-500 transition-all shadow-lg ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
+          className={`pointer-events-auto cursor-pointer rounded-full bg-slate-800/80 p-3 text-white shadow-lg transition-all hover:bg-indigo-500 ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
         >
           <LuArrowRight size={20} />
         </button>
@@ -90,23 +90,23 @@ export const PreviewPanel = () => {
       <div
         ref={contentRef}
         style={{ transform: 'scale(var(--preview-scale, 1))' }}
-        className="transition-transform duration-300 ease-out origin-center will-change-transform"
+        className="origin-center transition-transform duration-300 ease-out will-change-transform"
       >
-        <div className="relative w-[340px] h-[680px] bg-black rounded-[3rem] border-8 border-slate-800 shadow-2xl overflow-hidden ring-1 ring-white/10">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-b-2xl z-50 flex items-center justify-center gap-2">
-            <div className="w-16 h-3 bg-slate-900/50 rounded-full" />
+        <div className="relative h-[680px] w-[340px] overflow-hidden rounded-[3rem] border-8 border-slate-800 bg-black shadow-2xl ring-1 ring-white/10">
+          <div className="absolute left-1/2 top-0 z-50 flex h-7 w-28 -translate-x-1/2 items-center justify-center gap-2 rounded-b-2xl bg-black">
+            <div className="h-3 w-16 rounded-full bg-slate-900/50" />
           </div>
 
-          <div className="absolute top-2 left-6 right-6 flex justify-between items-center z-40 text-white text-[10px] font-medium">
+          <div className="absolute left-6 right-6 top-2 z-40 flex items-center justify-between text-[10px] font-medium text-white">
             <span>9:41</span>
-            <div className="flex gap-1.5 items-center">
+            <div className="flex items-center gap-1.5">
               <LuSignal size={12} />
               <LuWifi size={12} />
               <LuBattery size={12} />
             </div>
           </div>
 
-          <div className="w-full h-full pt-8 bg-slate-950 relative">
+          <div className="relative h-full w-full bg-slate-950 pt-8">
             {PLATFORMS.map((p) => {
               const isActive = p.id === platform;
               const shouldRender = isActive || prerender;
@@ -117,7 +117,7 @@ export const PreviewPanel = () => {
               return (
                 <div
                   key={p.id}
-                  className="absolute inset-0 pt-8 w-full h-full"
+                  className="absolute inset-0 h-full w-full pt-8"
                   style={{
                     display: isActive ? 'block' : 'none',
                     zIndex: isActive ? 10 : 0,
@@ -126,7 +126,7 @@ export const PreviewPanel = () => {
                   <Suspense
                     fallback={
                       isActive ? (
-                        <div className="flex items-center justify-center h-full text-slate-500">
+                        <div className="flex h-full items-center justify-center text-slate-500">
                           <div className="animate-pulse">Loading...</div>
                         </div>
                       ) : null
@@ -139,7 +139,7 @@ export const PreviewPanel = () => {
             })}
           </div>
 
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/20 rounded-full z-50"></div>
+          <div className="absolute bottom-2 left-1/2 z-50 h-1 w-32 -translate-x-1/2 rounded-full bg-white/20"></div>
         </div>
       </div>
     </div>

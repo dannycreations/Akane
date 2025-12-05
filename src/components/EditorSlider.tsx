@@ -11,7 +11,7 @@ interface SliderProps {
 
 export const Slider = memo(({ label, value, min, max, step = 1, onChange }: SliderProps) => {
   return (
-    <div className="flex flex-col gap-1 w-full">
+    <div className="flex w-full flex-col gap-1">
       <div className="flex justify-between text-xs font-medium text-slate-400">
         <span>{label}</span>
         <span>{value.toFixed(1)}</span>
@@ -23,7 +23,7 @@ export const Slider = memo(({ label, value, min, max, step = 1, onChange }: Slid
         step={step}
         value={value}
         onChange={(e) => onChange(parseFloat(e.target.value))}
-        className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-500 hover:accent-indigo-400 transition-all"
+        className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-700 transition-all accent-indigo-500 hover:accent-indigo-400"
       />
     </div>
   );

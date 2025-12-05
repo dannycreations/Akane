@@ -20,16 +20,16 @@ import { PostImage, ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
 
 const BottomNav = ({ active = 'chat' }: { active?: string }) => (
-  <Navigation className="bg-black/95 backdrop-blur-xl border-t border-white/10" safeAreaClassName="pb-6">
-    <div className="h-[72px] flex items-center justify-between px-6">
+  <Navigation className="border-t border-white/10 bg-black/95 backdrop-blur-xl" safeAreaClassName="pb-6">
+    <div className="flex h-[72px] items-center justify-between px-6">
       <div className={`flex flex-col items-center gap-1 ${active === 'map' ? 'text-[#00FF00]' : 'text-[#666]'}`}>
         <LuMapPin size={26} strokeWidth={2.5} />
       </div>
       <div className={`flex flex-col items-center gap-1 ${active === 'chat' ? 'text-[#3E95FF]' : 'text-[#666]'}`}>
         <LuMessageSquare size={26} strokeWidth={2.5} />
       </div>
-      <div className="flex flex-col items-center justify-center -mt-6">
-        <div className="w-16 h-16 bg-[#FFFC00] rounded-full border-4 border-black flex items-center justify-center shadow-[0_0_15px_rgba(255,252,0,0.3)]">
+      <div className="-mt-6 flex flex-col items-center justify-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full border-4 border-black bg-[#FFFC00] shadow-[0_0_15px_rgba(255,252,0,0.3)]">
           <LuCamera size={32} className="text-black" />
         </div>
       </div>
@@ -44,17 +44,17 @@ const BottomNav = ({ active = 'chat' }: { active?: string }) => (
 );
 
 const ProfileView = memo(() => (
-  <div className="w-full h-full bg-[#000000] text-white font-sans flex flex-col relative overflow-hidden">
+  <div className="relative flex h-full w-full flex-col overflow-hidden bg-[#000000] font-sans text-white">
     {/* Top Header */}
-    <div className="absolute top-0 left-0 right-0 p-4 z-20 flex justify-between items-center">
-      <div className="w-10 h-10 bg-black/50 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm cursor-pointer border border-white/10">
+    <div className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between p-4">
+      <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/50 shadow-sm backdrop-blur-md">
         <LuChevronLeft size={24} className="text-white" />
       </div>
       <div className="flex gap-3">
-        <div className="w-10 h-10 bg-black/50 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm cursor-pointer border border-white/10">
+        <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/50 shadow-sm backdrop-blur-md">
           <LuShare size={20} className="text-white" />
         </div>
-        <div className="w-10 h-10 bg-black/50 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm cursor-pointer border border-white/10">
+        <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/50 shadow-sm backdrop-blur-md">
           <LuSettings size={22} className="text-white" />
         </div>
       </div>
@@ -62,36 +62,36 @@ const ProfileView = memo(() => (
 
     <div className="flex-1 overflow-y-auto no-scrollbar">
       {/* Profile Card */}
-      <div className="relative bg-[#121212] shadow-sm rounded-b-[2.5rem] pb-6 overflow-hidden border-b border-white/5">
+      <div className="relative overflow-hidden rounded-b-[2.5rem] border-b border-white/5 bg-[#121212] pb-6 shadow-sm">
         {/* Fake Banner - using the current image but blurred heavily */}
-        <div className="h-40 w-full bg-[#1A1A1A] relative overflow-hidden">
-          <PostImage containerClass="w-full h-full" imageClass="w-full h-full object-cover opacity-60 blur-2xl scale-125" />
+        <div className="relative h-40 w-full overflow-hidden bg-[#1A1A1A]">
+          <PostImage containerClass="h-full w-full" imageClass="h-full w-full scale-125 object-cover opacity-60 blur-2xl" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-[#121212]"></div>
         </div>
 
-        <div className="flex flex-col items-center -mt-16 relative z-10">
-          <div className="p-1.5 bg-[#121212] rounded-3xl shadow-2xl">
-            <div className="w-[120px] h-[120px] rounded-[1.2rem] bg-[#1A1A1A] overflow-hidden ring-1 ring-white/10 relative">
-              <ProfileImage className="w-full h-full" />
+        <div className="relative z-10 -mt-16 flex flex-col items-center">
+          <div className="rounded-3xl bg-[#121212] p-1.5 shadow-2xl">
+            <div className="relative h-[120px] w-[120px] overflow-hidden rounded-[1.2rem] bg-[#1A1A1A] ring-1 ring-white/10">
+              <ProfileImage className="h-full w-full" />
               {/* Snapcode Dots Simulation */}
-              <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle,#fff_1px,transparent_1px)] bg-[size:8px_8px]"></div>
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,#fff_1px,transparent_1px)] bg-[size:8px_8px] opacity-20"></div>
             </div>
           </div>
 
           <div className="mt-3 text-center">
             <h1 className="text-2xl font-bold tracking-tight text-white">Your Name</h1>
-            <p className="text-sm font-medium text-gray-400 mt-0.5">
+            <p className="mt-0.5 text-sm font-medium text-gray-400">
               username • <span className="text-gray-500">♍️ Virgo</span>
             </p>
-            <div className="text-xs font-semibold text-gray-500 mt-1">54,203 Snap Score</div>
+            <div className="mt-1 text-xs font-semibold text-gray-500">54,203 Snap Score</div>
           </div>
 
           {/* 2025 Action Pills */}
-          <div className="flex items-center gap-2 mt-5 w-full px-10">
-            <button className="flex-1 bg-[#333] text-white font-bold py-2.5 rounded-full text-sm shadow-md hover:scale-[1.02] transition-transform border border-white/5">
+          <div className="mt-5 flex w-full items-center gap-2 px-10">
+            <button className="flex-1 rounded-full border border-white/5 bg-[#333] py-2.5 text-sm font-bold text-white shadow-md transition-transform hover:scale-[1.02]">
               Subscribe
             </button>
-            <button className="flex-1 bg-white text-black font-bold py-2.5 rounded-full text-sm shadow-sm hover:bg-gray-200 transition-colors">
+            <button className="flex-1 rounded-full bg-white py-2.5 text-sm font-bold text-black shadow-sm transition-colors hover:bg-gray-200">
               Message
             </button>
           </div>
@@ -99,37 +99,37 @@ const ProfileView = memo(() => (
       </div>
 
       {/* Content Section */}
-      <div className="p-4 space-y-4">
+      <div className="space-y-4 p-4">
         <div>
-          <h3 className="font-bold text-lg mb-3 ml-1 text-white">Highlights</h3>
-          <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2">
+          <h3 className="mb-3 ml-1 text-lg font-bold text-white">Highlights</h3>
+          <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="flex-shrink-0 w-24 flex flex-col gap-2 group cursor-pointer">
-                <div className="w-24 h-36 bg-[#1A1A1A] rounded-xl overflow-hidden shadow-sm border border-white/10 relative">
+              <div key={i} className="group flex w-24 flex-shrink-0 cursor-pointer flex-col gap-2">
+                <div className="relative h-36 w-24 overflow-hidden rounded-xl border border-white/10 bg-[#1A1A1A] shadow-sm">
                   {i === 1 ? (
-                    <PostImage containerClass="w-full h-full" imageClass="w-full h-full object-cover" />
+                    <PostImage containerClass="h-full w-full" imageClass="h-full w-full object-cover" />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-[#1A1A1A] to-[#222]"></div>
+                    <div className="h-full w-full bg-gradient-to-br from-[#1A1A1A] to-[#222]"></div>
                   )}
-                  <div className="absolute bottom-2 left-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm rounded-full text-[9px] font-bold text-white">
+                  <div className="absolute bottom-2 left-2 rounded-full bg-black/60 px-2 py-0.5 text-[9px] font-bold text-white backdrop-blur-sm">
                     2d ago
                   </div>
                 </div>
-                <span className="text-xs font-medium text-center text-gray-400 group-hover:text-white transition-colors">Highlight {i}</span>
+                <span className="text-center text-xs font-medium text-gray-400 transition-colors group-hover:text-white">Highlight {i}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="bg-[#121212] p-4 rounded-2xl shadow-sm border border-white/5">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="font-bold text-lg text-white">Spotlight</h3>
+        <div className="rounded-2xl border border-white/5 bg-[#121212] p-4 shadow-sm">
+          <div className="mb-2 flex items-center justify-between">
+            <h3 className="text-lg font-bold text-white">Spotlight</h3>
             <LuChevronLeft className="rotate-180 text-gray-500" />
           </div>
           <div className="grid grid-cols-3 gap-1 rounded-lg overflow-hidden">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="aspect-[3/4] bg-[#1A1A1A] relative">
-                {i === 0 && <PostImage containerClass="w-full h-full" imageClass="w-full h-full object-cover" />}
+              <div key={i} className="relative aspect-[3/4] bg-[#1A1A1A]">
+                {i === 0 && <PostImage containerClass="h-full w-full" imageClass="h-full w-full object-cover" />}
                 <div className="absolute bottom-1 left-1 text-white drop-shadow-md">
                   <LuPlay fill="white" size={12} />
                 </div>
@@ -143,18 +143,18 @@ const ProfileView = memo(() => (
 ));
 
 const ChatView = memo(() => (
-  <div className="w-full h-full bg-[#000000] text-white font-sans flex flex-col relative overflow-hidden">
+  <div className="relative flex h-full w-full flex-col overflow-hidden bg-[#000000] font-sans text-white">
     {/* Header */}
-    <div className="h-16 px-4 flex items-center justify-between border-b border-white/5 shrink-0 bg-[#000000] z-20">
-      <div className="w-9 h-9 bg-[#1A1A1A] rounded-full flex items-center justify-center overflow-hidden border border-white/5">
-        <div className="w-full h-full bg-gradient-to-br from-purple-500 to-indigo-600 opacity-80"></div>
+    <div className="z-20 flex h-16 shrink-0 items-center justify-between border-b border-white/5 bg-[#000000] px-4">
+      <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-white/5 bg-[#1A1A1A]">
+        <div className="h-full w-full bg-gradient-to-br from-purple-500 to-indigo-600 opacity-80"></div>
       </div>
-      <h1 className="font-bold text-xl tracking-tight text-white">Chat</h1>
+      <h1 className="text-xl font-bold tracking-tight text-white">Chat</h1>
       <div className="flex gap-4">
-        <div className="w-9 h-9 bg-[#1A1A1A] rounded-full flex items-center justify-center text-gray-400 border border-white/5 hover:bg-[#222]">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/5 bg-[#1A1A1A] text-gray-400 hover:bg-[#222]">
           <LuUserPlus size={20} />
         </div>
-        <div className="w-9 h-9 bg-[#1A1A1A] rounded-full flex items-center justify-center text-gray-400 border border-white/5 hover:bg-[#222]">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/5 bg-[#1A1A1A] text-gray-400 hover:bg-[#222]">
           <LuEllipsis size={20} />
         </div>
       </div>
@@ -163,7 +163,7 @@ const ChatView = memo(() => (
     <div className="flex-1 overflow-y-auto no-scrollbar">
       {/* Search */}
       <div className="px-4 py-3">
-        <div className="bg-[#1A1A1A] h-10 rounded-full flex items-center px-4 gap-2 text-gray-500 border border-white/5">
+        <div className="flex h-10 items-center gap-2 rounded-full border border-white/5 bg-[#1A1A1A] px-4 text-gray-500">
           <LuSearch size={18} />
           <span className="text-sm font-medium">Search</span>
         </div>
@@ -172,62 +172,62 @@ const ChatView = memo(() => (
       {/* Chat List */}
       <div className="pb-4">
         {/* User Preview Row */}
-        <div className="flex items-center gap-3 px-4 py-3 hover:bg-[#111] active:bg-[#1A1A1A] cursor-pointer transition-colors relative">
+        <div className="relative flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-[#111] active:bg-[#1A1A1A]">
           <div className="relative shrink-0">
-            <div className="w-14 h-14 rounded-full p-[2px] bg-black ring-2 ring-[#FFFC00] shadow-[0_0_10px_rgba(255,252,0,0.2)]">
-              <ProfileImage className="rounded-full w-full h-full bg-[#1A1A1A]" />
+            <div className="h-14 w-14 rounded-full bg-black p-[2px] ring-2 ring-[#FFFC00] shadow-[0_0_10px_rgba(255,252,0,0.2)]">
+              <ProfileImage className="h-full w-full rounded-full bg-[#1A1A1A]" />
             </div>
           </div>
-          <div className="flex-1 min-w-0 pr-10">
-            <h3 className="font-bold text-[17px] text-white leading-tight">Your Name</h3>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <div className="w-3 h-3 rounded-[2px] bg-[#F23C57] shrink-0 shadow-[0_0_8px_rgba(242,60,87,0.4)]"></div>
-              <span className="text-[#F23C57] font-bold text-xs tracking-wide">New Snap • 1m</span>
-              <span className="text-gray-600 text-[10px]">•</span>
-              <span className="text-gray-500 text-xs">🔥 24</span>
+          <div className="min-w-0 flex-1 pr-10">
+            <h3 className="text-[17px] font-bold leading-tight text-white">Your Name</h3>
+            <div className="mt-0.5 flex items-center gap-1.5">
+              <div className="h-3 w-3 shrink-0 rounded-[2px] bg-[#F23C57] shadow-[0_0_8px_rgba(242,60,87,0.4)]"></div>
+              <span className="text-xs font-bold tracking-wide text-[#F23C57]">New Snap • 1m</span>
+              <span className="text-[10px] text-gray-600">•</span>
+              <span className="text-xs text-gray-500">🔥 24</span>
             </div>
           </div>
 
-          <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-black to-transparent pointer-events-none"></div>
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 flex gap-3 text-gray-500">
+          <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-16 bg-gradient-to-l from-black to-transparent"></div>
+          <div className="absolute right-4 top-1/2 flex -translate-y-1/2 gap-3 text-gray-500">
             <LuImage size={24} className="stroke-[1.5]" />
             <LuCamera size={24} className="stroke-[1.5]" />
           </div>
         </div>
 
         {/* Mock Rows */}
-        <div className="flex items-center gap-3 px-4 py-3 hover:bg-[#111] active:bg-[#1A1A1A] cursor-pointer transition-colors">
+        <div className="flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-[#111] active:bg-[#1A1A1A]">
           <div className="relative shrink-0">
-            <div className="w-14 h-14 rounded-full bg-[#1A1A1A] overflow-hidden border border-white/5">
-              <div className="w-full h-full flex items-center justify-center text-purple-400 font-bold text-lg">F</div>
+            <div className="h-14 w-14 overflow-hidden rounded-full border border-white/5 bg-[#1A1A1A]">
+              <div className="flex h-full w-full items-center justify-center text-lg font-bold text-purple-400">F</div>
             </div>
           </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-[17px] text-white leading-tight">Friend</h3>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <div className="w-3 h-3 border border-[#3E95FF] rounded-tl-lg rounded-tr-lg rounded-br-lg shrink-0"></div>
-              <span className="text-gray-500 font-medium text-xs">Delivered • 2h</span>
+          <div className="min-w-0 flex-1">
+            <h3 className="text-[17px] font-bold leading-tight text-white">Friend</h3>
+            <div className="mt-0.5 flex items-center gap-1.5">
+              <div className="h-3 w-3 shrink-0 rounded-tl-lg rounded-tr-lg rounded-br-lg border border-[#3E95FF]"></div>
+              <span className="text-xs font-medium text-gray-500">Delivered • 2h</span>
             </div>
           </div>
-          <div className="text-gray-500 pr-2">
+          <div className="pr-2 text-gray-500">
             <LuCamera size={24} className="stroke-[1.5]" />
           </div>
         </div>
 
-        <div className="flex items-center gap-3 px-4 py-3 hover:bg-[#111] active:bg-[#1A1A1A] cursor-pointer transition-colors">
+        <div className="flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-[#111] active:bg-[#1A1A1A]">
           <div className="relative shrink-0">
-            <div className="w-14 h-14 rounded-full bg-[#1A1A1A] overflow-hidden border border-white/5">
-              <div className="w-full h-full flex items-center justify-center text-green-400 font-bold text-lg">T</div>
+            <div className="h-14 w-14 overflow-hidden rounded-full border border-white/5 bg-[#1A1A1A]">
+              <div className="flex h-full w-full items-center justify-center text-lg font-bold text-green-400">T</div>
             </div>
           </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-bold text-[17px] text-white leading-tight">Team Snapchat</h3>
-            <div className="flex items-center gap-1.5 mt-0.5">
-              <div className="w-3 h-3 bg-[#3E95FF] rounded-full shrink-0 shadow-[0_0_8px_rgba(62,149,255,0.4)]"></div>
-              <span className="text-[#3E95FF] font-semibold text-xs">New Chat • 5h</span>
+          <div className="min-w-0 flex-1">
+            <h3 className="text-[17px] font-bold leading-tight text-white">Team Snapchat</h3>
+            <div className="mt-0.5 flex items-center gap-1.5">
+              <div className="h-3 w-3 shrink-0 rounded-full bg-[#3E95FF] shadow-[0_0_8px_rgba(62,149,255,0.4)]"></div>
+              <span className="text-xs font-semibold text-[#3E95FF]">New Chat • 5h</span>
             </div>
           </div>
-          <div className="text-gray-500 pr-2">
+          <div className="pr-2 text-gray-500">
             <LuCamera size={24} className="stroke-[1.5]" />
           </div>
         </div>
@@ -243,11 +243,11 @@ export const SnapchatView = () => {
   const isProfile = perspective === Perspective.Profile;
 
   return (
-    <div className="w-full h-full relative">
-      <div className="w-full h-full" style={{ display: isProfile ? 'block' : 'none' }}>
+    <div className="relative h-full w-full">
+      <div className="h-full w-full" style={{ display: isProfile ? 'block' : 'none' }}>
         <ProfileView />
       </div>
-      <div className="w-full h-full" style={{ display: !isProfile ? 'block' : 'none' }}>
+      <div className="h-full w-full" style={{ display: !isProfile ? 'block' : 'none' }}>
         <ChatView />
       </div>
     </div>

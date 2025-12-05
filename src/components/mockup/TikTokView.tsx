@@ -20,33 +20,33 @@ import { PostImage, ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
 
 const BottomNav = ({ active = 'home' }: { active?: string }) => (
-  <Navigation className="bg-black border-t border-white/10" safeAreaClassName="pb-6">
-    <div className="h-[50px] flex items-center justify-between px-4 text-[10px] font-medium text-gray-400">
-      <div className={`flex flex-col items-center gap-1 cursor-pointer ${active === 'home' ? 'text-white' : ''}`}>
+  <Navigation className="border-t border-white/10 bg-black" safeAreaClassName="pb-6">
+    <div className="flex h-[50px] items-center justify-between px-4 text-[10px] font-medium text-gray-400">
+      <div className={`flex cursor-pointer flex-col items-center gap-1 ${active === 'home' ? 'text-white' : ''}`}>
         <LuHouse size={22} strokeWidth={active === 'home' ? 3 : 2} />
         <span>Home</span>
       </div>
-      <div className="flex flex-col items-center gap-1 cursor-pointer hover:text-white transition-colors">
+      <div className="flex cursor-pointer flex-col items-center gap-1 transition-colors hover:text-white">
         <div className="relative">
           <LuSearch size={22} />
-          <div className="absolute top-0 right-0 w-2 h-2 bg-[#fe2c55] rounded-full border border-black"></div>
+          <div className="absolute right-0 top-0 h-2 w-2 rounded-full border border-black bg-[#fe2c55]"></div>
         </div>
         <span>Shop</span>
       </div>
-      <div className="flex flex-col items-center justify-center cursor-pointer hover:opacity-90 transition-opacity px-2">
-        <div className="w-[45px] h-[30px] relative flex items-center justify-center">
-          <div className="absolute left-0 top-0 bottom-0 w-[80%] bg-[#25f4ee] rounded-lg"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-[80%] bg-[#fe2c55] rounded-lg"></div>
-          <div className="absolute left-[2px] right-[2px] top-0 bottom-0 bg-white rounded-lg flex items-center justify-center">
+      <div className="flex cursor-pointer flex-col items-center justify-center px-2 transition-opacity hover:opacity-90">
+        <div className="relative flex h-[30px] w-[45px] items-center justify-center">
+          <div className="absolute bottom-0 left-0 top-0 w-[80%] rounded-lg bg-[#25f4ee]"></div>
+          <div className="absolute bottom-0 right-0 top-0 w-[80%] rounded-lg bg-[#fe2c55]"></div>
+          <div className="absolute bottom-0 left-[2px] right-[2px] top-0 flex items-center justify-center rounded-lg bg-white">
             <LuPlus size={20} className="text-black" strokeWidth={3} />
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center gap-1 cursor-pointer hover:text-white transition-colors">
+      <div className="flex cursor-pointer flex-col items-center gap-1 transition-colors hover:text-white">
         <LuMessageSquare size={22} />
         <span>Inbox</span>
       </div>
-      <div className={`flex flex-col items-center gap-1 cursor-pointer ${active === 'profile' ? 'text-white' : ''}`}>
+      <div className={`flex cursor-pointer flex-col items-center gap-1 ${active === 'profile' ? 'text-white' : ''}`}>
         <LuUser size={22} strokeWidth={active === 'profile' ? 3 : 2} />
         <span>Profile</span>
       </div>
@@ -55,52 +55,52 @@ const BottomNav = ({ active = 'home' }: { active?: string }) => (
 );
 
 const ProfileView = memo(() => (
-  <div className="w-full h-full bg-black text-white font-sans flex flex-col relative overflow-hidden">
+  <div className="relative flex h-full w-full flex-col overflow-hidden bg-black font-sans text-white">
     {/* Header */}
-    <div className="h-12 flex items-center justify-between px-4 shrink-0 z-20">
+    <div className="z-20 flex h-12 shrink-0 items-center justify-between px-4">
       <div className="w-6"></div>
-      <div className="flex items-center gap-1 font-bold text-base cursor-pointer">
+      <div className="flex cursor-pointer items-center gap-1 text-base font-bold">
         <span>Your Name</span>
-        <span className="w-2 h-2 bg-yellow-400 rounded-full border border-black"></span>
+        <span className="h-2 w-2 rounded-full border border-black bg-yellow-400"></span>
       </div>
       <LuMenu size={24} />
     </div>
 
     <div className="flex-1 overflow-y-auto no-scrollbar">
-      <div className="flex flex-col items-center pt-4 pb-2">
+      <div className="flex flex-col items-center pb-2 pt-4">
         <div className="relative mb-3">
-          <div className="w-24 h-24 rounded-full overflow-hidden border border-white/10">
-            <ProfileImage className="w-full h-full" />
+          <div className="h-24 w-24 overflow-hidden rounded-full border border-white/10">
+            <ProfileImage className="h-full w-full" />
           </div>
-          <div className="absolute bottom-0 right-0 w-6 h-6 bg-[#25f4ee] rounded-full flex items-center justify-center border-2 border-black text-black">
+          <div className="absolute bottom-0 right-0 flex h-6 w-6 items-center justify-center rounded-full border-2 border-black bg-[#25f4ee] text-black">
             <LuPlus size={14} strokeWidth={4} />
           </div>
         </div>
 
-        <div className="text-center mb-4">
+        <div className="mb-4 text-center">
           <div className="text-sm font-semibold">@username</div>
-          <div className="flex items-center justify-center gap-6 mt-4 text-center">
+          <div className="mt-4 flex items-center justify-center gap-6 text-center">
             <div className="flex flex-col items-center">
-              <span className="font-bold text-lg leading-none">142</span>
+              <span className="text-lg font-bold leading-none">142</span>
               <span className="text-xs text-gray-400">Following</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="font-bold text-lg leading-none">42.5K</span>
+              <span className="text-lg font-bold leading-none">42.5K</span>
               <span className="text-xs text-gray-400">Followers</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="font-bold text-lg leading-none">1.2M</span>
+              <span className="text-lg font-bold leading-none">1.2M</span>
               <span className="text-xs text-gray-400">Likes</span>
             </div>
           </div>
         </div>
 
-        <div className="flex gap-2 w-full px-12 mb-4">
-          <button className="flex-1 bg-[#333] py-3 rounded-lg text-sm font-semibold">Edit profile</button>
-          <button className="flex-1 bg-[#333] py-3 rounded-lg text-sm font-semibold">Share profile</button>
+        <div className="mb-4 flex w-full gap-2 px-12">
+          <button className="flex-1 rounded-lg bg-[#333] py-3 text-sm font-semibold">Edit profile</button>
+          <button className="flex-1 rounded-lg bg-[#333] py-3 text-sm font-semibold">Share profile</button>
         </div>
 
-        <div className="text-sm text-center px-8 mb-4 leading-snug">
+        <div className="mb-4 px-8 text-center text-sm leading-snug">
           Digital Creator 🎨 <br />
           Trying out new aesthetics.
         </div>
@@ -108,37 +108,37 @@ const ProfileView = memo(() => (
 
       {/* Tabs */}
       <div className="flex items-center border-b border-white/10 text-gray-500">
-        <div className="flex-1 h-11 flex items-center justify-center text-white border-b-2 border-white cursor-pointer">
+        <div className="flex h-11 flex-1 cursor-pointer items-center justify-center border-b-2 border-white text-white">
           <svg viewBox="0 0 48 48" width="20" height="20" fill="currentColor">
             <path d="M6 6h10v10H6V6zm0 14h10v10H6V20zm0 14h10v10H6V34zm14-28h10v10H20V6zm0 14h10v10H20V20zm0 14h10v10H20V34zm14-28h10v10H34V6zm0 14h10v10H34V20zm0 14h10v10H34V34z" />
           </svg>
         </div>
-        <div className="flex-1 h-11 flex items-center justify-center cursor-pointer hover:text-white transition-colors">
+        <div className="flex h-11 flex-1 cursor-pointer items-center justify-center transition-colors hover:text-white">
           <LuLock size={20} />
         </div>
-        <div className="flex-1 h-11 flex items-center justify-center cursor-pointer hover:text-white transition-colors">
+        <div className="flex h-11 flex-1 cursor-pointer items-center justify-center transition-colors hover:text-white">
           <LuBookmark size={20} />
         </div>
-        <div className="flex-1 h-11 flex items-center justify-center cursor-pointer hover:text-white transition-colors">
+        <div className="flex h-11 flex-1 cursor-pointer items-center justify-center transition-colors hover:text-white">
           <LuHeart size={20} />
         </div>
       </div>
 
       {/* Grid */}
       <div className="grid grid-cols-3 gap-0.5">
-        <div className="relative aspect-[3/4] bg-[#222] overflow-hidden group">
-          <div className="absolute top-1 left-1 bg-[#fe2c55] text-white text-[10px] font-bold px-1.5 py-0.5 rounded">Pinned</div>
+        <div className="group relative aspect-[3/4] overflow-hidden bg-[#222]">
+          <div className="absolute left-1 top-1 rounded bg-[#fe2c55] px-1.5 py-0.5 text-[10px] font-bold text-white">Pinned</div>
           <PostImage
-            containerClass="w-full h-full flex items-center justify-center bg-[#1a1a1a]"
-            imageClass="w-full h-full object-cover opacity-80"
+            containerClass="flex h-full w-full items-center justify-center bg-[#1a1a1a]"
+            imageClass="h-full w-full object-cover opacity-80"
           />
-          <div className="absolute bottom-1 left-1 text-white text-xs font-semibold drop-shadow flex items-center gap-1">
+          <div className="absolute bottom-1 left-1 flex items-center gap-1 text-xs font-semibold text-white drop-shadow">
             <LuHeart size={10} fill="white" /> 14.2K
           </div>
         </div>
         {[...Array(8)].map((_, i) => (
           <div key={i} className="relative aspect-[3/4] bg-[#1a1a1a]">
-            <div className="absolute bottom-1 left-1 text-white text-xs font-semibold drop-shadow flex items-center gap-1">
+            <div className="absolute bottom-1 left-1 flex items-center gap-1 text-xs font-semibold text-white drop-shadow">
               <svg viewBox="0 0 24 24" width="10" height="10" fill="transparent" stroke="currentColor" strokeWidth="2.5">
                 <polygon points="5 3 19 12 5 21 5 3" />
               </svg>
@@ -155,21 +155,21 @@ const ProfileView = memo(() => (
 ));
 
 const FeedView = memo(() => (
-  <div className="w-full h-full bg-black text-white font-sans flex flex-col justify-end relative overflow-hidden">
+  <div className="relative flex h-full w-full flex-col justify-end overflow-hidden bg-black font-sans text-white">
     {/* Video Background Mock */}
     <div className="absolute inset-0 z-0 bg-[#111]">
-      <PostImage containerClass="w-full h-full flex items-center justify-center" imageClass="w-full h-full object-cover opacity-60" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60 pointer-events-none"></div>
+      <PostImage containerClass="flex h-full w-full items-center justify-center" imageClass="h-full w-full object-cover opacity-60" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60"></div>
     </div>
 
     {/* Top Tab Bar */}
-    <div className="absolute top-0 left-0 right-0 h-16 flex items-center justify-center z-20 pt-2 text-[15px] font-bold drop-shadow-md">
-      <span className="text-white/60 mr-4 cursor-pointer hover:text-white transition-colors">Friends</span>
-      <span className="text-white mr-4 cursor-pointer relative">
+    <div className="absolute left-0 right-0 top-0 z-20 flex h-16 items-center justify-center pt-2 text-[15px] font-bold drop-shadow-md">
+      <span className="mr-4 cursor-pointer text-white/60 transition-colors hover:text-white">Friends</span>
+      <span className="relative mr-4 cursor-pointer text-white">
         Following
-        <div className="absolute -right-2 top-0 w-1.5 h-1.5 bg-[#fe2c55] rounded-full"></div>
+        <div className="absolute -right-2 top-0 h-1.5 w-1.5 rounded-full bg-[#fe2c55]"></div>
       </span>
-      <span className="text-white relative cursor-pointer after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:-translate-x-1/2 after:w-8 after:h-0.5 after:bg-white after:rounded-full">
+      <span className="relative cursor-pointer text-white after:absolute after:-bottom-2 after:left-1/2 after:h-0.5 after:w-8 after:-translate-x-1/2 after:rounded-full after:bg-white after:content-['']">
         For You
       </span>
       <div className="absolute right-4 top-1/2 -translate-y-1/2 pt-2">
@@ -178,52 +178,52 @@ const FeedView = memo(() => (
     </div>
 
     {/* Right Sidebar Actions */}
-    <div className="absolute right-2 bottom-20 z-20 flex flex-col items-center gap-5 pb-4">
+    <div className="absolute bottom-20 right-2 z-20 flex flex-col items-center gap-5 pb-4">
       <div className="relative mb-2">
-        <div className="w-12 h-12 rounded-full border border-white overflow-hidden shadow-sm">
-          <ProfileImage className="w-full h-full" />
+        <div className="h-12 w-12 overflow-hidden rounded-full border border-white shadow-sm">
+          <ProfileImage className="h-full w-full" />
         </div>
-        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#fe2c55] rounded-full p-0.5">
+        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-[#fe2c55] p-0.5">
           <LuPlus size={12} className="text-white" strokeWidth={4} />
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-1 cursor-pointer">
+      <div className="flex cursor-pointer flex-col items-center gap-1">
         <LuHeart size={32} fill="white" className="text-[#fe2c55] drop-shadow-sm transition-transform active:scale-75" />
         <span className="text-xs font-bold drop-shadow-md">428.5K</span>
       </div>
 
-      <div className="flex flex-col items-center gap-1 cursor-pointer">
+      <div className="flex cursor-pointer flex-col items-center gap-1">
         <LuMessageCircle size={32} fill="white" className="text-white drop-shadow-sm" />
         <span className="text-xs font-bold drop-shadow-md">1,024</span>
       </div>
 
-      <div className="flex flex-col items-center gap-1 cursor-pointer">
+      <div className="flex cursor-pointer flex-col items-center gap-1">
         <LuBookmark size={32} fill="white" className="text-white drop-shadow-sm" />
         <span className="text-xs font-bold drop-shadow-md">42.1K</span>
       </div>
 
-      <div className="flex flex-col items-center gap-1 cursor-pointer">
+      <div className="flex cursor-pointer flex-col items-center gap-1">
         <LuShare2 size={32} fill="white" className="text-white drop-shadow-sm" />
         <span className="text-xs font-bold drop-shadow-md">8,492</span>
       </div>
 
-      <div className="mt-4 animate-[spin_5s_linear_infinite] w-10 h-10 bg-black rounded-full border-[6px] border-[#222] flex items-center justify-center relative overflow-hidden">
-        <ProfileImage className="w-full h-full" />
+      <div className="relative mt-4 flex h-10 w-10 animate-[spin_5s_linear_infinite] items-center justify-center overflow-hidden rounded-full bg-black border-[6px] border-[#222]">
+        <ProfileImage className="h-full w-full" />
       </div>
     </div>
 
     {/* Bottom Info Overlay */}
-    <div className="absolute left-0 bottom-[50px] right-16 z-20 px-4 pb-4 flex flex-col items-start text-shadow-sm">
-      <div className="font-bold text-[17px] mb-1 hover:underline cursor-pointer">@username</div>
-      <div className="text-[15px] leading-snug line-clamp-2 mb-2">
+    <div className="text-shadow-sm absolute bottom-[50px] left-0 right-16 z-20 flex flex-col items-start px-4 pb-4">
+      <div className="mb-1 cursor-pointer text-[17px] font-bold hover:underline">@username</div>
+      <div className="mb-2 line-clamp-2 text-[15px] leading-snug">
         POV: You finally found the perfect profile picture tool. 📸 ✨ <span className="font-bold">#design #pfp #2025</span>
       </div>
-      <div className="flex items-center gap-2 text-[15px] font-medium w-full">
-        <div className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
+      <div className="flex w-full items-center gap-2 text-[15px] font-medium">
+        <div className="flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 backdrop-blur-sm">
           <LuMusic size={14} />
-          <div className="w-24 overflow-hidden relative h-5">
-            <span className="absolute whitespace-nowrap animate-[marquee_5s_linear_infinite]">Original Sound - Your Name</span>
+          <div className="relative h-5 w-24 overflow-hidden">
+            <span className="absolute animate-[marquee_5s_linear_infinite] whitespace-nowrap">Original Sound - Your Name</span>
           </div>
         </div>
       </div>
@@ -238,11 +238,11 @@ export const TikTokView = () => {
   const isProfile = perspective === Perspective.Profile;
 
   return (
-    <div className="w-full h-full relative">
-      <div className="w-full h-full" style={{ display: isProfile ? 'block' : 'none' }}>
+    <div className="relative h-full w-full">
+      <div className="h-full w-full" style={{ display: isProfile ? 'block' : 'none' }}>
         <ProfileView />
       </div>
-      <div className="w-full h-full" style={{ display: !isProfile ? 'block' : 'none' }}>
+      <div className="h-full w-full" style={{ display: !isProfile ? 'block' : 'none' }}>
         <FeedView />
       </div>
     </div>
