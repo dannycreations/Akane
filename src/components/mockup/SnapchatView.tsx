@@ -16,8 +16,7 @@ import {
 
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
-import { CroppedPreview } from '../CroppedPreview';
-import { PostImage } from './Shared';
+import { PostImage, ProfileImage } from '../shared/Image';
 
 const BottomNav = ({ active = 'chat' }: { active?: string }) => (
   <div className="h-[72px] bg-black/95 backdrop-blur-xl border-t border-white/10 flex items-center justify-between px-6 shrink-0 z-50 rounded-b-[2.5rem]">
@@ -70,7 +69,7 @@ const ProfileView = memo(() => (
         <div className="flex flex-col items-center -mt-16 relative z-10">
           <div className="p-1.5 bg-[#121212] rounded-3xl shadow-2xl">
             <div className="w-[120px] h-[120px] rounded-[1.2rem] bg-[#1A1A1A] overflow-hidden ring-1 ring-white/10 relative">
-              <CroppedPreview className="w-full h-full" />
+              <ProfileImage className="w-full h-full" />
               {/* Snapcode Dots Simulation */}
               <div className="absolute inset-0 opacity-20 pointer-events-none bg-[radial-gradient(circle,#fff_1px,transparent_1px)] bg-[size:8px_8px]"></div>
             </div>
@@ -173,7 +172,7 @@ const ChatView = memo(() => (
         <div className="flex items-center gap-3 px-4 py-3 hover:bg-[#111] active:bg-[#1A1A1A] cursor-pointer transition-colors relative">
           <div className="relative shrink-0">
             <div className="w-14 h-14 rounded-full p-[2px] bg-black ring-2 ring-[#FFFC00] shadow-[0_0_10px_rgba(255,252,0,0.2)]">
-              <CroppedPreview className="rounded-full w-full h-full bg-[#1A1A1A]" />
+              <ProfileImage className="rounded-full w-full h-full bg-[#1A1A1A]" />
             </div>
           </div>
           <div className="flex-1 min-w-0 pr-10">

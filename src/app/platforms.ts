@@ -1,4 +1,4 @@
-import { SiDiscord, SiFacebook, SiInstagram, SiLinkedin, SiSlack, SiSnapchat, SiTelegram, SiWhatsapp, SiX } from 'react-icons/si';
+import { SiDiscord, SiFacebook, SiInstagram, SiLinkedin, SiSlack, SiSnapchat, SiTelegram, SiTiktok, SiWhatsapp, SiX } from 'react-icons/si';
 
 import { Perspective } from './constants';
 
@@ -12,6 +12,7 @@ export enum Platform {
   Slack = 'Slack',
   Snapchat = 'Snapchat',
   Telegram = 'Telegram',
+  TikTok = 'TikTok',
   Twitter = 'Twitter',
   WhatsApp = 'WhatsApp',
 }
@@ -81,6 +82,14 @@ export const PLATFORM_METADATA: readonly PlatformMetadata[] = [
     color: 'text-sky-400',
     perspectives: [Perspective.Profile, Perspective.Chat],
     outputSize: 640,
+  },
+  {
+    id: Platform.TikTok,
+    name: 'TikTok',
+    icon: SiTiktok,
+    color: 'text-[#fe2c55]',
+    perspectives: [Perspective.Profile, Perspective.Feed],
+    outputSize: 200,
   },
   {
     id: Platform.WhatsApp,

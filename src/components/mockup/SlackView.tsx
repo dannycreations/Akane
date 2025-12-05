@@ -3,7 +3,7 @@ import { LuChevronDown, LuClock, LuEllipsis, LuHash, LuMessageSquare, LuPapercli
 
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
-import { CroppedPreview } from '../CroppedPreview';
+import { ProfileImage } from '../shared/Image';
 
 const bgMain = 'bg-[#1A1D21]';
 const textPrimary = 'text-[#D1D2D3]';
@@ -23,7 +23,7 @@ const ProfileView = memo(() => (
       <div className="flex flex-col items-center mb-6">
         <div className="relative group cursor-pointer">
           <div className="w-[180px] h-[180px] rounded-3xl overflow-hidden shadow-2xl ring-4 ring-[#1A1D21]">
-            <CroppedPreview size={180} />
+            <ProfileImage className="w-full h-full" />
           </div>
           <div className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-[#1A1D21] flex items-center justify-center">
             <div className="w-5 h-5 rounded-full bg-[#2BAC76] border-2 border-[#1A1D21]"></div>
@@ -92,7 +92,7 @@ const ChatView = memo(() => (
         <div className="w-5 h-5 bg-[#ABABAD] rounded-sm"></div>
       </div>
       <div className="mt-auto w-8 h-8 rounded bg-indigo-500 overflow-hidden">
-        <CroppedPreview size={32} />
+        <ProfileImage className="w-full h-full" />
       </div>
     </div>
 
@@ -124,7 +124,7 @@ const ChatView = memo(() => (
 
         <div className="flex gap-3 group hover:bg-[#222529] -mx-4 px-4 py-1 transition-colors">
           <div className="w-9 h-9 rounded bg-indigo-500 overflow-hidden shrink-0 mt-1 cursor-pointer hover:opacity-80">
-            <CroppedPreview size={36} />
+            <ProfileImage className="w-full h-full" />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-baseline gap-2">

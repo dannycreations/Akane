@@ -3,7 +3,7 @@ import { LuArrowLeft, LuCircleCheck, LuEllipsisVertical, LuImage, LuPhone, LuSen
 
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
-import { CroppedPreview } from '../CroppedPreview';
+import { ProfileImage } from '../shared/Image';
 
 const ProfileView = memo(() => (
   <div className="w-full h-full bg-[#0b141a] text-[#e9edef] flex flex-col font-sans">
@@ -13,7 +13,9 @@ const ProfileView = memo(() => (
       <LuEllipsisVertical size={24} />
     </div>
     <div className="flex justify-center my-8 relative group">
-      <CroppedPreview size={180} className="rounded-full ring-4 ring-[#25D366]/20 group-hover:ring-[#25D366] transition-all duration-300" />
+      <div className="w-[180px] h-[180px]">
+        <ProfileImage className="rounded-full ring-4 ring-[#25D366]/20 group-hover:ring-[#25D366] transition-all duration-300 w-full h-full" />
+      </div>
       <div className="absolute bottom-2 right-14 bg-[#00a884] p-3 rounded-full shadow-lg">
         <LuImage size={20} className="text-white" />
       </div>
@@ -50,7 +52,9 @@ const ChatView = memo(() => (
       <div className="flex items-center gap-2">
         <LuArrowLeft size={20} className="text-white" />
         <div className="flex items-center gap-2">
-          <CroppedPreview size={36} className="rounded-full" />
+          <div className="w-9 h-9">
+            <ProfileImage className="rounded-full w-full h-full" />
+          </div>
           <div className="flex flex-col">
             <span className="text-white font-medium text-sm leading-tight">Your Name</span>
             <span className="text-[#8696a0] text-xs">online</span>

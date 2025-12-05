@@ -3,7 +3,7 @@ import { LuCirclePlus, LuGift, LuHash, LuMenu, LuPhone, LuSearch, LuSettings, Lu
 
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
-import { CroppedPreview } from '../CroppedPreview';
+import { ProfileImage } from '../shared/Image';
 
 const bgMain = 'bg-[#1e1f22]';
 const bgSidebar = 'bg-[#2b2d31]';
@@ -31,10 +31,8 @@ const BottomNav = () => (
       <span className="text-[10px] font-medium">Search</span>
     </div>
     <div className="flex flex-col items-center gap-1 group cursor-pointer text-[#dbdee1]">
-      <div className="relative">
-        <div className="w-6 h-6 rounded-full overflow-hidden ring-2 ring-[#23a559]">
-          <CroppedPreview size={24} />
-        </div>
+      <div className="relative w-6 h-6 rounded-full overflow-hidden ring-2 ring-[#23a559]">
+        <ProfileImage />
       </div>
       <span className="text-[10px] font-medium">You</span>
     </div>
@@ -66,7 +64,7 @@ const ProfileView = memo(() => (
       <div className="px-4 pb-4 -mt-[50px] relative z-10">
         <div className="relative inline-block">
           <div className="w-[100px] h-[100px] rounded-full p-[6px] bg-[#111214]">
-            <CroppedPreview size={88} className="rounded-full" />
+            <ProfileImage className="rounded-full w-full h-full" />
           </div>
           <div className="absolute bottom-1 right-1 w-7 h-7 bg-[#111214] rounded-full flex items-center justify-center">
             <div className="w-5 h-5 bg-[#23a559] rounded-full border-[3px] border-[#111214]"></div>
@@ -140,8 +138,8 @@ const ChatView = memo(() => (
 
     <div className="flex-1 overflow-y-auto p-4 space-y-5">
       <div className="flex gap-4 group">
-        <div className="shrink-0 cursor-pointer hover:opacity-80 transition-opacity mt-1">
-          <CroppedPreview size={40} className="rounded-full" />
+        <div className="shrink-0 cursor-pointer hover:opacity-80 transition-opacity mt-1 w-10 h-10">
+          <ProfileImage className="rounded-full w-full h-full" />
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5">

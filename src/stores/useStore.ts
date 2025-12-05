@@ -6,7 +6,7 @@ import { getPlatformPerspective, PLATFORM_METADATA } from '../app/platforms';
 import type { Platform } from '../app/platforms';
 import type { EditorState, ImageSource } from '../app/types';
 
-interface AppState {
+export interface AppState {
   readonly image: ImageSource | null;
   readonly activeTab: 'editor' | 'preview';
   readonly editorState: EditorState;

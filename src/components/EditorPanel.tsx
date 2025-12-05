@@ -6,12 +6,11 @@ import { useEditorGesture } from '../hooks/useEditorGesture';
 import { useStore } from '../stores/useStore';
 import { saveImage } from '../utilities/image';
 import { Slider } from './EditorSlider';
+import { EditorImage } from './shared/Image';
 
 import type { ChangeEvent } from 'react';
-import type { ImageSource } from '../app/types';
 
 const GRID_LINE_CLASS = 'absolute bg-white/30 pointer-events-none shadow-[0_0_2px_rgba(0,0,0,0.2)]';
-const TRANSFORM_STYLE = { transform: 'rotate(var(--crop-rotate)) scale(var(--crop-scale)) translate(var(--crop-x), var(--crop-y))' };
 
 const GridOverlay = memo(({ isRoundedSquare }: { readonly isRoundedSquare: boolean }) => {
   const style = { borderRadius: isRoundedSquare ? '1.5rem' : '50%' };
@@ -26,20 +25,6 @@ const GridOverlay = memo(({ isRoundedSquare }: { readonly isRoundedSquare: boole
       <div className={`${GRID_LINE_CLASS} left-2/3 top-0 bottom-0 w-px`} />
       <div className={`${GRID_LINE_CLASS} top-1/3 left-0 right-0 h-px`} />
       <div className={`${GRID_LINE_CLASS} top-2/3 left-0 right-0 h-px`} />
-    </div>
-  );
-});
-
-const EditorCanvas = memo(({ image }: { readonly image: ImageSource }) => {
-  return (
-    <div className="w-full h-full origin-center will-change-transform" style={TRANSFORM_STYLE}>
-      <img
-        src={image.url}
-        alt="Preview"
-        className="w-full h-full object-contain pointer-events-none select-none"
-        draggable={false}
-        decoding="async"
-      />
     </div>
   );
 });
@@ -210,7 +195,6 @@ export const EditorPanel = () => {
               className="block max-w-full max-h-full w-auto h-auto opacity-0 pointer-events-none select-none"
               style={{ minWidth: '0', minHeight: '0', objectFit: 'contain' }}
               draggable={false}
-              alt=""
             />
 
             <div className="absolute inset-0 w-full h-full flex items-center justify-center">
@@ -224,7 +208,7 @@ export const EditorPanel = () => {
                 onPointerLeave={handlePointerUp}
                 onWheel={handleWheel}
               >
-                <EditorCanvas image={image} />
+                <EditorImage image={image} />
               </div>
 
               <GridOverlay isRoundedSquare={isRoundedSquare} />

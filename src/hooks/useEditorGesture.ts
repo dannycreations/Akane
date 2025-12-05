@@ -4,6 +4,7 @@ import { useStore } from '../stores/useStore';
 import { calculateLimits, rotateDelta } from '../utilities/geometry';
 
 import type { PointerEvent, RefObject, WheelEvent } from 'react';
+import type { EditorState } from '../app/types';
 
 export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>, ar: number, minZoom: number, maxZoom: number) => {
   const setEditorState = useStore((state) => state.setEditorState);
@@ -14,7 +15,7 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
   const latestPointerEvent = useRef<PointerEvent | null>(null);
 
   const updateStateClamped = useCallback(
-    (newState: ReturnType<typeof useStore.getState>['editorState'], metaAr: number) => {
+    (newState: EditorState, metaAr: number) => {
       const { xLim, yLim } = calculateLimits(metaAr, newState.zoom);
       setEditorState({
         ...newState,

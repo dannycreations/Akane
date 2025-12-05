@@ -25,6 +25,7 @@ const views = {
   [Platform.Slack]: loadView(() => import('./SlackView').then((m) => ({ default: m.SlackView }))),
   [Platform.Snapchat]: loadView(() => import('./SnapchatView').then((m) => ({ default: m.SnapchatView }))),
   [Platform.Telegram]: loadView(() => import('./TelegramView').then((m) => ({ default: m.TelegramView }))),
+  [Platform.TikTok]: loadView(() => import('./TikTokView').then((m) => ({ default: m.TikTokView }))),
   [Platform.WhatsApp]: loadView(() => import('./WhatsAppView').then((m) => ({ default: m.WhatsAppView }))),
   [Platform.Twitter]: loadView(() => import('./TwitterView').then((m) => ({ default: m.TwitterView }))),
 };

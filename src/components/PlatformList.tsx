@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { PLATFORM_METADATA } from '../app/platforms';
 import { useStore } from '../stores/useStore';
 
-import type { PlatformMetadata } from '../app/platforms';
+import type { Platform, PlatformMetadata } from '../app/platforms';
 
 interface PlatformListProps {
   readonly orientation?: 'vertical' | 'horizontal';
@@ -19,7 +19,7 @@ const PlatformItem = memo(
     readonly p: PlatformMetadata;
     readonly isSelected: boolean;
     readonly isVertical: boolean;
-    readonly onSelect: (id: any) => void;
+    readonly onSelect: (id: Platform) => void;
   }) => {
     const Icon = p.icon;
 

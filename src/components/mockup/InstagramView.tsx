@@ -14,8 +14,7 @@ import {
 
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
-import { CroppedPreview } from '../CroppedPreview';
-import { PostImage } from './Shared';
+import { PostImage, ProfileImage } from '../shared/Image';
 
 const isDark = true;
 const bg = isDark ? 'bg-black' : 'bg-white';
@@ -29,7 +28,7 @@ const BottomNav = () => (
     <LuSquarePlus size={24} className={text} />
     <LuClapperboard size={24} className={text} />
     <div className="w-6 h-6 rounded-full overflow-hidden ring-1 ring-gray-700">
-      <CroppedPreview size={24} />
+      <ProfileImage className="w-full h-full" />
     </div>
   </div>
 );
@@ -44,7 +43,9 @@ const StoryView = memo(() => (
 
     <div className="p-4 mt-4 flex items-center justify-between z-20">
       <div className="flex items-center gap-2">
-        <CroppedPreview size={32} className="rounded-full border border-white/20" />
+        <div className="w-8 h-8 rounded-full border border-white/20 overflow-hidden">
+          <ProfileImage className="w-full h-full" />
+        </div>
         <span className="text-white text-sm font-semibold text-shadow">username</span>
         <span className="text-gray-300 text-xs">3h</span>
       </div>
@@ -52,7 +53,7 @@ const StoryView = memo(() => (
     </div>
 
     <div className="absolute inset-0 flex items-center justify-center">
-      <CroppedPreview size={400} className="w-full h-full object-cover" />
+      <PostImage containerClass="w-full h-full" imageClass="w-full h-full object-cover" />
     </div>
 
     <div className="mt-auto p-4 z-20 flex items-center gap-3">
@@ -79,8 +80,8 @@ const FeedView = memo(() => (
       <div className={`flex gap-4 px-4 py-2 border-b ${border} overflow-x-auto no-scrollbar mb-2`}>
         <div className="flex flex-col items-center gap-1 min-w-[64px]">
           <div className="p-[2px] rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 relative">
-            <div className={`${bg} p-[2px] rounded-full`}>
-              <CroppedPreview size={56} className="rounded-full" />
+            <div className={`${bg} p-[2px] rounded-full w-14 h-14`}>
+              <ProfileImage className="rounded-full w-full h-full" />
             </div>
             <div className="absolute bottom-0 right-0 bg-blue-500 rounded-full p-0.5 border-2 border-black">
               <LuSquarePlus size={10} className="text-white" />
@@ -104,18 +105,15 @@ const FeedView = memo(() => (
         <div className="flex items-center justify-between p-3">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-gray-800">
-              <CroppedPreview size={32} />
+              <ProfileImage className="w-full h-full" />
             </div>
             <span className="font-semibold text-sm">username</span>
           </div>
           <LuEllipsis size={20} />
         </div>
 
-        <div className="w-full bg-gray-900 flex items-center justify-center overflow-hidden">
-          <PostImage
-            containerClass="w-full aspect-square flex items-center justify-center text-gray-700 bg-gray-900"
-            imageClass="w-full h-auto object-contain max-h-[400px]"
-          />
+        <div className="w-full bg-gray-900">
+          <PostImage containerClass="w-full min-h-[200px] bg-gray-900" imageClass="w-full h-auto block" />
         </div>
 
         <div className="p-3">
@@ -156,8 +154,8 @@ const ProfileView = memo(() => (
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
           <div className="p-[2px] rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500">
-            <div className={`${bg} p-[2px] rounded-full`}>
-              <CroppedPreview size={80} className="rounded-full" />
+            <div className={`${bg} p-[2px] rounded-full w-[88px] h-[88px]`}>
+              <ProfileImage className="rounded-full w-full h-full" />
             </div>
           </div>
           <div className="flex gap-6 text-center">

@@ -6,6 +6,8 @@ import { PlatformList } from '../components/PlatformList';
 import { PreviewPanel } from '../components/PreviewPanel';
 import { useStore } from '../stores/useStore';
 
+import type { AppState } from '../stores/useStore';
+
 export const Akane = () => {
   const activeTab = useStore((state) => state.activeTab);
   const setActiveTab = useStore((state) => state.setActiveTab);
@@ -20,7 +22,7 @@ export const Akane = () => {
     let lastX: number | null = null;
     let lastY: number | null = null;
 
-    const update = (state: ReturnType<typeof useStore.getState>) => {
+    const update = (state: AppState) => {
       const { rotation, zoom, x, y } = state.editorState;
 
       if (rotation !== lastRotation) {

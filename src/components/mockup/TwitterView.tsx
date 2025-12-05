@@ -20,7 +20,7 @@ import {
 
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
-import { CroppedPreview } from '../CroppedPreview';
+import { ProfileImage } from '../shared/Image';
 
 const VerifiedBadge = () => (
   <svg viewBox="0 0 22 22" className="w-[18px] h-[18px] text-[#1d9bf0] fill-current ml-1">
@@ -68,8 +68,8 @@ const ProfileView = memo(() => (
 
       <div className="px-4 relative pb-4 border-b border-[#2f3336]">
         <div className="flex justify-between items-end -mt-[40px] mb-3">
-          <div className="p-1 bg-black rounded-full">
-            <CroppedPreview size={80} className="rounded-full border-2 border-black" />
+          <div className="p-1 bg-black rounded-full w-[88px] h-[88px]">
+            <ProfileImage className="rounded-full border-2 border-black w-full h-full" />
           </div>
           <button className="px-4 py-1.5 rounded-full border border-[#536471] font-bold text-sm hover:bg-white/10 transition-colors">
             Edit profile
@@ -124,8 +124,8 @@ const ProfileView = memo(() => (
           <div className="w-3 h-3 fill-current">📌</div> Pinned
         </div>
         <div className="flex gap-3">
-          <div className="shrink-0">
-            <CroppedPreview size={40} className="rounded-full" />
+          <div className="shrink-0 w-10 h-10">
+            <ProfileImage className="rounded-full w-full h-full" />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-1 text-[#71767b] text-sm">
@@ -192,7 +192,7 @@ const FeedView = memo(() => (
   <div className="w-full h-full bg-black text-[#e7e9ea] font-sans flex flex-col relative">
     <div className="h-14 flex items-center justify-between px-4 border-b border-[#2f3336] shrink-0 sticky top-0 bg-black/80 backdrop-blur-md z-30">
       <div className="w-8 h-8 rounded-full overflow-hidden">
-        <CroppedPreview size={32} />
+        <ProfileImage className="w-full h-full" />
       </div>
       <XLogo />
       <div className="w-8"></div>
@@ -211,8 +211,8 @@ const FeedView = memo(() => (
 
       <div className="p-4 border-b border-[#2f3336] hover:bg-white/[0.03] transition-colors cursor-pointer">
         <div className="flex gap-3">
-          <div className="shrink-0">
-            <CroppedPreview size={40} className="rounded-full" />
+          <div className="shrink-0 w-10 h-10">
+            <ProfileImage className="rounded-full w-full h-full" />
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-1 text-[#71767b] text-sm">

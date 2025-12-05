@@ -15,8 +15,7 @@ import {
 
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
-import { CroppedPreview } from '../CroppedPreview';
-import { PostImage } from './Shared';
+import { PostImage, ProfileImage } from '../shared/Image';
 
 const BottomNav = () => (
   <div className="h-[52px] bg-[#1b1f23] border-t border-[#31363c] flex items-center justify-between px-6 shrink-0 z-50">
@@ -47,7 +46,7 @@ const ProfileView = memo(() => (
   <div className="w-full h-full bg-[#000000] text-white font-sans flex flex-col relative overflow-hidden">
     <div className="flex items-center gap-3 p-3 bg-[#1b1f23] border-b border-[#31363c] shrink-0">
       <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
-        <CroppedPreview size={32} />
+        <ProfileImage className="w-full h-full" />
       </div>
       <div className="flex-1 h-8 bg-[#293038] rounded flex items-center px-3 gap-2">
         <LuSearch size={16} className="text-[#90959c]" />
@@ -63,8 +62,8 @@ const ProfileView = memo(() => (
         </div>
 
         <div className="px-4 relative">
-          <div className="-mt-[50px] inline-block p-1 bg-[#1b1f23] rounded-full relative z-10">
-            <CroppedPreview size={100} className="rounded-full" />
+          <div className="-mt-[50px] inline-block p-1 bg-[#1b1f23] rounded-full relative z-10 w-[100px] h-[100px]">
+            <ProfileImage className="rounded-full w-full h-full" />
             <div className="absolute inset-0 rounded-full border-4 border-[#1b1f23] pointer-events-none"></div>
           </div>
 
@@ -134,7 +133,7 @@ const FeedView = memo(() => (
   <div className="w-full h-full bg-[#000000] text-white font-sans flex flex-col relative">
     <div className="flex items-center gap-3 p-3 bg-[#1b1f23] border-b border-[#31363c] shrink-0">
       <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
-        <CroppedPreview size={32} />
+        <ProfileImage className="w-full h-full" />
       </div>
       <div className="flex-1 h-8 bg-[#293038] rounded flex items-center px-3 gap-2">
         <LuSearch size={16} className="text-[#90959c]" />
@@ -146,8 +145,8 @@ const FeedView = memo(() => (
     <div className="flex-1 overflow-y-auto no-scrollbar bg-[#000000]">
       <div className="bg-[#1b1f23] mb-2 mt-2 pt-3 pb-1">
         <div className="px-3 flex gap-3 mb-2">
-          <div className="shrink-0">
-            <CroppedPreview size={48} className="rounded-full" />
+          <div className="shrink-0 w-12 h-12">
+            <ProfileImage className="rounded-full w-full h-full" />
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between">
@@ -172,8 +171,8 @@ const FeedView = memo(() => (
           </p>
         </div>
 
-        <div className="w-full bg-[#293038] flex items-center justify-center overflow-hidden mb-2">
-          <PostImage containerClass="w-full aspect-video flex items-center justify-center" imageClass="w-full h-auto max-h-[500px] object-contain" />
+        <div className="w-full bg-[#293038] mb-2">
+          <PostImage containerClass="w-full bg-[#293038]" imageClass="w-full h-auto block" />
         </div>
 
         <div className="px-3 py-2 flex items-center justify-between text-xs text-[#90959c] border-b border-[#31363c]">

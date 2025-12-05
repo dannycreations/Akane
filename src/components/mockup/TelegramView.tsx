@@ -3,7 +3,7 @@ import { LuArrowLeft, LuCheck, LuEllipsisVertical, LuMic, LuPaperclip, LuPhone, 
 
 import { Perspective } from '../../app/constants';
 import { useStore } from '../../stores/useStore';
-import { CroppedPreview } from '../CroppedPreview';
+import { ProfileImage } from '../shared/Image';
 
 const bgMain = 'bg-[#17212b]';
 const bgContent = 'bg-[#0e1621]';
@@ -35,7 +35,7 @@ const ProfileView = memo(() => (
     </div>
 
     <div className="w-full aspect-square bg-black relative shrink-0 overflow-hidden">
-      <CroppedPreview className="w-full h-full object-cover" />
+      <ProfileImage className="w-full h-full object-cover" />
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#17212b] to-transparent"></div>
 
       <div className="absolute bottom-4 left-5 text-white z-20">
@@ -87,7 +87,7 @@ const ChatView = memo(() => (
       </div>
       <div className="flex-1 flex items-center gap-3 ml-1 cursor-pointer">
         <div className="w-10 h-10 rounded-full overflow-hidden bg-black">
-          <CroppedPreview size={40} />
+          <ProfileImage className="w-full h-full" />
         </div>
         <div className="flex flex-col justify-center">
           <div className={`${textPrimary} font-bold text-base leading-none flex items-center gap-1`}>Your Name</div>
