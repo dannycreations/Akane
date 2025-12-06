@@ -50,7 +50,7 @@ const PlatformItem = memo(
   },
 );
 
-export const PlatformList = ({ orientation = 'vertical' }: PlatformListProps) => {
+export const PlatformList = memo(({ orientation = 'vertical' }: PlatformListProps) => {
   const selected = useStore((state) => state.platform);
   const setPlatform = useStore((state) => state.setPlatform);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -83,4 +83,4 @@ export const PlatformList = ({ orientation = 'vertical' }: PlatformListProps) =>
       </div>
     </div>
   );
-};
+});

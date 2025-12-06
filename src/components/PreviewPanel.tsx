@@ -1,4 +1,4 @@
-import { startTransition, Suspense, useEffect, useRef, useState } from 'react';
+import { memo, Suspense, useEffect, useRef, useState } from 'react';
 import { LuArrowLeft, LuArrowRight, LuBattery, LuSignal, LuWifi } from 'react-icons/lu';
 
 import { useStore } from '../stores/useStore';
@@ -6,13 +6,18 @@ import { getPlatformConfig, PLATFORMS } from './mockup';
 
 import type { Platform } from '../app/platforms';
 
-export const PreviewPanel = () => {
+const PHONE_WIDTH = 340;
+const PHONE_HEIGHT = 680;
+const MARGIN = 20;
+
+export const PreviewPanel = memo(() => {
   const platform = useStore((state) => state.platform);
   const perspective = useStore((state) => state.perspective);
   const setPerspective = useStore((state) => state.setPerspective);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
   const [visited, setVisited] = useState<Set<Platform>>(() => new Set([platform]));
 
   useEffect(() => {
@@ -25,18 +30,31 @@ export const PreviewPanel = () => {
   }, [platform]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      startTransition(() => {
-        setVisited((prev) => {
-          if (prev.size === PLATFORMS.length) return prev;
-          const next = new Set(prev);
-          PLATFORMS.forEach((p) => next.add(p.id));
-          return next;
-        });
-      });
-    }, 1500);
+    const preloadNetwork = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      PLATFORMS.forEach((p) => p.preload?.());
+    };
+    preloadNetwork();
 
-    return () => clearTimeout(timer);
+    let timer: number;
+    const ids = PLATFORMS.map((p) => p.id);
+
+    const mountNext = (index: number) => {
+      if (index >= ids.length) return;
+
+      const id = ids[index];
+      setVisited((prev) => {
+        if (prev.has(id)) return prev;
+        const next = new Set(prev);
+        next.add(id);
+        return next;
+      });
+
+      timer = window.setTimeout(() => mountNext(index + 1), 200);
+    };
+
+    timer = window.setTimeout(() => mountNext(0), 1000);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const config = getPlatformConfig(platform);
@@ -70,10 +88,6 @@ export const PreviewPanel = () => {
         if (!entry) return;
 
         const { width, height } = entry.contentRect;
-
-        const PHONE_WIDTH = 340;
-        const PHONE_HEIGHT = 680;
-        const MARGIN = 20;
 
         const scaleX = (width - MARGIN) / PHONE_WIDTH;
         const scaleY = (height - MARGIN) / PHONE_HEIGHT;
@@ -136,6 +150,7 @@ export const PreviewPanel = () => {
               const shouldRender = visited.has(p.id);
 
               if (!shouldRender) return null;
+
               const View = p.node;
 
               return (
@@ -168,4 +183,4 @@ export const PreviewPanel = () => {
       </div>
     </div>
   );
-};
+});

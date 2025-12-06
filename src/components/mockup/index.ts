@@ -6,11 +6,11 @@ import type { ComponentType } from 'react';
 import type { PlatformMetadata } from '../../app/platforms';
 
 export interface PlatformConfig extends PlatformMetadata {
-  readonly node: ComponentType<any>;
+  readonly node: ComponentType;
   readonly preload?: () => Promise<unknown>;
 }
 
-const loadView = (importer: () => Promise<{ default: ComponentType<any> }>) => {
+const loadView = (importer: () => Promise<{ default: ComponentType }>) => {
   return {
     node: lazy(importer),
     preload: importer,

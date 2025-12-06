@@ -1,9 +1,9 @@
 import { memo } from 'react';
-import { BsBarChartFill } from 'react-icons/bs';
 import {
   LuArrowLeft,
   LuBell,
   LuCalendar,
+  LuChartColumn,
   LuEllipsis,
   LuHeart,
   LuHouse,
@@ -166,7 +166,7 @@ const ProfileView = memo(() => (
               </div>
               <div className="group flex items-center gap-2 hover:text-[#1d9bf0]">
                 <div className="rounded-full p-1.5 group-hover:bg-[#1d9bf0]/10">
-                  <BsBarChartFill size={16} />
+                  <LuChartColumn size={16} />
                 </div>
                 <span className="text-xs">1.2k</span>
               </div>
@@ -249,7 +249,7 @@ const FeedView = memo(() => (
               </div>
               <div className="group flex items-center gap-2 hover:text-[#1d9bf0]">
                 <div className="rounded-full p-1.5 group-hover:bg-[#1d9bf0]/10">
-                  <BsBarChartFill size={16} />
+                  <LuChartColumn size={16} />
                 </div>
                 <span className="text-xs">850</span>
               </div>

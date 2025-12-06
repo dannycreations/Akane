@@ -2,7 +2,6 @@ import { memo } from 'react';
 import {
   LuCamera,
   LuChevronLeft,
-  LuEllipsis,
   LuImage,
   LuMapPin,
   LuMessageSquare,
@@ -45,7 +44,6 @@ const BottomNav = ({ active = 'chat' }: { active?: string }) => (
 
 const ProfileView = memo(() => (
   <div className="relative flex h-full w-full flex-col overflow-hidden bg-[#000000] font-sans text-white">
-    {/* Top Header */}
     <div className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between p-4">
       <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/50 shadow-sm backdrop-blur-md">
         <LuChevronLeft size={24} className="text-white" />
@@ -61,9 +59,7 @@ const ProfileView = memo(() => (
     </div>
 
     <div className="flex-1 overflow-y-auto no-scrollbar">
-      {/* Profile Card */}
       <div className="relative overflow-hidden rounded-b-[2.5rem] border-b border-white/5 bg-[#121212] pb-6 shadow-sm">
-        {/* Fake Banner - using the current image but blurred heavily */}
         <div className="relative h-40 w-full overflow-hidden bg-[#1A1A1A]">
           <PostImage containerClass="h-full w-full" imageClass="h-full w-full scale-125 object-cover opacity-60 blur-2xl" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-[#121212]"></div>
@@ -73,7 +69,6 @@ const ProfileView = memo(() => (
           <div className="rounded-3xl bg-[#121212] p-1.5 shadow-2xl">
             <div className="relative h-[120px] w-[120px] overflow-hidden rounded-[1.2rem] bg-[#1A1A1A] ring-1 ring-white/10">
               <ProfileImage className="h-full w-full" />
-              {/* Snapcode Dots Simulation */}
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle,#fff_1px,transparent_1px)] bg-[size:8px_8px] opacity-20"></div>
             </div>
           </div>
@@ -86,7 +81,6 @@ const ProfileView = memo(() => (
             <div className="mt-1 text-xs font-semibold text-gray-500">54,203 Snap Score</div>
           </div>
 
-          {/* 2025 Action Pills */}
           <div className="mt-5 flex w-full items-center gap-2 px-10">
             <button className="flex-1 rounded-full border border-white/5 bg-[#333] py-2.5 text-sm font-bold text-white shadow-md transition-transform hover:scale-[1.02]">
               Subscribe
@@ -98,7 +92,6 @@ const ProfileView = memo(() => (
         </div>
       </div>
 
-      {/* Content Section */}
       <div className="space-y-4 p-4">
         <div>
           <h3 className="mb-3 ml-1 text-lg font-bold text-white">Highlights</h3>
@@ -144,7 +137,6 @@ const ProfileView = memo(() => (
 
 const ChatView = memo(() => (
   <div className="relative flex h-full w-full flex-col overflow-hidden bg-[#000000] font-sans text-white">
-    {/* Header */}
     <div className="z-20 flex h-16 shrink-0 items-center justify-between border-b border-white/5 bg-[#000000] px-4">
       <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-white/5 bg-[#1A1A1A]">
         <div className="h-full w-full bg-gradient-to-br from-purple-500 to-indigo-600 opacity-80"></div>
@@ -155,13 +147,12 @@ const ChatView = memo(() => (
           <LuUserPlus size={20} />
         </div>
         <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/5 bg-[#1A1A1A] text-gray-400 hover:bg-[#222]">
-          <LuEllipsis size={20} />
+          <LuUsers size={20} />
         </div>
       </div>
     </div>
 
     <div className="flex-1 overflow-y-auto no-scrollbar">
-      {/* Search */}
       <div className="px-4 py-3">
         <div className="flex h-10 items-center gap-2 rounded-full border border-white/5 bg-[#1A1A1A] px-4 text-gray-500">
           <LuSearch size={18} />
@@ -169,9 +160,7 @@ const ChatView = memo(() => (
         </div>
       </div>
 
-      {/* Chat List */}
       <div className="pb-4">
-        {/* User Preview Row */}
         <div className="relative flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-[#111] active:bg-[#1A1A1A]">
           <div className="relative shrink-0">
             <div className="h-14 w-14 rounded-full bg-black p-[2px] ring-2 ring-[#FFFC00] shadow-[0_0_10px_rgba(255,252,0,0.2)]">
@@ -195,7 +184,6 @@ const ChatView = memo(() => (
           </div>
         </div>
 
-        {/* Mock Rows */}
         <div className="flex cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-[#111] active:bg-[#1A1A1A]">
           <div className="relative shrink-0">
             <div className="h-14 w-14 overflow-hidden rounded-full border border-white/5 bg-[#1A1A1A]">

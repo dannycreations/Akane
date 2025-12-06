@@ -28,7 +28,7 @@ export const ProfileImage = memo(({ size, className }: ProfileImageProps) => {
 
   return (
     <div className={`relative flex-shrink-0 select-none overflow-hidden bg-slate-800 ${className ?? ''}`} style={containerStyle}>
-      <EditorImage />
+      <EditorImage image={image} />
     </div>
   );
 });
@@ -50,7 +50,6 @@ export const PostImage = memo(
     const style = useMemo(() => {
       if (!image) return undefined;
       const ar = image.width / image.height;
-      // Cap at 4:5 ratio (0.8)
       if (ar < 0.8) {
         return {
           aspectRatio: '4/5',
@@ -82,14 +81,16 @@ interface EditorImageProps {
   readonly imgClassName?: string;
 }
 
-export const EditorImage = memo(({ image: imageProp, className, style, imgClassName }: EditorImageProps) => {
-  const storedImage = useStore((state) => state.image);
-  const image = imageProp ?? storedImage;
+export const EditorImage = memo(({ image, className, style, imgClassName }: EditorImageProps) => {
+  const finalStyle = useMemo(() => {
+    if (!style) return TRANSFORM_STYLE;
+    return { ...TRANSFORM_STYLE, ...style };
+  }, [style]);
 
   if (!image) return null;
 
   return (
-    <div className={`h-full w-full origin-center will-change-transform ${className ?? ''}`} style={{ ...TRANSFORM_STYLE, ...style }}>
+    <div className={`h-full w-full origin-center will-change-transform ${className ?? ''}`} style={finalStyle}>
       <img
         src={image.url}
         className={imgClassName ?? 'pointer-events-none block h-full w-full select-none object-contain'}

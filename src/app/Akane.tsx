@@ -17,12 +17,16 @@ export const Akane = () => {
     const root = rootRef.current;
     if (!root) return;
 
+    let lastEditorState: AppState['editorState'] | null = null;
     let lastRotation: number | null = null;
     let lastZoom: number | null = null;
     let lastX: number | null = null;
     let lastY: number | null = null;
 
     const update = (state: AppState) => {
+      if (state.editorState === lastEditorState) return;
+      lastEditorState = state.editorState;
+
       const { rotation, zoom, x, y } = state.editorState;
 
       if (rotation !== lastRotation) {

@@ -29,6 +29,40 @@ const GridOverlay = memo(({ isRoundedSquare }: { readonly isRoundedSquare: boole
   );
 });
 
+const ZoomControl = memo(
+  ({
+    minZoom,
+    maxZoom,
+    disabled,
+    onChange,
+  }: {
+    readonly minZoom: number;
+    readonly maxZoom: number;
+    readonly disabled: boolean;
+    readonly onChange: (val: number) => void;
+  }) => {
+    const zoom = useStore((state) => state.editorState.zoom);
+
+    return (
+      <div className="flex items-center gap-3">
+        <LuZoomIn size={16} className={`flex-shrink-0 text-indigo-400 ${disabled ? 'opacity-50' : ''}`} />
+        <Slider label="ZOOM" min={0} max={maxZoom - minZoom} step={0.01} value={!disabled ? Math.max(0, zoom - minZoom) : 0} onChange={onChange} />
+      </div>
+    );
+  },
+);
+
+const RotationControl = memo(({ disabled, onChange }: { readonly disabled: boolean; readonly onChange: (val: number) => void }) => {
+  const rotation = useStore((state) => state.editorState.rotation);
+
+  return (
+    <div className="flex items-center gap-3">
+      <LuRotateCw size={16} className={`flex-shrink-0 text-indigo-400 ${disabled ? 'opacity-50' : ''}`} />
+      <Slider label="ROTATE" min={-180} max={180} value={rotation} onChange={onChange} />
+    </div>
+  );
+});
+
 const EditorControls = memo(
   ({
     minZoom,
@@ -43,34 +77,18 @@ const EditorControls = memo(
     readonly onRotationChange: (val: number) => void;
     readonly disabled: boolean;
   }) => {
-    const zoom = useStore((state) => state.editorState.zoom);
-    const rotation = useStore((state) => state.editorState.rotation);
-
     return (
       <div className="z-20 mt-2 shrink-0 rounded-xl border border-slate-700/50 bg-slate-800/80 p-3 backdrop-blur-md">
         <div className="grid grid-cols-1 gap-2 sm:gap-4">
-          <div className="flex items-center gap-3">
-            <LuZoomIn size={16} className={`flex-shrink-0 text-indigo-400 ${disabled ? 'opacity-50' : ''}`} />
-            <Slider
-              label="ZOOM"
-              min={0}
-              max={maxZoom - minZoom}
-              step={0.01}
-              value={!disabled ? Math.max(0, zoom - minZoom) : 0}
-              onChange={onZoomChange}
-            />
-          </div>
-          <div className="flex items-center gap-3">
-            <LuRotateCw size={16} className={`flex-shrink-0 text-indigo-400 ${disabled ? 'opacity-50' : ''}`} />
-            <Slider label="ROTATE" min={-180} max={180} value={rotation} onChange={onRotationChange} />
-          </div>
+          <ZoomControl minZoom={minZoom} maxZoom={maxZoom} disabled={disabled} onChange={onZoomChange} />
+          <RotationControl disabled={disabled} onChange={onRotationChange} />
         </div>
       </div>
     );
   },
 );
 
-export const EditorPanel = () => {
+export const EditorPanel = memo(() => {
   const image = useStore((state) => state.image);
   const platform = useStore((state) => state.platform);
   const setImage = useStore((state) => state.setImage);
@@ -232,4 +250,4 @@ export const EditorPanel = () => {
       />
     </div>
   );
-};
+});

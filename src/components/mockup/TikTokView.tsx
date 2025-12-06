@@ -3,11 +3,13 @@ import {
   LuBookmark,
   LuHeart,
   LuHouse,
+  LuLayoutGrid,
   LuLock,
   LuMenu,
   LuMessageCircle,
   LuMessageSquare,
   LuMusic,
+  LuPlay,
   LuPlus,
   LuSearch,
   LuShare2,
@@ -56,7 +58,6 @@ const BottomNav = ({ active = 'home' }: { active?: string }) => (
 
 const ProfileView = memo(() => (
   <div className="relative flex h-full w-full flex-col overflow-hidden bg-black font-sans text-white">
-    {/* Header */}
     <div className="z-20 flex h-12 shrink-0 items-center justify-between px-4">
       <div className="w-6"></div>
       <div className="flex cursor-pointer items-center gap-1 text-base font-bold">
@@ -106,12 +107,9 @@ const ProfileView = memo(() => (
         </div>
       </div>
 
-      {/* Tabs */}
       <div className="flex items-center border-b border-white/10 text-gray-500">
         <div className="flex h-11 flex-1 cursor-pointer items-center justify-center border-b-2 border-white text-white">
-          <svg viewBox="0 0 48 48" width="20" height="20" fill="currentColor">
-            <path d="M6 6h10v10H6V6zm0 14h10v10H6V20zm0 14h10v10H6V34zm14-28h10v10H20V6zm0 14h10v10H20V20zm0 14h10v10H20V34zm14-28h10v10H34V6zm0 14h10v10H34V20zm0 14h10v10H34V34z" />
-          </svg>
+          <LuLayoutGrid size={20} />
         </div>
         <div className="flex h-11 flex-1 cursor-pointer items-center justify-center transition-colors hover:text-white">
           <LuLock size={20} />
@@ -124,7 +122,6 @@ const ProfileView = memo(() => (
         </div>
       </div>
 
-      {/* Grid */}
       <div className="grid grid-cols-3 gap-0.5">
         <div className="group relative aspect-[3/4] overflow-hidden bg-[#222]">
           <div className="absolute left-1 top-1 rounded bg-[#fe2c55] px-1.5 py-0.5 text-[10px] font-bold text-white">Pinned</div>
@@ -139,9 +136,7 @@ const ProfileView = memo(() => (
         {[...Array(8)].map((_, i) => (
           <div key={i} className="relative aspect-[3/4] bg-[#1a1a1a]">
             <div className="absolute bottom-1 left-1 flex items-center gap-1 text-xs font-semibold text-white drop-shadow">
-              <svg viewBox="0 0 24 24" width="10" height="10" fill="transparent" stroke="currentColor" strokeWidth="2.5">
-                <polygon points="5 3 19 12 5 21 5 3" />
-              </svg>
+              <LuPlay size={10} strokeWidth={2.5} />
               {(Math.random() * 50).toFixed(1)}K
             </div>
           </div>
@@ -156,13 +151,11 @@ const ProfileView = memo(() => (
 
 const FeedView = memo(() => (
   <div className="relative flex h-full w-full flex-col justify-end overflow-hidden bg-black font-sans text-white">
-    {/* Video Background Mock */}
     <div className="absolute inset-0 z-0 bg-[#111]">
       <PostImage containerClass="flex h-full w-full items-center justify-center" imageClass="h-full w-full object-cover opacity-60" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60"></div>
     </div>
 
-    {/* Top Tab Bar */}
     <div className="absolute left-0 right-0 top-0 z-20 flex h-16 items-center justify-center pt-2 text-[15px] font-bold drop-shadow-md">
       <span className="mr-4 cursor-pointer text-white/60 transition-colors hover:text-white">Friends</span>
       <span className="relative mr-4 cursor-pointer text-white">
@@ -177,7 +170,6 @@ const FeedView = memo(() => (
       </div>
     </div>
 
-    {/* Right Sidebar Actions */}
     <div className="absolute bottom-20 right-2 z-20 flex flex-col items-center gap-5 pb-4">
       <div className="relative mb-2">
         <div className="h-12 w-12 overflow-hidden rounded-full border border-white shadow-sm">
@@ -213,7 +205,6 @@ const FeedView = memo(() => (
       </div>
     </div>
 
-    {/* Bottom Info Overlay */}
     <div className="text-shadow-sm absolute bottom-[50px] left-0 right-16 z-20 flex flex-col items-start px-4 pb-4">
       <div className="mb-1 cursor-pointer text-[17px] font-bold hover:underline">@username</div>
       <div className="mb-2 line-clamp-2 text-[15px] leading-snug">
