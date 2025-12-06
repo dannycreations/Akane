@@ -18,6 +18,7 @@ export interface AppState {
   readonly setEditorState: (editorState: EditorState) => void;
   readonly setPlatform: (platform: Platform) => void;
   readonly setPerspective: (perspective: Perspective) => void;
+  readonly setImageWithEditorState: (image: ImageSource, editorState: EditorState) => void;
 }
 
 export const useStore = create<AppState>((set) => ({
@@ -42,4 +43,5 @@ export const useStore = create<AppState>((set) => ({
       return { platform, perspective };
     }),
   setPerspective: (perspective) => set({ perspective }),
+  setImageWithEditorState: (image, editorState) => set({ image, editorState }),
 }));

@@ -36,7 +36,7 @@ const PlatformItem = memo(
   `;
 
     return (
-      <button onClick={() => onSelect(p.id)} className={buttonClass}>
+      <button onClick={() => onSelect(p.id)} className={buttonClass} title={p.name} aria-label={p.name}>
         {isSelected && isVertical && <div className="absolute left-0 h-8 w-1 animate-pulse rounded-r-full bg-indigo-500" />}
         {isSelected && !isVertical && <div className="absolute bottom-0 h-1 w-8 animate-pulse rounded-t-full bg-indigo-500" />}
         <Icon size={isVertical ? 28 : 24} className={iconClass} />

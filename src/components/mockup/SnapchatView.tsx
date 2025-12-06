@@ -18,6 +18,9 @@ import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
 
+const HIGHLIGHT_IDS = [1, 2, 3];
+const SPOTLIGHT_ITEMS = Array.from({ length: 3 });
+
 const BottomNav = ({ active = 'chat' }: { active?: string }) => (
   <Navigation className="border-t border-white/10 bg-black/95 backdrop-blur-xl" safeAreaClassName="pb-6">
     <div className="flex h-[72px] items-center justify-between px-6">
@@ -96,7 +99,7 @@ const ProfileView = memo(() => (
         <div>
           <h3 className="mb-3 ml-1 text-lg font-bold text-white">Highlights</h3>
           <div className="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
-            {[1, 2, 3].map((i) => (
+            {HIGHLIGHT_IDS.map((i) => (
               <div key={i} className="group flex w-24 flex-shrink-0 cursor-pointer flex-col gap-2">
                 <div className="relative h-36 w-24 overflow-hidden rounded-xl border border-white/10 bg-[#1A1A1A] shadow-sm">
                   {i === 1 ? (
@@ -120,7 +123,7 @@ const ProfileView = memo(() => (
             <LuChevronLeft className="rotate-180 text-gray-500" />
           </div>
           <div className="grid grid-cols-3 gap-1 rounded-lg overflow-hidden">
-            {[...Array(3)].map((_, i) => (
+            {SPOTLIGHT_ITEMS.map((_, i) => (
               <div key={i} className="relative aspect-[3/4] bg-[#1A1A1A]">
                 {i === 0 && <PostImage containerClass="h-full w-full" imageClass="h-full w-full object-cover" />}
                 <div className="absolute bottom-1 left-1 text-white drop-shadow-md">

@@ -23,6 +23,8 @@ import { useStore } from '../../stores/useStore';
 import { ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
 
+const TABS = ['Posts', 'Replies', 'Highlights', 'Media'];
+
 const VerifiedBadge = () => (
   <svg viewBox="0 0 22 22" className="ml-1 h-[18px] w-[18px] fill-current text-[#1d9bf0]">
     <g>
@@ -114,7 +116,7 @@ const ProfileView = memo(() => (
       </div>
 
       <div className="flex border-b border-[#2f3336]">
-        {['Posts', 'Replies', 'Highlights', 'Media'].map((tab, i) => (
+        {TABS.map((tab, i) => (
           <div key={tab} className="relative flex flex-1 cursor-pointer justify-center py-3 hover:bg-white/5">
             <span className={`text-sm font-bold ${i === 0 ? 'text-[#e7e9ea]' : 'text-[#71767b]'}`}>{tab}</span>
             {i === 0 && <div className="absolute bottom-0 h-1 w-10 rounded-full bg-[#1d9bf0]"></div>}

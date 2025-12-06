@@ -17,17 +17,32 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
   const updateStateClamped = useCallback(
     (newState: EditorState, metaAr: number) => {
       const { xLim, yLim } = calculateLimits(metaAr, newState.zoom);
+      const newX = Math.max(-xLim, Math.min(xLim, newState.x));
+      const newY = Math.max(-yLim, Math.min(yLim, newState.y));
+
+      const currentState = useStore.getState().editorState;
+
+      if (
+        Math.abs(newX - currentState.x) < 1e-5 &&
+        Math.abs(newY - currentState.y) < 1e-5 &&
+        Math.abs(newState.zoom - currentState.zoom) < 1e-5 &&
+        Math.abs(newState.rotation - currentState.rotation) < 1e-5
+      ) {
+        return;
+      }
+
       setEditorState({
-        ...newState,
-        x: Math.max(-xLim, Math.min(xLim, newState.x)),
-        y: Math.max(-yLim, Math.min(yLim, newState.y)),
+        zoom: newState.zoom,
+        rotation: newState.rotation,
+        x: newX,
+        y: newY,
       });
     },
     [setEditorState],
   );
 
   const performDragUpdate = useCallback(() => {
-    if (!isDragging.current || !latestPointerEvent.current) return;
+    if (!isDragging.current || !latestPointerEvent.current || !containerRef.current) return;
 
     const e = latestPointerEvent.current;
     const { containerSize, mouseX, mouseY, stateX, stateY } = dragStart.current;
@@ -38,7 +53,7 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
     const dxScreen = e.clientX - mouseX;
     const dyScreen = e.clientY - mouseY;
     const { dx: dxLocal, dy: dyLocal } = rotateDelta(dxScreen, dyScreen, currentState.rotation);
-    const zoomFactor = currentState.zoom > 0.001 ? currentState.zoom : 0.001;
+    const zoomFactor = Math.max(currentState.zoom, 0.001);
 
     updateStateClamped(
       {
@@ -50,7 +65,7 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
     );
 
     frameRef.current = requestAnimationFrame(performDragUpdate);
-  }, [ar, updateStateClamped]);
+  }, [ar, containerRef, updateStateClamped]);
 
   const handlePointerDown = useCallback(
     (e: PointerEvent) => {

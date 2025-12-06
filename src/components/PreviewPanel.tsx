@@ -31,29 +31,25 @@ export const PreviewPanel = memo(() => {
 
   useEffect(() => {
     const preloadNetwork = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => window.setTimeout(resolve, 200));
       PLATFORMS.forEach((p) => p.preload?.());
     };
     preloadNetwork();
 
-    let timer: number;
-    const ids = PLATFORMS.map((p) => p.id);
-
-    const mountNext = (index: number) => {
-      if (index >= ids.length) return;
-
-      const id = ids[index];
+    const timer = window.setTimeout(() => {
       setVisited((prev) => {
-        if (prev.has(id)) return prev;
         const next = new Set(prev);
-        next.add(id);
-        return next;
+        let hasChanges = false;
+        PLATFORMS.forEach((p) => {
+          if (!next.has(p.id)) {
+            next.add(p.id);
+            hasChanges = true;
+          }
+        });
+        return hasChanges ? next : prev;
       });
+    }, 2000);
 
-      timer = window.setTimeout(() => mountNext(index + 1), 200);
-    };
-
-    timer = window.setTimeout(() => mountNext(0), 1000);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -114,12 +110,14 @@ export const PreviewPanel = memo(() => {
         <button
           onClick={handlePrevPerspective}
           className={`pointer-events-auto cursor-pointer rounded-full bg-slate-800/80 p-3 text-white shadow-lg transition-all hover:bg-indigo-500 ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
+          aria-label="Previous Perspective"
         >
           <LuArrowLeft size={20} />
         </button>
         <button
           onClick={handleNextPerspective}
           className={`pointer-events-auto cursor-pointer rounded-full bg-slate-800/80 p-3 text-white shadow-lg transition-all hover:bg-indigo-500 ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
+          aria-label="Next Perspective"
         >
           <LuArrowRight size={20} />
         </button>

@@ -22,6 +22,10 @@ const bg = isDark ? 'bg-black' : 'bg-white';
 const text = isDark ? 'text-white' : 'text-black';
 const border = isDark ? 'border-gray-800' : 'border-gray-200';
 
+const STORY_USER_IDS = [1, 2, 3, 4];
+const HIGHLIGHT_IDS = [1, 2, 3];
+const GRID_ITEMS = Array.from({ length: 9 });
+
 const BottomNav = () => (
   <Navigation className={`${bg} border-t ${border}`} safeAreaClassName="pb-5">
     <div className="flex h-[50px] items-center justify-between px-6">
@@ -94,7 +98,7 @@ const FeedView = memo(() => (
           </div>
           <span className="w-full truncate text-center text-xs text-gray-400">Your story</span>
         </div>
-        {[1, 2, 3, 4].map((i) => (
+        {STORY_USER_IDS.map((i) => (
           <div key={i} className="flex min-w-[64px] flex-col items-center gap-1">
             <div className="rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 p-[2px]">
               <div className={`rounded-full p-[2px] ${bg}`}>
@@ -190,7 +194,7 @@ const ProfileView = memo(() => (
         </div>
       </div>
       <div className="flex gap-4 overflow-x-auto px-4 pb-2 no-scrollbar">
-        {[1, 2, 3].map((i) => (
+        {HIGHLIGHT_IDS.map((i) => (
           <div key={i} className="flex min-w-[64px] flex-col items-center gap-1">
             <div className="h-16 w-16 rounded-full border border-slate-700 bg-slate-800"></div>
             <span className="text-xs">Highlight {i}</span>
@@ -199,7 +203,7 @@ const ProfileView = memo(() => (
       </div>
       <div className="mt-2 border-t border-slate-800">
         <div className="grid grid-cols-3 gap-0.5">
-          {[...Array(9)].map((_, i) => (
+          {GRID_ITEMS.map((_, i) => (
             <div key={i} className="aspect-square bg-slate-900 transition-colors hover:bg-slate-800"></div>
           ))}
         </div>

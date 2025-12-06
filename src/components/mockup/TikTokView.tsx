@@ -21,6 +21,8 @@ import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
 
+const GRID_ITEMS = Array.from({ length: 8 });
+
 const BottomNav = ({ active = 'home' }: { active?: string }) => (
   <Navigation className="border-t border-white/10 bg-black" safeAreaClassName="pb-6">
     <div className="flex h-[50px] items-center justify-between px-4 text-[10px] font-medium text-gray-400">
@@ -133,7 +135,7 @@ const ProfileView = memo(() => (
             <LuHeart size={10} fill="white" /> 14.2K
           </div>
         </div>
-        {[...Array(8)].map((_, i) => (
+        {GRID_ITEMS.map((_, i) => (
           <div key={i} className="relative aspect-[3/4] bg-[#1a1a1a]">
             <div className="absolute bottom-1 left-1 flex items-center gap-1 text-xs font-semibold text-white drop-shadow">
               <LuPlay size={10} strokeWidth={2.5} />
@@ -200,12 +202,12 @@ const FeedView = memo(() => (
         <span className="text-xs font-bold drop-shadow-md">8,492</span>
       </div>
 
-      <div className="relative mt-4 flex h-10 w-10 animate-[spin_5s_linear_infinite] items-center justify-center overflow-hidden rounded-full bg-black border-[6px] border-[#222]">
+      <div className="relative mt-4 flex h-10 w-10 animate-[spin_5s_linear_infinite] items-center justify-center overflow-hidden rounded-full bg-black border-[6px] border-[#222] will-change-transform">
         <ProfileImage className="h-full w-full" />
       </div>
     </div>
 
-    <div className="text-shadow-sm absolute bottom-[50px] left-0 right-16 z-20 flex flex-col items-start px-4 pb-4">
+    <div className="text-shadow-sm absolute bottom-[75px] left-0 right-16 z-20 flex flex-col items-start px-4 pb-4">
       <div className="mb-1 cursor-pointer text-[17px] font-bold hover:underline">@username</div>
       <div className="mb-2 line-clamp-2 text-[15px] leading-snug">
         POV: You finally found the perfect profile picture tool. 📸 ✨ <span className="font-bold">#design #pfp #2025</span>
@@ -214,7 +216,7 @@ const FeedView = memo(() => (
         <div className="flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 backdrop-blur-sm">
           <LuMusic size={14} />
           <div className="relative h-5 w-24 overflow-hidden">
-            <span className="absolute animate-[marquee_5s_linear_infinite] whitespace-nowrap">Original Sound - Your Name</span>
+            <span className="absolute animate-[marquee_5s_linear_infinite] whitespace-nowrap will-change-transform">Original Sound - Your Name</span>
           </div>
         </div>
       </div>
