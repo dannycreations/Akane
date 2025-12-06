@@ -124,74 +124,76 @@ const ProfileView = memo(() => (
 
 const ChatView = memo(() => (
   <div className={`relative flex h-full w-full flex-col font-sans ${bgMain} ${textMain}`}>
-    <div className={`flex h-12 shrink-0 items-center justify-between border-b border-[#26272d] px-4 shadow-sm ${bgSidebar}`}>
-      <div className="flex items-center gap-3">
-        <LuMenu size={24} className={textMuted} />
-        <div className="flex items-center gap-2">
-          <LuHash size={20} className={textMuted} />
-          <span className="text-base font-bold text-white">general</span>
-        </div>
-      </div>
-      <div className="flex items-center gap-4 text-[#dbdee1]">
-        <LuPhone size={22} />
-        <LuVideo size={24} />
-        <LuUsers size={22} />
-      </div>
-    </div>
-
-    <div className="flex-1 space-y-5 overflow-y-auto p-4">
-      <div className="group flex gap-4">
-        <div className="mt-1 h-10 w-10 shrink-0 cursor-pointer transition-opacity hover:opacity-80">
-          <ProfileImage className="h-full w-full rounded-full" />
-        </div>
-        <div className="min-w-0 flex-1">
-          <div className="mb-0.5 flex items-center gap-2">
-            <span className="cursor-pointer text-base font-medium text-white hover:underline">Your Name</span>
-            <span className="rounded bg-[#5865f2] px-1.5 py-0.5 text-[10px] font-bold uppercase text-white">BOT</span>
-            <span className="text-xs text-[#949ba4]">Today at 4:20 PM</span>
+    <div className="flex flex-1 min-w-0 flex-col">
+      <div className={`flex h-12 shrink-0 items-center justify-between border-b border-[#26272d] px-4 shadow-sm ${bgSidebar}`}>
+        <div className="flex items-center gap-3">
+          <LuMenu size={24} className={textMuted} />
+          <div className="flex items-center gap-2">
+            <LuHash size={20} className={textMuted} />
+            <span className="text-base font-bold text-white">general</span>
           </div>
-          <p className="leading-snug text-[#dbdee1]">
-            Hey everyone! Just checking out the new profile styles. <span className="inline-block align-middle text-[1.25em]">👀</span>
-          </p>
+        </div>
+        <div className="flex items-center gap-4 text-[#dbdee1]">
+          <LuPhone size={22} />
+          <LuVideo size={24} />
+          <LuUsers size={22} />
+        </div>
+      </div>
 
-          <div className="mt-1.5 flex gap-1">
-            <div className="flex cursor-pointer items-center gap-1 rounded-lg border border-[#5865f2] bg-[#2b2d31] px-1.5 py-0.5">
-              <span className="text-sm">🔥</span>
-              <span className="text-xs font-bold text-[#5865f2]">3</span>
+      <div className="flex-1 space-y-5 overflow-y-auto p-4">
+        <div className="group flex gap-4">
+          <div className="mt-1 h-10 w-10 shrink-0 cursor-pointer transition-opacity hover:opacity-80">
+            <ProfileImage className="h-full w-full rounded-full" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="mb-0.5 flex items-center gap-2">
+              <span className="cursor-pointer text-base font-medium text-white hover:underline">Your Name</span>
+              <span className="rounded bg-[#5865f2] px-1.5 py-0.5 text-[10px] font-bold uppercase text-white">BOT</span>
+              <span className="text-xs text-[#949ba4]">Today at 4:20 PM</span>
+            </div>
+            <p className="leading-snug text-[#dbdee1]">
+              Hey everyone! Just checking out the new profile styles. <span className="inline-block align-middle text-[1.25em]">👀</span>
+            </p>
+
+            <div className="mt-1.5 flex gap-1">
+              <div className="flex cursor-pointer items-center gap-1 rounded-lg border border-[#5865f2] bg-[#2b2d31] px-1.5 py-0.5">
+                <span className="text-sm">🔥</span>
+                <span className="text-xs font-bold text-[#5865f2]">3</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="group mt-2 flex gap-4">
-        <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-yellow-500 font-bold text-[#1e1f22]">U</div>
-        <div className="min-w-0 flex-1">
-          <div className="mb-0.5 flex items-center gap-2">
-            <span className="cursor-pointer text-base font-medium text-red-400 hover:underline">User</span>
-            <span className="text-xs text-[#949ba4]">Today at 4:22 PM</span>
+        <div className="group mt-2 flex gap-4">
+          <div className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-yellow-500 font-bold text-[#1e1f22]">U</div>
+          <div className="min-w-0 flex-1">
+            <div className="mb-0.5 flex items-center gap-2">
+              <span className="cursor-pointer text-base font-medium text-red-400 hover:underline">User</span>
+              <span className="text-xs text-[#949ba4]">Today at 4:22 PM</span>
+            </div>
+            <p className="leading-snug text-[#dbdee1]">That looks super clean! Did you edit that yourself?</p>
           </div>
-          <p className="leading-snug text-[#dbdee1]">That looks super clean! Did you edit that yourself?</p>
         </div>
       </div>
+
+      <Navigation className={bgMain} safeAreaClassName="pb-6">
+        <div className="px-4 pt-2">
+          <div className={`flex items-center gap-2 rounded-full bg-[#383a40] px-4 py-2.5`}>
+            <div className="cursor-pointer rounded-full bg-[#b5bac1] p-0.5 transition-colors hover:text-white">
+              <LuCirclePlus size={20} className="text-[#383a40]" fill="currentColor" />
+            </div>
+            <input
+              type="text"
+              placeholder="Message #general"
+              className="min-w-0 flex-1 border-none bg-transparent text-[#dbdee1] outline-none placeholder-[#949ba4]"
+            />
+            <LuGift size={24} className="cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]" />
+            <LuSticker size={24} className="cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]" />
+            <LuSmile size={24} className="cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]" />
+          </div>
+        </div>
+      </Navigation>
     </div>
-
-    <Navigation className={bgMain} safeAreaClassName="pb-4">
-      <div className="px-4 pt-2">
-        <div className={`flex items-center gap-2 rounded-full bg-[#383a40] px-4 py-2.5`}>
-          <div className="cursor-pointer rounded-full bg-[#b5bac1] p-0.5 transition-colors hover:text-white">
-            <LuCirclePlus size={20} className="text-[#383a40]" fill="currentColor" />
-          </div>
-          <input
-            type="text"
-            placeholder="Message #general"
-            className="min-w-0 flex-1 border-none bg-transparent text-[#dbdee1] outline-none placeholder-[#949ba4]"
-          />
-          <LuGift size={24} className="cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]" />
-          <LuSticker size={24} className="cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]" />
-          <LuSmile size={24} className="cursor-pointer text-[#b5bac1] hover:text-[#dbdee1]" />
-        </div>
-      </div>
-    </Navigation>
   </div>
 ));
 

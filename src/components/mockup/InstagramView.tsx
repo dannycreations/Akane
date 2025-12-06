@@ -59,13 +59,15 @@ const StoryView = memo(() => (
       <PostImage containerClass="h-full w-full" imageClass="h-full w-full object-cover" />
     </div>
 
-    <div className="z-20 mt-auto flex items-center gap-3 p-4">
-      <div className="flex h-10 flex-1 items-center rounded-full border border-white/30 px-4">
-        <span className="text-sm text-white/70">Send message</span>
+    <Navigation className="z-20 mt-auto" safeAreaClassName="pb-6">
+      <div className="flex items-center gap-3 px-4 pt-2">
+        <div className="flex h-10 flex-1 items-center rounded-full border border-white/30 px-4">
+          <span className="text-sm text-white/70">Send message</span>
+        </div>
+        <LuHeart className="text-white" size={24} />
+        <LuSend className="text-white" size={24} />
       </div>
-      <LuHeart className="text-white" size={24} />
-      <LuSend className="text-white" size={24} />
-    </div>
+    </Navigation>
   </div>
 ));
 

@@ -87,17 +87,7 @@ const ProfileView = memo(() => (
 
 const ChatView = memo(() => (
   <div className={`relative flex h-full w-full flex-col font-sans ${bgMain} ${textPrimary}`}>
-    <div className="absolute bottom-0 left-0 top-0 z-10 flex w-[60px] flex-col items-center border-r border-[#2B2D31] bg-[#121417] py-4 gap-4">
-      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#36373A] font-bold">W</div>
-      <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-[#36373A] bg-transparent hover:bg-[#36373A]">
-        <div className="h-5 w-5 rounded-sm bg-[#ABABAD]"></div>
-      </div>
-      <div className="mt-auto h-8 w-8 overflow-hidden rounded bg-indigo-500">
-        <ProfileImage className="h-full w-full" />
-      </div>
-    </div>
-
-    <div className="ml-[60px] flex flex-1 min-w-0 flex-col">
+    <div className="flex flex-1 min-w-0 flex-col">
       <div className={`flex h-12 shrink-0 items-center justify-between border-b px-4 ${border}`}>
         <div className="flex items-center gap-1 text-lg font-bold">
           <LuHash size={20} className={textSecondary} />
