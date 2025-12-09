@@ -10,14 +10,49 @@ const PHONE_WIDTH = 340;
 const PHONE_HEIGHT = 680;
 const MARGIN = 20;
 
-export const PreviewPanel = memo(() => {
+const PerspectiveControls = memo(() => {
   const platform = useStore((state) => state.platform);
   const perspective = useStore((state) => state.perspective);
   const setPerspective = useStore((state) => state.setPerspective);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const config = getPlatformConfig(platform);
+  const perspectives = config.perspectives;
+  const currentIdx = perspectives.indexOf(perspective);
 
+  const handleNextPerspective = () => {
+    const next = perspectives[(currentIdx + 1) % perspectives.length];
+    setPerspective(next);
+  };
+
+  const handlePrevPerspective = () => {
+    const prev = perspectives[(currentIdx - 1 + perspectives.length) % perspectives.length];
+    setPerspective(prev);
+  };
+
+  if (perspectives.length <= 1) return null;
+
+  return (
+    <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 flex w-full max-w-[500px] -translate-x-1/2 -translate-y-1/2 justify-between px-4">
+      <button
+        onClick={handlePrevPerspective}
+        className="pointer-events-auto cursor-pointer rounded-full bg-slate-800/80 p-3 text-white shadow-lg transition-all hover:bg-indigo-500"
+        aria-label="Previous Perspective"
+      >
+        <LuArrowLeft size={20} />
+      </button>
+      <button
+        onClick={handleNextPerspective}
+        className="pointer-events-auto cursor-pointer rounded-full bg-slate-800/80 p-3 text-white shadow-lg transition-all hover:bg-indigo-500"
+        aria-label="Next Perspective"
+      >
+        <LuArrowRight size={20} />
+      </button>
+    </div>
+  );
+});
+
+const PhoneFrame = memo(() => {
+  const platform = useStore((state) => state.platform);
   const [visited, setVisited] = useState<Set<Platform>>(() => new Set([platform]));
 
   useEffect(() => {
@@ -53,19 +88,63 @@ export const PreviewPanel = memo(() => {
     return () => window.clearTimeout(timer);
   }, []);
 
-  const config = getPlatformConfig(platform);
-  const perspectives = config.perspectives;
-  const currentIdx = perspectives.indexOf(perspective);
+  return (
+    <div className="relative h-[680px] w-[340px] overflow-hidden rounded-[3rem] border-8 border-slate-800 bg-black shadow-2xl ring-1 ring-white/10">
+      <div className="absolute left-1/2 top-0 z-50 flex h-7 w-28 -translate-x-1/2 items-center justify-center gap-2 rounded-b-2xl bg-black">
+        <div className="h-3 w-16 rounded-full bg-slate-900/50" />
+      </div>
 
-  const handleNextPerspective = () => {
-    const next = perspectives[(currentIdx + 1) % perspectives.length];
-    setPerspective(next);
-  };
+      <div className="absolute left-6 right-6 top-2 z-40 flex items-center justify-between text-[10px] font-medium text-white">
+        <span>9:41</span>
+        <div className="flex items-center gap-1.5">
+          <LuSignal size={12} />
+          <LuWifi size={12} />
+          <LuBattery size={12} />
+        </div>
+      </div>
 
-  const handlePrevPerspective = () => {
-    const prev = perspectives[(currentIdx - 1 + perspectives.length) % perspectives.length];
-    setPerspective(prev);
-  };
+      <div className="relative h-full w-full bg-slate-950 pt-8">
+        {PLATFORMS.map((p) => {
+          const isActive = p.id === platform;
+          const shouldRender = visited.has(p.id);
+
+          if (!shouldRender) return null;
+
+          const View = p.node;
+
+          return (
+            <div
+              key={p.id}
+              className="absolute inset-0 h-full w-full pt-8"
+              style={{
+                display: isActive ? 'block' : 'none',
+                zIndex: isActive ? 10 : 0,
+              }}
+            >
+              <Suspense
+                fallback={
+                  isActive ? (
+                    <div className="flex h-full items-center justify-center text-slate-500">
+                      <div className="animate-pulse">Loading...</div>
+                    </div>
+                  ) : null
+                }
+              >
+                <View />
+              </Suspense>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="absolute bottom-2 left-1/2 z-50 h-1 w-32 -translate-x-1/2 rounded-full bg-white/20"></div>
+    </div>
+  );
+});
+
+export const PreviewPanel = memo(() => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -106,78 +185,13 @@ export const PreviewPanel = memo(() => {
 
   return (
     <div ref={containerRef} className="relative flex flex-1 w-full min-h-0 flex-col items-center justify-center overflow-hidden p-4 lg:p-8">
-      <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 flex w-full max-w-[500px] -translate-x-1/2 -translate-y-1/2 justify-between px-4">
-        <button
-          onClick={handlePrevPerspective}
-          className={`pointer-events-auto cursor-pointer rounded-full bg-slate-800/80 p-3 text-white shadow-lg transition-all hover:bg-indigo-500 ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
-          aria-label="Previous Perspective"
-        >
-          <LuArrowLeft size={20} />
-        </button>
-        <button
-          onClick={handleNextPerspective}
-          className={`pointer-events-auto cursor-pointer rounded-full bg-slate-800/80 p-3 text-white shadow-lg transition-all hover:bg-indigo-500 ${perspectives.length <= 1 ? 'opacity-0' : ''}`}
-          aria-label="Next Perspective"
-        >
-          <LuArrowRight size={20} />
-        </button>
-      </div>
-
+      <PerspectiveControls />
       <div
         ref={contentRef}
         style={{ transform: 'scale(var(--preview-scale, 1))' }}
         className="origin-center transition-transform duration-300 ease-out will-change-transform"
       >
-        <div className="relative h-[680px] w-[340px] overflow-hidden rounded-[3rem] border-8 border-slate-800 bg-black shadow-2xl ring-1 ring-white/10">
-          <div className="absolute left-1/2 top-0 z-50 flex h-7 w-28 -translate-x-1/2 items-center justify-center gap-2 rounded-b-2xl bg-black">
-            <div className="h-3 w-16 rounded-full bg-slate-900/50" />
-          </div>
-
-          <div className="absolute left-6 right-6 top-2 z-40 flex items-center justify-between text-[10px] font-medium text-white">
-            <span>9:41</span>
-            <div className="flex items-center gap-1.5">
-              <LuSignal size={12} />
-              <LuWifi size={12} />
-              <LuBattery size={12} />
-            </div>
-          </div>
-
-          <div className="relative h-full w-full bg-slate-950 pt-8">
-            {PLATFORMS.map((p) => {
-              const isActive = p.id === platform;
-              const shouldRender = visited.has(p.id);
-
-              if (!shouldRender) return null;
-
-              const View = p.node;
-
-              return (
-                <div
-                  key={p.id}
-                  className="absolute inset-0 h-full w-full pt-8"
-                  style={{
-                    display: isActive ? 'block' : 'none',
-                    zIndex: isActive ? 10 : 0,
-                  }}
-                >
-                  <Suspense
-                    fallback={
-                      isActive ? (
-                        <div className="flex h-full items-center justify-center text-slate-500">
-                          <div className="animate-pulse">Loading...</div>
-                        </div>
-                      ) : null
-                    }
-                  >
-                    <View />
-                  </Suspense>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="absolute bottom-2 left-1/2 z-50 h-1 w-32 -translate-x-1/2 rounded-full bg-white/20"></div>
-        </div>
+        <PhoneFrame />
       </div>
     </div>
   );
