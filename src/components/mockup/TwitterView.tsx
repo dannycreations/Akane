@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo } from 'react';
 import {
   LuArrowLeft,
@@ -118,7 +119,7 @@ const ProfileView = memo(() => (
       <div className="flex border-b border-[#2f3336]">
         {TABS.map((tab, i) => (
           <div key={tab} className="relative flex flex-1 cursor-pointer justify-center py-3 hover:bg-white/5">
-            <span className={`text-sm font-bold ${i === 0 ? 'text-[#e7e9ea]' : 'text-[#71767b]'}`}>{tab}</span>
+            <span className={clsx('text-sm font-bold', i === 0 ? 'text-[#e7e9ea]' : 'text-[#71767b]')}>{tab}</span>
             {i === 0 && <div className="absolute bottom-0 h-1 w-10 rounded-full bg-[#1d9bf0]"></div>}
           </div>
         ))}

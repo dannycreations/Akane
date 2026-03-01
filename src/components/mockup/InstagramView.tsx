@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo } from 'react';
 import {
   LuBookmark,
@@ -27,7 +28,7 @@ const HIGHLIGHT_IDS = [1, 2, 3];
 const GRID_ITEMS = Array.from({ length: 9 });
 
 const BottomNav = () => (
-  <Navigation className={`${bg} border-t ${border}`} safeAreaClassName="pb-5">
+  <Navigation className={clsx(bg, 'border-t', border)} safeAreaClassName="pb-5">
     <div className="flex h-[50px] items-center justify-between px-6">
       <LuHouse size={24} className={text} />
       <LuSearch size={24} className={text} />
@@ -76,8 +77,8 @@ const StoryView = memo(() => (
 ));
 
 const FeedView = memo(() => (
-  <div className={`flex h-full w-full flex-col font-sans ${bg} ${text}`}>
-    <div className={`flex h-12 shrink-0 items-center justify-between border-b px-4 ${border}`}>
+  <div className={clsx('flex h-full w-full flex-col font-sans', bg, text)}>
+    <div className={clsx('flex h-12 shrink-0 items-center justify-between border-b px-4', border)}>
       <div className="text-xl font-bold tracking-tight italic">Instagram</div>
       <div className="flex gap-5">
         <LuHeart size={24} />
@@ -86,10 +87,10 @@ const FeedView = memo(() => (
     </div>
 
     <div className="flex-1 overflow-y-auto no-scrollbar">
-      <div className={`mb-2 flex gap-4 overflow-x-auto border-b px-4 py-2 no-scrollbar ${border}`}>
+      <div className={clsx('mb-2 flex gap-4 overflow-x-auto border-b px-4 py-2 no-scrollbar', border)}>
         <div className="flex min-w-[64px] flex-col items-center gap-1">
           <div className="relative rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 p-[2px]">
-            <div className={`h-14 w-14 rounded-full p-[2px] ${bg}`}>
+            <div className={clsx('h-14 w-14 rounded-full p-[2px]', bg)}>
               <ProfileImage className="h-full w-full rounded-full" />
             </div>
             <div className="absolute bottom-0 right-0 rounded-full border-2 border-black bg-blue-500 p-0.5">
@@ -101,7 +102,7 @@ const FeedView = memo(() => (
         {STORY_USER_IDS.map((i) => (
           <div key={i} className="flex min-w-[64px] flex-col items-center gap-1">
             <div className="rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 p-[2px]">
-              <div className={`rounded-full p-[2px] ${bg}`}>
+              <div className={clsx('rounded-full p-[2px]', bg)}>
                 <div className="h-14 w-14 rounded-full bg-gray-800" />
               </div>
             </div>
@@ -150,8 +151,8 @@ const FeedView = memo(() => (
 ));
 
 const ProfileView = memo(() => (
-  <div className={`flex h-full w-full flex-col font-sans ${bg} ${text}`}>
-    <div className={`flex h-12 shrink-0 items-center justify-between border-b px-4 ${border}`}>
+  <div className={clsx('flex h-full w-full flex-col font-sans', bg, text)}>
+    <div className={clsx('flex h-12 shrink-0 items-center justify-between border-b px-4', border)}>
       <span className="text-lg font-bold">username</span>
       <div className="flex gap-4">
         <LuSquarePlus size={24} />
@@ -163,7 +164,7 @@ const ProfileView = memo(() => (
       <div className="p-4">
         <div className="mb-4 flex items-center justify-between">
           <div className="rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 p-[2px]">
-            <div className={`h-[88px] w-[88px] rounded-full p-[2px] ${bg}`}>
+            <div className={clsx('h-[88px] w-[88px] rounded-full p-[2px]', bg)}>
               <ProfileImage className="h-full w-full rounded-full" />
             </div>
           </div>

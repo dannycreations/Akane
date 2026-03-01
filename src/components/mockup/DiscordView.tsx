@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo } from 'react';
 import { LuCirclePlus, LuGift, LuHash, LuMenu, LuPhone, LuSearch, LuSettings, LuSmile, LuSticker, LuUsers, LuVideo } from 'react-icons/lu';
 
@@ -13,7 +14,7 @@ const textMain = 'text-[#dbdee1]';
 const textMuted = 'text-[#949ba4]';
 
 const BottomNav = () => (
-  <Navigation className={`${bgSidebar} border-t border-[#1e1f22]`} safeAreaClassName="pb-6">
+  <Navigation className={clsx(bgSidebar, 'border-t border-[#1e1f22]')} safeAreaClassName="pb-6">
     <div className="flex h-[56px] items-center justify-around px-2">
       <div className="group flex cursor-pointer flex-col items-center gap-1">
         <div className="rounded-full bg-[#5865f2] p-1 text-white">
@@ -54,7 +55,7 @@ const NitroBadge = () => (
 );
 
 const ProfileView = memo(() => (
-  <div className={`relative flex h-full w-full flex-col overflow-hidden font-sans ${bgUserCard} ${textMain}`}>
+  <div className={clsx('relative flex h-full w-full flex-col overflow-hidden font-sans', bgUserCard, textMain)}>
     <div className="absolute left-0 right-0 top-0 z-30 flex h-14 items-center justify-end gap-4 bg-transparent px-4">
       <LuSettings size={24} className="text-white drop-shadow-md" />
     </div>
@@ -123,9 +124,9 @@ const ProfileView = memo(() => (
 ));
 
 const ChatView = memo(() => (
-  <div className={`relative flex h-full w-full flex-col font-sans ${bgMain} ${textMain}`}>
+  <div className={clsx('relative flex h-full w-full flex-col font-sans', bgMain, textMain)}>
     <div className="flex flex-1 min-w-0 flex-col">
-      <div className={`flex h-12 shrink-0 items-center justify-between border-b border-[#26272d] px-4 shadow-sm ${bgSidebar}`}>
+      <div className={clsx('flex h-12 shrink-0 items-center justify-between border-b border-[#26272d] px-4 shadow-sm', bgSidebar)}>
         <div className="flex items-center gap-3">
           <LuMenu size={24} className={textMuted} />
           <div className="flex items-center gap-2">
@@ -176,9 +177,9 @@ const ChatView = memo(() => (
         </div>
       </div>
 
-      <Navigation className={bgMain} safeAreaClassName="pb-6">
+      <Navigation className={clsx(bgMain)} safeAreaClassName="pb-6">
         <div className="px-4 pt-2">
-          <div className={`flex items-center gap-2 rounded-full bg-[#383a40] px-4 py-2.5`}>
+          <div className={clsx('flex items-center gap-2 rounded-full bg-[#383a40] px-4 py-2.5')}>
             <div className="cursor-pointer rounded-full bg-[#b5bac1] p-0.5 transition-colors hover:text-white">
               <LuCirclePlus size={20} className="text-[#383a40]" fill="currentColor" />
             </div>

@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo } from 'react';
 import { LuArrowLeft, LuCheck, LuEllipsisVertical, LuMic, LuPaperclip, LuPhone, LuSmile } from 'react-icons/lu';
 
@@ -26,7 +27,7 @@ const PremiumStar = ({ size = 16, className = '' }: { size?: number; className?:
 );
 
 const ProfileView = memo(() => (
-  <div className={`relative flex h-full w-full flex-col font-sans ${bgMain}`}>
+  <div className={clsx('relative flex h-full w-full flex-col font-sans', bgMain)}>
     <div className="absolute left-0 right-0 top-0 z-30 flex items-center justify-between p-3 text-white drop-shadow-md">
       <LuArrowLeft size={24} />
       <div className="flex gap-4">
@@ -49,25 +50,25 @@ const ProfileView = memo(() => (
 
     <div className="flex-1 space-y-6 overflow-y-auto p-5 no-scrollbar">
       <div>
-        <h3 className={`mb-1 text-sm font-medium ${accent}`}>Info</h3>
-        <p className={`text-[17px] leading-snug ${textPrimary}`}>Bio description here. 🚀</p>
-        <p className={`mt-1 text-xs ${textSecondary}`}>Bio</p>
+        <h3 className={clsx('mb-1 text-sm font-medium', accent)}>Info</h3>
+        <p className={clsx('text-[17px] leading-snug', textPrimary)}>Bio description here. 🚀</p>
+        <p className={clsx('mt-1 text-xs', textSecondary)}>Bio</p>
       </div>
 
       <div>
-        <p className={`text-[17px] ${textPrimary}`}>@username</p>
-        <p className={`mt-1 text-xs ${textSecondary}`}>Username</p>
+        <p className={clsx('text-[17px]', textPrimary)}>@username</p>
+        <p className={clsx('mt-1 text-xs', textSecondary)}>Username</p>
       </div>
 
       <div>
-        <p className={`text-[17px] ${textPrimary}`}>+1 (555) 123-4567</p>
-        <p className={`mt-1 text-xs ${textSecondary}`}>Mobile</p>
+        <p className={clsx('text-[17px]', textPrimary)}>+1 (555) 123-4567</p>
+        <p className={clsx('mt-1 text-xs', textSecondary)}>Mobile</p>
       </div>
 
       <div className="my-2 h-px w-full bg-black/20" />
 
       <div className="flex items-center justify-between">
-        <div className={`text-[17px] ${textPrimary}`}>Notifications</div>
+        <div className={clsx('text-[17px]', textPrimary)}>Notifications</div>
         <div className="font-medium text-[#6ab3f3]">On</div>
       </div>
     </div>
@@ -81,26 +82,26 @@ const ProfileView = memo(() => (
 ));
 
 const ChatView = memo(() => (
-  <div className={`relative flex h-full w-full flex-col font-sans ${bgContent}`}>
-    <div className={`z-20 flex h-[56px] shrink-0 items-center px-2 shadow-sm ${headerBg}`}>
+  <div className={clsx('relative flex h-full w-full flex-col font-sans', bgContent)}>
+    <div className={clsx('z-20 flex h-[56px] shrink-0 items-center px-2 shadow-sm', headerBg)}>
       <div className="cursor-pointer rounded-full p-2 hover:bg-[#202b36]">
-        <LuArrowLeft size={22} className={textSecondary} />
+        <LuArrowLeft size={22} className={clsx(textSecondary)} />
       </div>
       <div className="ml-1 flex flex-1 cursor-pointer items-center gap-3">
         <div className="h-10 w-10 overflow-hidden rounded-full bg-black">
           <ProfileImage className="h-full w-full" />
         </div>
         <div className="flex flex-col justify-center">
-          <div className={`flex items-center gap-1 text-base font-bold leading-none ${textPrimary}`}>Your Name</div>
-          <div className={`mt-1 text-xs ${textSecondary}`}>last seen recently</div>
+          <div className={clsx('flex items-center gap-1 text-base font-bold leading-none', textPrimary)}>Your Name</div>
+          <div className={clsx('mt-1 text-xs', textSecondary)}>last seen recently</div>
         </div>
       </div>
       <div className="flex gap-1">
         <div className="cursor-pointer rounded-full p-2 hover:bg-[#202b36]">
-          <LuPhone size={22} className={textSecondary} />
+          <LuPhone size={22} className={clsx(textSecondary)} />
         </div>
         <div className="cursor-pointer rounded-full p-2 hover:bg-[#202b36]">
-          <LuEllipsisVertical size={22} className={textSecondary} />
+          <LuEllipsisVertical size={22} className={clsx(textSecondary)} />
         </div>
       </div>
     </div>

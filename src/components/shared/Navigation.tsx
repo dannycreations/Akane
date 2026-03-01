@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo } from 'react';
 
 import type { ReactNode } from 'react';
@@ -9,5 +10,5 @@ interface NavigationProps {
 }
 
 export const Navigation = memo(({ children, className = '', safeAreaClassName = 'pb-8' }: NavigationProps) => {
-  return <div className={`z-50 w-full shrink-0 ${className} ${safeAreaClassName}`}>{children}</div>;
+  return <div className={clsx('z-50 w-full shrink-0', className, safeAreaClassName)}>{children}</div>;
 });

@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo } from 'react';
 import { LuChevronDown, LuClock, LuEllipsis, LuHash, LuMessageSquare, LuPaperclip, LuSend, LuSmile, LuUserPlus, LuVideo, LuX } from 'react-icons/lu';
 
@@ -12,11 +13,11 @@ const textSecondary = 'text-[#ABABAD]';
 const border = 'border-[#36373A]';
 
 const ProfileView = memo(() => (
-  <div className={`relative flex h-full w-full flex-col overflow-hidden font-sans ${bgMain} ${textPrimary}`}>
-    <div className={`z-20 flex h-14 items-center justify-between border-b bg-[#1A1D21] px-4 ${border}`}>
+  <div className={clsx('relative flex h-full w-full flex-col overflow-hidden font-sans', bgMain, textPrimary)}>
+    <div className={clsx('z-20 flex h-14 items-center justify-between border-b bg-[#1A1D21] px-4', border)}>
       <h2 className="text-lg font-bold">Profile</h2>
       <div className="cursor-pointer rounded-lg p-2 hover:bg-[#35373B]">
-        <LuX size={20} className={textSecondary} />
+        <LuX size={20} className={clsx(textSecondary)} />
       </div>
     </div>
 
@@ -32,7 +33,7 @@ const ProfileView = memo(() => (
         </div>
 
         <h1 className="mt-4 text-2xl font-bold">Your Name</h1>
-        <div className={`mt-1 ${textSecondary}`}>Job Title</div>
+        <div className={clsx('mt-1', textSecondary)}>Job Title</div>
 
         <button className="mt-4 flex w-full max-w-[240px] justify-center gap-2 rounded-lg border border-[#56585B] px-4 py-1.5 transition-colors hover:bg-[#35373B]">
           <LuSmile size={16} />
@@ -72,7 +73,7 @@ const ProfileView = memo(() => (
           <div className="flex-1">
             <label className="mb-1 block text-xs font-bold uppercase text-[#ABABAD]">Local Time</label>
             <div className="flex items-center gap-2 text-sm">
-              <LuClock size={14} className={textSecondary} /> 10:42 AM
+              <LuClock size={14} className={clsx(textSecondary)} /> 10:42 AM
             </div>
           </div>
           <div className="flex-1">
@@ -86,13 +87,13 @@ const ProfileView = memo(() => (
 ));
 
 const ChatView = memo(() => (
-  <div className={`relative flex h-full w-full flex-col font-sans ${bgMain} ${textPrimary}`}>
+  <div className={clsx('relative flex h-full w-full flex-col font-sans', bgMain, textPrimary)}>
     <div className="flex flex-1 min-w-0 flex-col">
-      <div className={`flex h-12 shrink-0 items-center justify-between border-b px-4 ${border}`}>
+      <div className={clsx('flex h-12 shrink-0 items-center justify-between border-b px-4', border)}>
         <div className="flex items-center gap-1 text-lg font-bold">
-          <LuHash size={20} className={textSecondary} />
+          <LuHash size={20} className={clsx(textSecondary)} />
           general
-          <LuChevronDown size={14} className={textSecondary} />
+          <LuChevronDown size={14} className={clsx(textSecondary)} />
         </div>
         <div className="-space-x-2 flex">
           <div className="flex h-6 w-6 items-center justify-center rounded border border-[#1A1D21] bg-yellow-500 text-[10px] font-bold text-black">

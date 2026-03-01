@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo, useCallback, useEffect, useRef } from 'react';
 import { LuDownload, LuRotateCw, LuUpload, LuX, LuZoomIn } from 'react-icons/lu';
 
@@ -16,14 +17,19 @@ const GridOverlay = memo(({ isRoundedSquare }: { readonly isRoundedSquare: boole
   const radiusClass = isRoundedSquare ? 'rounded-3xl' : 'rounded-full';
 
   return (
-    <div className={`pointer-events-none absolute inset-0 z-10 select-none overflow-hidden transition-all duration-300 ease-in-out ${radiusClass}`}>
+    <div
+      className={clsx('pointer-events-none absolute inset-0 z-10 select-none overflow-hidden transition-all duration-300 ease-in-out', radiusClass)}
+    >
       <div
-        className={`absolute inset-0 border border-white/20 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 ease-in-out ${radiusClass}`}
+        className={clsx(
+          'absolute inset-0 border border-white/20 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 ease-in-out',
+          radiusClass,
+        )}
       />
-      <div className={`${GRID_LINE_CLASS} bottom-0 left-1/3 top-0 w-px`} />
-      <div className={`${GRID_LINE_CLASS} bottom-0 left-2/3 top-0 w-px`} />
-      <div className={`${GRID_LINE_CLASS} left-0 right-0 top-1/3 h-px`} />
-      <div className={`${GRID_LINE_CLASS} left-0 right-0 top-2/3 h-px`} />
+      <div className={clsx(GRID_LINE_CLASS, 'bottom-0 left-1/3 top-0 w-px')} />
+      <div className={clsx(GRID_LINE_CLASS, 'bottom-0 left-2/3 top-0 w-px')} />
+      <div className={clsx(GRID_LINE_CLASS, 'left-0 right-0 top-1/3 h-px')} />
+      <div className={clsx(GRID_LINE_CLASS, 'left-0 right-0 top-2/3 h-px')} />
     </div>
   );
 });
@@ -44,7 +50,7 @@ const ZoomControl = memo(
 
     return (
       <div className="flex items-center gap-3">
-        <LuZoomIn size={16} className={`flex-shrink-0 text-indigo-400 ${disabled ? 'opacity-50' : ''}`} />
+        <LuZoomIn size={16} className={clsx('flex-shrink-0 text-indigo-400', disabled && 'opacity-50')} />
         <Slider label="ZOOM" min={0} max={maxZoom - minZoom} step={0.01} value={!disabled ? Math.max(0, zoom - minZoom) : 0} onChange={onChange} />
       </div>
     );
@@ -56,7 +62,7 @@ const RotationControl = memo(({ disabled, onChange }: { readonly disabled: boole
 
   return (
     <div className="flex items-center gap-3">
-      <LuRotateCw size={16} className={`flex-shrink-0 text-indigo-400 ${disabled ? 'opacity-50' : ''}`} />
+      <LuRotateCw size={16} className={clsx('flex-shrink-0 text-indigo-400', disabled && 'opacity-50')} />
       <Slider label="ROTATE" min={-180} max={180} value={rotation} onChange={onChange} />
     </div>
   );
@@ -185,11 +191,11 @@ export const EditorPanel = memo(() => {
   return (
     <div className="relative flex h-full w-full flex-col select-none border-r border-slate-800 bg-slate-900 p-2">
       <div className="z-20 mb-1 flex shrink-0 items-center justify-between">
-        <button onClick={() => setImage(null)} disabled={!image} className={`${buttonBaseClass} text-slate-400 hover:text-red-400`}>
+        <button onClick={() => setImage(null)} disabled={!image} className={clsx(buttonBaseClass, 'text-slate-400 hover:text-red-400')}>
           <LuX size={16} />
           <span className="sm:inline">CLOSE</span>
         </button>
-        <button onClick={handleDownload} disabled={!image} className={`${buttonBaseClass} text-slate-400 hover:text-emerald-400`}>
+        <button onClick={handleDownload} disabled={!image} className={clsx(buttonBaseClass, 'text-slate-400 hover:text-emerald-400')}>
           <LuDownload size={16} />
           <span className="sm:inline">SAVE</span>
         </button>
@@ -219,9 +225,10 @@ export const EditorPanel = memo(() => {
             <div className="absolute inset-0 flex h-full w-full items-center justify-center">
               <div
                 ref={containerRef}
-                className={`relative h-full w-full touch-none cursor-move overflow-hidden bg-slate-950 shadow-2xl ring-4 ring-indigo-500/20 transition-all duration-300 ease-in-out ${
-                  isRoundedSquare ? 'rounded-3xl' : 'rounded-full'
-                }`}
+                className={clsx(
+                  'relative h-full w-full touch-none cursor-move overflow-hidden bg-slate-950 shadow-2xl ring-4 ring-indigo-500/20 transition-all duration-300 ease-in-out',
+                  isRoundedSquare ? 'rounded-3xl' : 'rounded-full',
+                )}
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
                 onPointerUp={handlePointerUp}

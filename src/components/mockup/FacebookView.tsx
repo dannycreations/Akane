@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo } from 'react';
 import { LuBell, LuEllipsis, LuGlobe, LuHouse, LuImage, LuMessageCircle, LuSearch, LuShare2, LuThumbsUp, LuTv, LuUsers } from 'react-icons/lu';
 
@@ -57,7 +58,7 @@ const ProfileView = memo(() => (
 
 const FeedView = memo(() => (
   <div className="relative flex h-full w-full flex-col bg-[#18191a] font-sans text-[#e4e6eb]">
-    <div className="z-20 flex h-14 shrink-0 items-center justify-between border-b border-[#3e4042] bg-[#242526] px-4">
+    <div className={clsx('z-20 flex h-14 shrink-0 items-center justify-between border-b border-[#3e4042] bg-[#242526] px-4')}>
       <h1 className="text-2xl font-bold tracking-tighter text-[#2374e1]">facebook</h1>
       <div className="flex gap-2">
         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#3a3b3c]">

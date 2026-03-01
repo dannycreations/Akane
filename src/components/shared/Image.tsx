@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo, useMemo } from 'react';
 
 import { useStore } from '../../stores/useStore';
@@ -23,11 +24,11 @@ export const ProfileImage = memo(({ size, className }: ProfileImageProps) => {
   }, [size]);
 
   if (!image) {
-    return <div className={`bg-slate-700 ${className ?? ''}`} style={containerStyle} />;
+    return <div className={clsx('bg-slate-700', className)} style={containerStyle} />;
   }
 
   return (
-    <div className={`relative flex-shrink-0 select-none overflow-hidden bg-slate-800 ${className ?? ''}`} style={containerStyle}>
+    <div className={clsx('relative flex-shrink-0 select-none overflow-hidden bg-slate-800', className)} style={containerStyle}>
       <EditorImage image={image} />
     </div>
   );
@@ -66,7 +67,7 @@ export const PostImage = memo(
 
     return (
       <div className={containerClass}>
-        <img src={image.url} className={`pointer-events-none block select-none ${imageClass}`} draggable={false} decoding="async" style={style} />
+        <img src={image.url} className={clsx('pointer-events-none block select-none', imageClass)} draggable={false} decoding="async" style={style} />
       </div>
     );
   },
@@ -90,7 +91,7 @@ export const EditorImage = memo(({ image, className, style, imgClassName }: Edit
   if (!image) return null;
 
   return (
-    <div className={`h-full w-full origin-center will-change-transform ${className ?? ''}`} style={finalStyle}>
+    <div className={clsx('h-full w-full origin-center will-change-transform', className)} style={finalStyle}>
       <img
         src={image.url}
         className={imgClassName ?? 'pointer-events-none block h-full w-full select-none object-contain'}

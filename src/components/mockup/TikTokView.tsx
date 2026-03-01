@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo } from 'react';
 import {
   LuBookmark,
@@ -26,7 +27,7 @@ const GRID_ITEMS = Array.from({ length: 8 });
 const BottomNav = ({ active = 'home' }: { active?: string }) => (
   <Navigation className="border-t border-white/10 bg-black" safeAreaClassName="pb-6">
     <div className="flex h-[50px] items-center justify-between px-4 text-[10px] font-medium text-gray-400">
-      <div className={`flex cursor-pointer flex-col items-center gap-1 ${active === 'home' ? 'text-white' : ''}`}>
+      <div className={clsx('flex cursor-pointer flex-col items-center gap-1', active === 'home' && 'text-white')}>
         <LuHouse size={22} strokeWidth={active === 'home' ? 3 : 2} />
         <span>Home</span>
       </div>
@@ -50,7 +51,7 @@ const BottomNav = ({ active = 'home' }: { active?: string }) => (
         <LuMessageSquare size={22} />
         <span>Inbox</span>
       </div>
-      <div className={`flex cursor-pointer flex-col items-center gap-1 ${active === 'profile' ? 'text-white' : ''}`}>
+      <div className={clsx('flex cursor-pointer flex-col items-center gap-1', active === 'profile' && 'text-white')}>
         <LuUser size={22} strokeWidth={active === 'profile' ? 3 : 2} />
         <span>Profile</span>
       </div>

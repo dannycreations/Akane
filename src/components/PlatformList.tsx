@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo, useRef } from 'react';
 
 import { PLATFORM_METADATA } from '../app/platforms';
@@ -24,16 +25,13 @@ const PlatformItem = memo(
   }) => {
     const Icon = p.icon;
 
-    const buttonClass = `
-    relative group flex shrink-0 cursor-pointer items-center justify-center rounded-2xl transition-all duration-300
-    ${isVertical ? 'w-14 h-14' : 'w-12 h-12'}
-    ${isSelected ? 'scale-110 bg-slate-800 shadow-[0_0_20px_rgba(99,102,241,0.3)]' : 'hover:bg-slate-900'}
-  `;
+    const buttonClass = clsx(
+      'relative group flex shrink-0 cursor-pointer items-center justify-center rounded-2xl transition-all duration-300',
+      isVertical ? 'w-14 h-14' : 'w-12 h-12',
+      isSelected ? 'scale-110 bg-slate-800 shadow-[0_0_20px_rgba(99,102,241,0.3)]' : 'hover:bg-slate-900',
+    );
 
-    const iconClass = `
-    transition-colors duration-300
-    ${isSelected ? p.color : 'text-slate-500 group-hover:text-slate-300'}
-  `;
+    const iconClass = clsx('transition-colors duration-300', isSelected ? p.color : 'text-slate-500 group-hover:text-slate-300');
 
     return (
       <button onClick={() => onSelect(p.id)} className={buttonClass} title={p.name} aria-label={p.name}>
@@ -64,15 +62,15 @@ export const PlatformList = memo(({ orientation = 'vertical' }: PlatformListProp
     }
   };
 
-  const containerClass = `
-    relative z-10 bg-slate-950 shadow-2xl
-    ${isVertical ? 'flex h-full w-24 flex-col items-center justify-center border-r border-slate-800 py-8' : 'h-20 w-full border-t border-slate-800'}
-  `;
+  const containerClass = clsx(
+    'relative z-10 bg-slate-950 shadow-2xl',
+    isVertical ? 'flex h-full w-24 flex-col items-center justify-center border-r border-slate-800 py-8' : 'h-20 w-full border-t border-slate-800',
+  );
 
-  const scrollContainerClass = `
-    flex items-center scroll-smooth no-scrollbar
-    ${isVertical ? 'w-full max-h-full flex-col gap-6 overflow-y-auto py-2' : 'h-full w-full flex-row gap-6 overflow-x-auto overflow-y-hidden px-6'}
-  `;
+  const scrollContainerClass = clsx(
+    'flex items-center scroll-smooth no-scrollbar',
+    isVertical ? 'w-full max-h-full flex-col gap-6 overflow-y-auto py-2' : 'h-full w-full flex-row gap-6 overflow-x-auto overflow-y-hidden px-6',
+  );
 
   return (
     <div className={containerClass}>

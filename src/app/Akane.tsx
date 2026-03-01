@@ -1,5 +1,6 @@
 import './styles.css';
 
+import { clsx } from 'clsx';
 import { useLayoutEffect, useRef } from 'react';
 import { LuEye, LuPencil } from 'react-icons/lu';
 
@@ -54,21 +55,21 @@ export const AkaneApp = () => {
   }, []);
 
   const getTabButtonClass = (isActive: boolean) => {
-    const baseClass = 'flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-lg py-2 text-sm font-medium transition-all';
-    const activeClass = 'bg-indigo-600 text-white shadow-lg';
-    const inactiveClass = 'text-slate-400 hover:text-slate-200';
-    return `${baseClass} ${isActive ? activeClass : inactiveClass}`;
+    return clsx(
+      'flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-lg py-2 text-sm font-medium transition-all',
+      isActive ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200',
+    );
   };
 
-  const editorPanelContainerClass = `
-    z-10 flex flex-1 min-w-0 overflow-hidden border-r border-slate-800 shadow-xl
-    ${activeTab === 'editor' ? 'flex' : 'hidden lg:flex'}
-  `;
+  const editorPanelContainerClass = clsx(
+    'z-10 flex flex-1 min-w-0 overflow-hidden border-r border-slate-800 shadow-xl',
+    activeTab === 'editor' ? 'flex' : 'hidden lg:flex',
+  );
 
-  const previewPanelContainerClass = `
-    z-0 flex flex-1 flex-col min-w-0 overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950
-    ${activeTab === 'preview' ? 'flex' : 'hidden lg:flex'}
-  `;
+  const previewPanelContainerClass = clsx(
+    'z-0 flex flex-1 flex-col min-w-0 overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950',
+    activeTab === 'preview' ? 'flex' : 'hidden lg:flex',
+  );
 
   return (
     <div ref={rootRef} className="flex h-screen w-screen flex-col overflow-hidden bg-slate-950 font-sans lg:flex-row">

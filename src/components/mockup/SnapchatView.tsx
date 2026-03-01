@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { memo } from 'react';
 import {
   LuCamera,
@@ -24,10 +25,10 @@ const SPOTLIGHT_ITEMS = Array.from({ length: 3 });
 const BottomNav = ({ active = 'chat' }: { active?: string }) => (
   <Navigation className="border-t border-white/10 bg-black/95 backdrop-blur-xl" safeAreaClassName="pb-6">
     <div className="flex h-[72px] items-center justify-between px-6">
-      <div className={`flex flex-col items-center gap-1 ${active === 'map' ? 'text-[#00FF00]' : 'text-[#666]'}`}>
+      <div className={clsx('flex flex-col items-center gap-1', active === 'map' ? 'text-[#00FF00]' : 'text-[#666]')}>
         <LuMapPin size={26} strokeWidth={2.5} />
       </div>
-      <div className={`flex flex-col items-center gap-1 ${active === 'chat' ? 'text-[#3E95FF]' : 'text-[#666]'}`}>
+      <div className={clsx('flex flex-col items-center gap-1', active === 'chat' ? 'text-[#3E95FF]' : 'text-[#666]')}>
         <LuMessageSquare size={26} strokeWidth={2.5} />
       </div>
       <div className="-mt-6 flex flex-col items-center justify-center">
@@ -35,10 +36,10 @@ const BottomNav = ({ active = 'chat' }: { active?: string }) => (
           <LuCamera size={32} className="text-black" />
         </div>
       </div>
-      <div className={`flex flex-col items-center gap-1 ${active === 'stories' ? 'text-[#A05DCD]' : 'text-[#666]'}`}>
+      <div className={clsx('flex flex-col items-center gap-1', active === 'stories' ? 'text-[#A05DCD]' : 'text-[#666]')}>
         <LuUsers size={26} strokeWidth={2.5} />
       </div>
-      <div className={`flex flex-col items-center gap-1 ${active === 'spotlight' ? 'text-[#FF0000]' : 'text-[#666]'}`}>
+      <div className={clsx('flex flex-col items-center gap-1', active === 'spotlight' ? 'text-[#FF0000]' : 'text-[#666]')}>
         <LuPlay size={26} strokeWidth={2.5} />
       </div>
     </div>
