@@ -1,3 +1,5 @@
+import './styles.css';
+
 import { useLayoutEffect, useRef } from 'react';
 import { LuEye, LuPencil } from 'react-icons/lu';
 
@@ -8,7 +10,7 @@ import { useStore } from '../stores/useStore';
 
 import type { AppState } from '../stores/useStore';
 
-export const Akane = () => {
+export const AkaneApp = () => {
   const activeTab = useStore((state) => state.activeTab);
   const setActiveTab = useStore((state) => state.setActiveTab);
   const rootRef = useRef<HTMLDivElement>(null);
