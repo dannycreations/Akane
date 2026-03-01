@@ -16,12 +16,7 @@ const DEFAULT_STYLE = { width: '100%', height: '100%' };
 export const ProfileImage = memo(({ size, className }: ProfileImageProps) => {
   const image = useStore((state) => state.image);
 
-  const containerStyle = useMemo(() => {
-    if (size !== undefined) {
-      return { width: size, height: size };
-    }
-    return DEFAULT_STYLE;
-  }, [size]);
+  const containerStyle = size !== undefined ? { width: size, height: size } : DEFAULT_STYLE;
 
   if (!image) {
     return <div className={clsx('bg-slate-700', className)} style={containerStyle} />;
@@ -49,16 +44,8 @@ export const PostImage = memo(
     const image = useStore((state) => state.image);
 
     const style = useMemo(() => {
-      if (!image) return undefined;
-      const ar = image.width / image.height;
-      if (ar < 0.8) {
-        return {
-          aspectRatio: '4/5',
-          objectFit: 'cover',
-          objectPosition: 'center',
-        } as CSSProperties;
-      }
-      return undefined;
+      if (!image) return;
+      return image.width / image.height < 0.8 ? ({ aspectRatio: '4/5', objectFit: 'cover', objectPosition: 'center' } as const) : undefined;
     }, [image]);
 
     if (!image) {
@@ -83,10 +70,7 @@ interface EditorImageProps {
 }
 
 export const EditorImage = memo(({ image, className, style, imgClassName }: EditorImageProps) => {
-  const finalStyle = useMemo(() => {
-    if (!style) return TRANSFORM_STYLE;
-    return { ...TRANSFORM_STYLE, ...style };
-  }, [style]);
+  const finalStyle = style ? { ...TRANSFORM_STYLE, ...style } : TRANSFORM_STYLE;
 
   if (!image) return null;
 

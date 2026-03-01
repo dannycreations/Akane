@@ -5,10 +5,7 @@ export async function saveImage(image: ImageSource, editorState: EditorState, ou
   img.crossOrigin = 'anonymous';
   img.src = image.url;
 
-  await new Promise<void>((resolve, reject) => {
-    img.onload = () => resolve();
-    img.onerror = reject;
-  });
+  await img.decode();
 
   const size = outputSize ?? Math.max(1080, img.naturalWidth, img.naturalHeight);
 
@@ -19,9 +16,7 @@ export async function saveImage(image: ImageSource, editorState: EditorState, ou
 
   if (!ctx) return;
 
-  ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
-  ctx.clearRect(0, 0, size, size);
   ctx.save();
   ctx.translate(size / 2, size / 2);
   ctx.rotate((editorState.rotation * Math.PI) / 180);

@@ -16,10 +16,9 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
   const localStateRef = useRef<EditorState>({ zoom: 1, rotation: 0, x: 0, y: 0 });
 
   const syncToDom = useCallback((s: EditorState) => {
-    const root = document.querySelector('[data-akane-root]') as HTMLElement;
-    if (!root) return;
+    const root = document.documentElement;
     root.style.setProperty('--crop-rotate', `${s.rotation}deg`);
-    root.style.setProperty('--crop-scale', `${s.zoom}`);
+    root.style.setProperty('--crop-scale', s.zoom.toString());
     root.style.setProperty('--crop-x', `${s.x * 100}%`);
     root.style.setProperty('--crop-y', `${s.y * 100}%`);
   }, []);
@@ -123,7 +122,7 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
     (e: WheelEvent) => {
       const currentState = useStore.getState().editorState;
       const sensitivity = 0.001;
-      const newZoom = Math.min(Math.max(currentState.zoom + -e.deltaY * sensitivity, minZoom), maxZoom);
+      const newZoom = Math.min(Math.max(currentState.zoom - e.deltaY * sensitivity, minZoom), maxZoom);
       updateStateClamped({ ...currentState, zoom: newZoom }, ar);
     },
     [ar, minZoom, maxZoom, updateStateClamped],

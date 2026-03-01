@@ -30,14 +30,10 @@ const views = {
   [Platform.Twitter]: loadView(() => import('./TwitterView').then((m) => ({ default: m.TwitterView }))),
 };
 
-export const PLATFORMS: readonly PlatformConfig[] = PLATFORM_METADATA.map((meta) => {
-  const view = views[meta.id];
-  return {
-    ...meta,
-    node: view.node,
-    preload: view.preload,
-  };
-});
+export const PLATFORMS: readonly PlatformConfig[] = PLATFORM_METADATA.map((meta) => ({
+  ...meta,
+  ...views[meta.id],
+}));
 
 const CONFIG_MAP = new Map<Platform, PlatformConfig>(PLATFORMS.map((p) => [p.id, p]));
 

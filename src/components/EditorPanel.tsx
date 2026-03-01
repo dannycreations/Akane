@@ -104,9 +104,7 @@ export const EditorPanel = memo(() => {
   const currentObjectUrlRef = useRef<string | null>(null);
 
   const isRoundedSquare = platform === Platform.Slack || platform === Platform.Snapchat;
-  const w = image?.width ?? 1,
-    h = image?.height ?? 1;
-  const ar = w / h;
+  const ar = image ? image.width / image.height : 1;
   const minZoom = image ? Math.max(ar, 1 / ar) : 0;
   const maxZoom = Math.max(5.0, minZoom * 3);
 
@@ -127,36 +125,33 @@ export const EditorPanel = memo(() => {
 
   const handleFileChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files && e.target.files[0]) {
-        const file = e.target.files[0];
+      const file = e.target.files?.[0];
+      if (!file) return;
 
-        if (currentObjectUrlRef.current) {
-          URL.revokeObjectURL(currentObjectUrlRef.current);
-        }
-
-        const url = URL.createObjectURL(file);
-        currentObjectUrlRef.current = url;
-
-        const img = new Image();
-        img.onload = () => {
-          const { naturalWidth, naturalHeight } = img;
-          const imgAr = naturalWidth / naturalHeight;
-          const initialZoom = Math.max(imgAr, 1 / imgAr);
-
-          setImageWithEditorState(
-            { url, name: file.name, width: naturalWidth, height: naturalHeight },
-            {
-              zoom: initialZoom,
-              rotation: 0,
-              x: 0,
-              y: 0,
-            },
-          );
-        };
-        img.src = url;
-
-        e.target.value = '';
+      if (currentObjectUrlRef.current) {
+        URL.revokeObjectURL(currentObjectUrlRef.current);
       }
+
+      const url = URL.createObjectURL(file);
+      currentObjectUrlRef.current = url;
+
+      const img = new Image();
+      img.onload = () => {
+        const { naturalWidth: width, naturalHeight: height } = img;
+        const imgAr = width / height;
+
+        setImageWithEditorState(
+          { url, name: file.name, width, height },
+          {
+            zoom: Math.max(imgAr, 1 / imgAr),
+            rotation: 0,
+            x: 0,
+            y: 0,
+          },
+        );
+      };
+      img.src = url;
+      e.target.value = '';
     },
     [setImageWithEditorState],
   );

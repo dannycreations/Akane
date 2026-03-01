@@ -17,12 +17,10 @@ export const AkaneApp = () => {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-
     const update = (s: AppState['editorState']) => {
+      const root = document.documentElement;
       root.style.setProperty('--crop-rotate', `${s.rotation}deg`);
-      root.style.setProperty('--crop-scale', `${s.zoom}`);
+      root.style.setProperty('--crop-scale', s.zoom.toString());
       root.style.setProperty('--crop-x', `${s.x * 100}%`);
       root.style.setProperty('--crop-y', `${s.y * 100}%`);
     };

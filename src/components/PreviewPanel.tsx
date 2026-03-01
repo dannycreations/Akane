@@ -56,32 +56,15 @@ const PhoneFrame = memo(() => {
   const [visited, setVisited] = useState<Set<Platform>>(() => new Set([platform]));
 
   useEffect(() => {
-    setVisited((prev) => {
-      if (prev.has(platform)) return prev;
-      const next = new Set(prev);
-      next.add(platform);
-      return next;
-    });
+    setVisited((prev) => (prev.has(platform) ? prev : new Set(prev).add(platform)));
   }, [platform]);
 
   useEffect(() => {
-    const preloadNetwork = async () => {
-      await new Promise((resolve) => window.setTimeout(resolve, 200));
-      PLATFORMS.forEach((p) => p.preload?.());
-    };
-    preloadNetwork();
-
     const timer = window.setTimeout(() => {
       setVisited((prev) => {
         const next = new Set(prev);
-        let hasChanges = false;
-        PLATFORMS.forEach((p) => {
-          if (!next.has(p.id)) {
-            next.add(p.id);
-            hasChanges = true;
-          }
-        });
-        return hasChanges ? next : prev;
+        PLATFORMS.forEach((p) => next.add(p.id));
+        return next.size === prev.size ? prev : next;
       });
     }, 2000);
 
