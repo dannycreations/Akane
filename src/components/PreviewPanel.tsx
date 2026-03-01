@@ -61,11 +61,7 @@ const PhoneFrame = memo(() => {
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      setVisited((prev) => {
-        const next = new Set(prev);
-        PLATFORMS.forEach((p) => next.add(p.id));
-        return next.size === prev.size ? prev : next;
-      });
+      setVisited((prev) => (prev.size === PLATFORMS.length ? prev : new Set(PLATFORMS.map((p) => p.id))));
     }, 2000);
 
     return () => window.clearTimeout(timer);
@@ -87,37 +83,30 @@ const PhoneFrame = memo(() => {
       </div>
 
       <div className="relative h-full w-full bg-slate-950 pt-8">
-        {PLATFORMS.map((p) => {
-          const isActive = p.id === platform;
-          const shouldRender = visited.has(p.id);
-
-          if (!shouldRender) return null;
-
-          const View = p.node;
-
-          return (
-            <div
-              key={p.id}
-              className="absolute inset-0 h-full w-full pt-8"
-              style={{
-                display: isActive ? 'block' : 'none',
-                zIndex: isActive ? 10 : 0,
-              }}
-            >
+        {PLATFORMS.map((p) => (
+          <div
+            key={p.id}
+            className="absolute inset-0 h-full w-full pt-8"
+            style={{
+              display: p.id === platform ? 'block' : 'none',
+              zIndex: p.id === platform ? 10 : 0,
+            }}
+          >
+            {visited.has(p.id) && (
               <Suspense
                 fallback={
-                  isActive ? (
+                  p.id === platform ? (
                     <div className="flex h-full items-center justify-center text-slate-500">
                       <div className="animate-pulse">Loading...</div>
                     </div>
                   ) : null
                 }
               >
-                <View />
+                <p.node />
               </Suspense>
-            </div>
-          );
-        })}
+            )}
+          </div>
+        ))}
       </div>
 
       <div className="absolute bottom-2 left-1/2 z-50 h-1 w-32 -translate-x-1/2 rounded-full bg-white/20"></div>

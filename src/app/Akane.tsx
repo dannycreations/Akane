@@ -1,34 +1,22 @@
 import './styles.css';
 
 import { clsx } from 'clsx';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect } from 'react';
 import { LuEye, LuPencil } from 'react-icons/lu';
 
 import { EditorPanel } from '../components/EditorPanel';
 import { PlatformList } from '../components/PlatformList';
 import { PreviewPanel } from '../components/PreviewPanel';
 import { useStore } from '../stores/useStore';
-
-import type { AppState } from '../stores/useStore';
+import { updateEditorCssVars } from '../utilities/dom';
 
 export const AkaneApp = () => {
   const activeTab = useStore((state) => state.activeTab);
   const setActiveTab = useStore((state) => state.setActiveTab);
-  const rootRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const update = (s: AppState['editorState']) => {
-      const root = document.documentElement;
-      root.style.setProperty('--crop-rotate', `${s.rotation}deg`);
-      root.style.setProperty('--crop-scale', s.zoom.toString());
-      root.style.setProperty('--crop-x', `${s.x * 100}%`);
-      root.style.setProperty('--crop-y', `${s.y * 100}%`);
-    };
-
-    const currentState = useStore.getState().editorState;
-    update(currentState);
-
-    return useStore.subscribe((state) => state.editorState, update);
+    updateEditorCssVars(useStore.getState().editorState);
+    return useStore.subscribe((state) => state.editorState, updateEditorCssVars);
   }, []);
 
   const getTabButtonClass = (isActive: boolean) => {
@@ -49,7 +37,7 @@ export const AkaneApp = () => {
   );
 
   return (
-    <div ref={rootRef} data-akane-root className="flex h-screen w-screen flex-col overflow-hidden bg-slate-950 font-sans lg:flex-row">
+    <div data-akane-root className="flex h-screen w-screen flex-col overflow-hidden bg-slate-950 font-sans lg:flex-row">
       <div className="z-30 flex-none border-b border-slate-800 bg-slate-950 p-3 lg:hidden">
         <div className="flex rounded-xl bg-slate-900 p-1">
           <button onClick={() => setActiveTab('editor')} className={getTabButtonClass(activeTab === 'editor')}>

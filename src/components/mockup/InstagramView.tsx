@@ -215,7 +215,7 @@ const ProfileView = memo(() => (
   </div>
 ));
 
-export const InstagramView = () => {
+export const InstagramView = memo(() => {
   const perspective = useStore((state) => state.perspective);
 
   return (
@@ -231,4 +231,4 @@ export const InstagramView = () => {
       </div>
     </div>
   );
-};
+});

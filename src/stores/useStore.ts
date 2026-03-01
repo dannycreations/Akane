@@ -40,6 +40,7 @@ export const useStore = create<AppState>()(
     setEditorState: (editorState) => set({ editorState }),
     setPlatform: (platform) =>
       set((state) => {
+        if (state.platform === platform) return {};
         const available = getPlatformPerspective(platform);
         const perspective = available.includes(state.perspective) ? state.perspective : available[0];
         return { platform, perspective };

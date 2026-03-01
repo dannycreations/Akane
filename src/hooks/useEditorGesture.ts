@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 
 import { useStore } from '../stores/useStore';
+import { updateEditorCssVars } from '../utilities/dom';
 import { calculateLimits, rotateDelta } from '../utilities/geometry';
 
 import type { PointerEvent, RefObject, WheelEvent } from 'react';
@@ -14,14 +15,6 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
   const frameRef = useRef<number>(0);
   const latestPointerEvent = useRef<PointerEvent | null>(null);
   const localStateRef = useRef<EditorState>({ zoom: 1, rotation: 0, x: 0, y: 0 });
-
-  const syncToDom = useCallback((s: EditorState) => {
-    const root = document.documentElement;
-    root.style.setProperty('--crop-rotate', `${s.rotation}deg`);
-    root.style.setProperty('--crop-scale', s.zoom.toString());
-    root.style.setProperty('--crop-x', `${s.x * 100}%`);
-    root.style.setProperty('--crop-y', `${s.y * 100}%`);
-  }, []);
 
   const updateStateClamped = useCallback(
     (newState: EditorState, metaAr: number, commit: boolean = true) => {
@@ -37,13 +30,13 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
       };
 
       localStateRef.current = updated;
-      syncToDom(updated);
+      updateEditorCssVars(updated);
 
       if (commit) {
         setEditorState(updated);
       }
     },
-    [setEditorState, syncToDom],
+    [setEditorState],
   );
 
   const performDragUpdate = useCallback(() => {
