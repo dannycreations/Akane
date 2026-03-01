@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { subscribeWithSelector } from 'zustand/middleware';
 
 import { Perspective } from '../app/constants';
 import { getPlatformPerspective, PLATFORM_METADATA } from '../app/platforms';
@@ -21,27 +22,29 @@ export interface AppState {
   readonly setImageWithEditorState: (image: ImageSource, editorState: EditorState) => void;
 }
 
-export const useStore = create<AppState>((set) => ({
-  image: null,
-  activeTab: 'editor',
-  editorState: {
-    zoom: 0,
-    rotation: 0,
-    x: 0,
-    y: 0,
-  },
-  platform: PLATFORM_METADATA[0].id,
-  perspective: Perspective.Profile,
+export const useStore = create<AppState>()(
+  subscribeWithSelector((set) => ({
+    image: null,
+    activeTab: 'editor',
+    editorState: {
+      zoom: 0,
+      rotation: 0,
+      x: 0,
+      y: 0,
+    },
+    platform: PLATFORM_METADATA[0].id,
+    perspective: Perspective.Profile,
 
-  setImage: (image) => set({ image }),
-  setActiveTab: (activeTab) => set({ activeTab }),
-  setEditorState: (editorState) => set({ editorState }),
-  setPlatform: (platform) =>
-    set((state) => {
-      const available = getPlatformPerspective(platform);
-      const perspective = available.includes(state.perspective) ? state.perspective : available[0];
-      return { platform, perspective };
-    }),
-  setPerspective: (perspective) => set({ perspective }),
-  setImageWithEditorState: (image, editorState) => set({ image, editorState }),
-}));
+    setImage: (image) => set({ image }),
+    setActiveTab: (activeTab) => set({ activeTab }),
+    setEditorState: (editorState) => set({ editorState }),
+    setPlatform: (platform) =>
+      set((state) => {
+        const available = getPlatformPerspective(platform);
+        const perspective = available.includes(state.perspective) ? state.perspective : available[0];
+        return { platform, perspective };
+      }),
+    setPerspective: (perspective) => set({ perspective }),
+    setImageWithEditorState: (image, editorState) => set({ image, editorState }),
+  })),
+);

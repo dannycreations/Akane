@@ -97,7 +97,6 @@ export const EditorPanel = memo(() => {
   const image = useStore((state) => state.image);
   const platform = useStore((state) => state.platform);
   const setImage = useStore((state) => state.setImage);
-  const setEditorState = useStore((state) => state.setEditorState);
   const setImageWithEditorState = useStore((state) => state.setImageWithEditorState);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -105,10 +104,11 @@ export const EditorPanel = memo(() => {
   const currentObjectUrlRef = useRef<string | null>(null);
 
   const isRoundedSquare = platform === Platform.Slack || platform === Platform.Snapchat;
-  const ar = image ? image.width / image.height : 1;
-  const coverZoom = Math.max(ar, 1 / ar);
-  const minZoom = image ? coverZoom : 0.0;
-  const maxZoom = Math.max(5.0, coverZoom * 3);
+  const w = image?.width ?? 1,
+    h = image?.height ?? 1;
+  const ar = w / h;
+  const minZoom = image ? Math.max(ar, 1 / ar) : 0;
+  const maxZoom = Math.max(5.0, minZoom * 3);
 
   const { handlePointerDown, handlePointerMove, handlePointerUp, handleWheel, updateStateClamped } = useEditorGesture(
     containerRef,
@@ -165,7 +165,7 @@ export const EditorPanel = memo(() => {
     (v: number) => {
       if (!image) return;
       const currentState = useStore.getState().editorState;
-      updateStateClamped({ ...currentState, zoom: minZoom + v }, ar);
+      updateStateClamped({ ...currentState, zoom: minZoom + v }, ar, true);
     },
     [image, ar, minZoom, updateStateClamped],
   );
@@ -173,9 +173,9 @@ export const EditorPanel = memo(() => {
   const handleRotationSliderChange = useCallback(
     (v: number) => {
       const currentState = useStore.getState().editorState;
-      setEditorState({ ...currentState, rotation: v });
+      updateStateClamped({ ...currentState, rotation: v }, ar, true);
     },
-    [setEditorState],
+    [ar, updateStateClamped],
   );
 
   const handleDownload = useCallback(async () => {

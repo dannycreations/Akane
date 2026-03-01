@@ -13,32 +13,38 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
   const dragStart = useRef({ mouseX: 0, mouseY: 0, stateX: 0, stateY: 0, containerSize: 0 });
   const frameRef = useRef<number>(0);
   const latestPointerEvent = useRef<PointerEvent | null>(null);
+  const localStateRef = useRef<EditorState>({ zoom: 1, rotation: 0, x: 0, y: 0 });
+
+  const syncToDom = useCallback((s: EditorState) => {
+    const root = document.querySelector('[data-akane-root]') as HTMLElement;
+    if (!root) return;
+    root.style.setProperty('--crop-rotate', `${s.rotation}deg`);
+    root.style.setProperty('--crop-scale', `${s.zoom}`);
+    root.style.setProperty('--crop-x', `${s.x * 100}%`);
+    root.style.setProperty('--crop-y', `${s.y * 100}%`);
+  }, []);
 
   const updateStateClamped = useCallback(
-    (newState: EditorState, metaAr: number) => {
+    (newState: EditorState, metaAr: number, commit: boolean = true) => {
       const { xLim, yLim } = calculateLimits(metaAr, newState.zoom);
       const newX = Math.max(-xLim, Math.min(xLim, newState.x));
       const newY = Math.max(-yLim, Math.min(yLim, newState.y));
 
-      const currentState = useStore.getState().editorState;
-
-      if (
-        Math.abs(newX - currentState.x) < 1e-5 &&
-        Math.abs(newY - currentState.y) < 1e-5 &&
-        Math.abs(newState.zoom - currentState.zoom) < 1e-5 &&
-        Math.abs(newState.rotation - currentState.rotation) < 1e-5
-      ) {
-        return;
-      }
-
-      setEditorState({
+      const updated = {
         zoom: newState.zoom,
         rotation: newState.rotation,
         x: newX,
         y: newY,
-      });
+      };
+
+      localStateRef.current = updated;
+      syncToDom(updated);
+
+      if (commit) {
+        setEditorState(updated);
+      }
     },
-    [setEditorState],
+    [setEditorState, syncToDom],
   );
 
   const performDragUpdate = useCallback(() => {
@@ -49,7 +55,7 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
 
     if (containerSize === 0) return;
 
-    const currentState = useStore.getState().editorState;
+    const currentState = localStateRef.current;
     const dxScreen = e.clientX - mouseX;
     const dyScreen = e.clientY - mouseY;
     const { dx: dxLocal, dy: dyLocal } = rotateDelta(dxScreen, dyScreen, currentState.rotation);
@@ -62,6 +68,7 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
         y: stateY + dyLocal / zoomFactor / containerSize,
       },
       ar,
+      false, // Don't commit to store every frame during drag
     );
 
     frameRef.current = requestAnimationFrame(performDragUpdate);
@@ -71,6 +78,7 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
     (e: PointerEvent) => {
       if (!containerRef.current) return;
       const currentState = useStore.getState().editorState;
+      localStateRef.current = currentState;
       const containerSize = containerRef.current.offsetWidth ?? 0;
 
       isDragging.current = true;
@@ -97,12 +105,19 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
     latestPointerEvent.current = e;
   }, []);
 
-  const handlePointerUp = useCallback((e: PointerEvent) => {
-    isDragging.current = false;
-    latestPointerEvent.current = null;
-    cancelAnimationFrame(frameRef.current);
-    (e.target as Element).releasePointerCapture(e.pointerId);
-  }, []);
+  const handlePointerUp = useCallback(
+    (e: PointerEvent) => {
+      if (!isDragging.current) return;
+      isDragging.current = false;
+      latestPointerEvent.current = null;
+      cancelAnimationFrame(frameRef.current);
+      (e.target as Element).releasePointerCapture(e.pointerId);
+
+      // Commit final state to store on drag end
+      setEditorState(localStateRef.current);
+    },
+    [setEditorState],
+  );
 
   const handleWheel = useCallback(
     (e: WheelEvent) => {

@@ -28,19 +28,12 @@ export async function saveImage(image: ImageSource, editorState: EditorState, ou
   ctx.scale(editorState.zoom, editorState.zoom);
   ctx.translate(editorState.x * size, editorState.y * size);
 
-  const ar = img.naturalWidth / img.naturalHeight;
-  let drawW: number;
-  let drawH: number;
+  const w = img.naturalWidth,
+    h = img.naturalHeight;
+  const drawW = w >= h ? size : size * (w / h);
+  const drawH = w >= h ? size * (h / w) : size;
 
-  if (ar >= 1) {
-    drawW = size;
-    drawH = size / ar;
-  } else {
-    drawH = size;
-    drawW = size * ar;
-  }
-
-  ctx.drawImage(img, -drawW / 2, -drawH / 2, drawW, drawH);
+  ctx.drawImage(img, -drawW * 0.5, -drawH * 0.5, drawW, drawH);
   ctx.restore();
 
   return new Promise((resolve) => {

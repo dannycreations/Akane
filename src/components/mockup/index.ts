@@ -39,6 +39,8 @@ export const PLATFORMS: readonly PlatformConfig[] = PLATFORM_METADATA.map((meta)
   };
 });
 
+const CONFIG_MAP = new Map<Platform, PlatformConfig>(PLATFORMS.map((p) => [p.id, p]));
+
 export function getPlatformConfig(id: Platform): PlatformConfig {
-  return PLATFORMS.find((p) => p.id === id) ?? PLATFORMS[0];
+  return CONFIG_MAP.get(id) ?? PLATFORMS[0];
 }

@@ -1,19 +1,9 @@
 export function calculateLimits(ar: number, zoom: number): { xLim: number; yLim: number } {
-  let wBase: number;
-  let hBase: number;
-  if (ar >= 1) {
-    wBase = 1;
-    hBase = 1 / ar;
-  } else {
-    wBase = ar;
-    hBase = 1;
-  }
-
-  const viewportDim = 1 / zoom;
-  const xLim = Math.max(0, (wBase - viewportDim) / 2);
-  const yLim = Math.max(0, (hBase - viewportDim) / 2);
-
-  return { xLim, yLim };
+  const invZoom = 1 / zoom;
+  return {
+    xLim: Math.max(0, (Math.min(1, ar) - invZoom) / 2),
+    yLim: Math.max(0, (Math.min(1, 1 / ar) - invZoom) / 2),
+  };
 }
 
 export function rotateDelta(dx: number, dy: number, angleDeg: number): { dx: number; dy: number } {

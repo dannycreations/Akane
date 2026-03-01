@@ -20,38 +20,17 @@ export const AkaneApp = () => {
     const root = rootRef.current;
     if (!root) return;
 
-    let lastEditorState: AppState['editorState'] | null = null;
-    let lastRotation: number | null = null;
-    let lastZoom: number | null = null;
-    let lastX: number | null = null;
-    let lastY: number | null = null;
-
-    const update = (state: AppState) => {
-      if (state.editorState === lastEditorState) return;
-      lastEditorState = state.editorState;
-
-      const { rotation, zoom, x, y } = state.editorState;
-
-      if (rotation !== lastRotation) {
-        root.style.setProperty('--crop-rotate', `${rotation}deg`);
-        lastRotation = rotation;
-      }
-      if (zoom !== lastZoom) {
-        root.style.setProperty('--crop-scale', `${zoom}`);
-        lastZoom = zoom;
-      }
-      if (x !== lastX) {
-        root.style.setProperty('--crop-x', `${x * 100}%`);
-        lastX = x;
-      }
-      if (y !== lastY) {
-        root.style.setProperty('--crop-y', `${y * 100}%`);
-        lastY = y;
-      }
+    const update = (s: AppState['editorState']) => {
+      root.style.setProperty('--crop-rotate', `${s.rotation}deg`);
+      root.style.setProperty('--crop-scale', `${s.zoom}`);
+      root.style.setProperty('--crop-x', `${s.x * 100}%`);
+      root.style.setProperty('--crop-y', `${s.y * 100}%`);
     };
 
-    update(useStore.getState());
-    return useStore.subscribe(update);
+    const currentState = useStore.getState().editorState;
+    update(currentState);
+
+    return useStore.subscribe((state) => state.editorState, update);
   }, []);
 
   const getTabButtonClass = (isActive: boolean) => {
@@ -72,7 +51,7 @@ export const AkaneApp = () => {
   );
 
   return (
-    <div ref={rootRef} className="flex h-screen w-screen flex-col overflow-hidden bg-slate-950 font-sans lg:flex-row">
+    <div ref={rootRef} data-akane-root className="flex h-screen w-screen flex-col overflow-hidden bg-slate-950 font-sans lg:flex-row">
       <div className="z-30 flex-none border-b border-slate-800 bg-slate-950 p-3 lg:hidden">
         <div className="flex rounded-xl bg-slate-900 p-1">
           <button onClick={() => setActiveTab('editor')} className={getTabButtonClass(activeTab === 'editor')}>
