@@ -15,8 +15,7 @@ const DEFAULT_STYLE = { width: '100%', height: '100%' };
 
 export const ProfileImage = memo(({ size, className }: ProfileImageProps) => {
   const image = useStore((state) => state.image);
-
-  const containerStyle = size !== undefined ? { width: size, height: size } : DEFAULT_STYLE;
+  const containerStyle = useMemo(() => (size !== undefined ? { width: size, height: size } : DEFAULT_STYLE), [size]);
 
   if (!image) {
     return <div className={clsx('bg-slate-700', className)} style={containerStyle} />;

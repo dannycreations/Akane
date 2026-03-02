@@ -2,9 +2,8 @@ import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 
 import { Perspective } from '../app/constants';
-import { getPlatformPerspective, PLATFORM_METADATA } from '../app/platforms';
+import { getPlatformPerspective, Platform } from '../app/platforms';
 
-import type { Platform } from '../app/platforms';
 import type { EditorState, ImageSource } from '../app/types';
 
 export interface AppState {
@@ -32,7 +31,7 @@ export const useStore = create<AppState>()(
       x: 0,
       y: 0,
     },
-    platform: PLATFORM_METADATA[0].id,
+    platform: Platform.Discord,
     perspective: Perspective.Profile,
 
     setImage: (image) => set({ image, editorState: { zoom: 1, rotation: 0, x: 0, y: 0 } }),
@@ -42,8 +41,12 @@ export const useStore = create<AppState>()(
       set((state) => {
         if (state.platform === platform) return {};
         const perspectives = getPlatformPerspective(platform);
-        const perspective = perspectives.includes(state.perspective) ? state.perspective : (perspectives[0] ?? state.perspective);
-        return { platform, perspective };
+        const nextPerspective = perspectives.includes(state.perspective) ? state.perspective : perspectives[0];
+
+        return {
+          platform,
+          perspective: nextPerspective ?? state.perspective,
+        };
       }),
     setPerspective: (perspective) => set({ perspective }),
     setImageWithEditorState: (image, editorState) => set({ image, editorState }),

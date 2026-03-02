@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { memo, useCallback, useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { LuDownload, LuRotateCw, LuUpload, LuX, LuZoomIn } from 'react-icons/lu';
 
 import { getPlatformMetadata, Platform } from '../app/platforms';
@@ -94,16 +94,22 @@ const EditorControls = memo(
 );
 
 export const EditorPanel = memo(() => {
-  const { image, platform, setImage, setImageWithEditorState } = useStore();
+  const image = useStore((state) => state.image);
+  const platform = useStore((state) => state.platform);
+  const setImage = useStore((state) => state.setImage);
+  const setImageWithEditorState = useStore((state) => state.setImageWithEditorState);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const currentObjectUrlRef = useRef<string | null>(null);
 
   const isRoundedSquare = platform === Platform.Slack || platform === Platform.Snapchat;
-  const ar = image ? image.width / image.height : 1;
-  const minZoom = image ? (ar > 1 ? ar : 1 / ar) : 0;
-  const maxZoom = minZoom * 3 > 5.0 ? minZoom * 3 : 5.0;
+  const { ar, minZoom, maxZoom } = useMemo(() => {
+    if (!image) return { ar: 1, minZoom: 0, maxZoom: 5 };
+    const ratio = image.width / image.height;
+    const min = ratio > 1 ? ratio : 1 / ratio;
+    return { ar: ratio, minZoom: min, maxZoom: Math.max(min * 3, 5) };
+  }, [image]);
 
   const { handlePointerDown, handlePointerMove, handlePointerUp, handleWheel, updateStateClamped } = useEditorGesture(
     containerRef,
@@ -134,18 +140,9 @@ export const EditorPanel = memo(() => {
 
       const img = new Image();
       img.onload = () => {
-        const { naturalWidth: width, naturalHeight: height } = img;
-        const imgAr = width / height;
-
-        setImageWithEditorState(
-          { url, name: file.name, width, height },
-          {
-            zoom: Math.max(imgAr, 1 / imgAr),
-            rotation: 0,
-            x: 0,
-            y: 0,
-          },
-        );
+        const { naturalWidth: w, naturalHeight: h } = img;
+        const minZoom = Math.max(w / h, h / w);
+        setImageWithEditorState({ url, name: file.name, width: w, height: h }, { zoom: minZoom, rotation: 0, x: 0, y: 0 });
       };
       img.src = url;
       e.target.value = '';

@@ -57,9 +57,7 @@ export const PlatformList = memo(({ orientation = 'vertical' }: PlatformListProp
 
   const handleWheel = (e: WheelEvent) => {
     if (isVertical || !scrollRef.current) return;
-    if (e.deltaY !== 0) {
-      scrollRef.current.scrollLeft += e.deltaY;
-    }
+    scrollRef.current.scrollLeft += e.deltaY;
   };
 
   const containerClass = clsx(

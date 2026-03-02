@@ -1,28 +1,34 @@
 import type { EditorState, ImageSource } from '../app/types';
 
 export async function saveImage(image: ImageSource, editorState: EditorState, outputSize?: number, suffix?: string): Promise<void> {
-  const response = await fetch(image.url);
-  const blobIn = await response.blob();
-  const bitmap = await createImageBitmap(blobIn);
+  const bitmap = await fetch(image.url)
+    .then((r) => r.blob())
+    .then(createImageBitmap);
 
-  const w = bitmap.width;
-  const h = bitmap.height;
-  const maxWH = w > h ? w : h;
-  const size = outputSize ?? (maxWH > 1080 ? maxWH : 1080);
+  const { width: w, height: h } = bitmap;
+  const size = outputSize ?? Math.max(w, h, 1080);
 
   const canvas = new OffscreenCanvas(size, size);
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: false });
 
   if (!ctx) {
     bitmap.close();
     return;
   }
 
+  ctx.fillStyle = '#000';
+  ctx.fillRect(0, 0, size, size);
+
+  ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
-  ctx.translate(size * 0.5, size * 0.5);
-  ctx.rotate((editorState.rotation * Math.PI) / 180);
-  ctx.scale(editorState.zoom, editorState.zoom);
-  ctx.translate(editorState.x * size, editorState.y * size);
+
+  ctx.setTransform(
+    new DOMMatrix()
+      .translate(size * 0.5, size * 0.5)
+      .rotate(editorState.rotation)
+      .scale(editorState.zoom)
+      .translate(editorState.x * size, editorState.y * size),
+  );
 
   const drawW = w >= h ? size : size * (w / h);
   const drawH = w >= h ? size * (h / w) : size;
@@ -31,17 +37,17 @@ export async function saveImage(image: ImageSource, editorState: EditorState, ou
   bitmap.close();
 
   const blob = await canvas.convertToBlob({ type: 'image/png', quality: 1.0 });
+  if (!blob) return;
 
-  if (blob) {
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    const lastDotIndex = image.name.lastIndexOf('.');
-    const nameWithoutExt = lastDotIndex !== -1 ? image.name.substring(0, lastDotIndex) : image.name;
-    const fileNameSuffix = suffix ? `_${suffix}` : '_edited';
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
 
-    link.download = `${nameWithoutExt}${fileNameSuffix}.png`;
-    link.href = url;
-    link.click();
-    URL.revokeObjectURL(url);
-  }
+  const lastDot = image.name.lastIndexOf('.');
+  const baseName = lastDot !== -1 ? image.name.substring(0, lastDot) : image.name;
+  const ext = suffix ? `_${suffix}` : '_edited';
+
+  link.download = `${baseName}${ext}.png`;
+  link.href = url;
+  link.click();
+  URL.revokeObjectURL(url);
 }

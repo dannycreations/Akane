@@ -56,7 +56,12 @@ const PhoneFrame = memo(() => {
   const [visited, setVisited] = useState<Set<Platform>>(() => new Set([platform]));
 
   useEffect(() => {
-    setVisited((prev) => (prev.has(platform) ? prev : new Set(prev).add(platform)));
+    setVisited((prev) => {
+      if (prev.has(platform)) return prev;
+      const next = new Set(prev);
+      next.add(platform);
+      return next;
+    });
   }, [platform]);
 
   useEffect(() => {
@@ -83,19 +88,22 @@ const PhoneFrame = memo(() => {
       </div>
 
       <div className="relative h-full w-full bg-slate-950 pt-8">
-        {PLATFORMS.map((p) => (
-          <div
-            key={p.id}
-            className="absolute inset-0 h-full w-full pt-8"
-            style={{
-              display: p.id === platform ? 'block' : 'none',
-              zIndex: p.id === platform ? 10 : 0,
-            }}
-          >
-            {visited.has(p.id) && (
+        {PLATFORMS.map((p) => {
+          const isActive = p.id === platform;
+          if (!isActive && !visited.has(p.id)) return null;
+
+          return (
+            <div
+              key={p.id}
+              className="absolute inset-0 h-full w-full pt-8"
+              style={{
+                display: isActive ? 'block' : 'none',
+                zIndex: isActive ? 10 : 0,
+              }}
+            >
               <Suspense
                 fallback={
-                  p.id === platform ? (
+                  isActive ? (
                     <div className="flex h-full items-center justify-center text-slate-500">
                       <div className="animate-pulse">Loading...</div>
                     </div>
@@ -104,9 +112,9 @@ const PhoneFrame = memo(() => {
               >
                 <p.node />
               </Suspense>
-            )}
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
 
       <div className="absolute bottom-2 left-1/2 z-50 h-1 w-32 -translate-x-1/2 rounded-full bg-white/20"></div>
@@ -116,25 +124,14 @@ const PhoneFrame = memo(() => {
 
 export const PreviewPanel = memo(() => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const container = containerRef.current;
-    const content = contentRef.current;
-    if (!container || !content) return;
+    if (!container) return;
 
     const observer = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (!entry) return;
-
-      const { width, height } = entry.contentRect;
-
-      const scaleX = (width - MARGIN) / PHONE_WIDTH;
-      const scaleY = (height - MARGIN) / PHONE_HEIGHT;
-
-      const finalScale = Math.max(0.3, Math.min(1, scaleX, scaleY));
-
-      content.style.setProperty('--preview-scale', finalScale.toString());
+      const { width, height } = entries[0].contentRect;
+      const s = Math.max(0.3, Math.min(1, (width - MARGIN) / PHONE_WIDTH, (height - MARGIN) / PHONE_HEIGHT));
+      container.style.setProperty('--preview-scale', s.toFixed(4));
     });
 
     observer.observe(container);
@@ -145,7 +142,6 @@ export const PreviewPanel = memo(() => {
     <div ref={containerRef} className="relative flex flex-1 w-full min-h-0 flex-col items-center justify-center overflow-hidden p-4 lg:p-8">
       <PerspectiveControls />
       <div
-        ref={contentRef}
         style={{ transform: 'scale(var(--preview-scale, 1))' }}
         className="origin-center transition-transform duration-300 ease-out will-change-transform"
       >

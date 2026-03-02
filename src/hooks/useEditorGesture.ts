@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import { useStore } from '../stores/useStore';
 import { updateEditorCssVars } from '../utilities/dom';
-import { calculateLimits, rotateDelta } from '../utilities/geometry';
+import { calculateLimits } from '../utilities/geometry';
 
 import type { PointerEvent, RefObject, WheelEvent } from 'react';
 import type { EditorState } from '../app/types';
@@ -11,19 +11,20 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
   const setEditorState = useStore((state) => state.setEditorState);
 
   const isDragging = useRef(false);
-  const dragStart = useRef({ mouseX: 0, mouseY: 0, stateX: 0, stateY: 0, containerSize: 0 });
+  const dragStart = useRef({ mouseX: 0, mouseY: 0, stateX: 0, stateY: 0, containerSize: 0, cos: 1, sin: 0 });
   const frameRef = useRef<number>(0);
-  const latestPointerEvent = useRef<PointerEvent | null>(null);
+  const pointerPos = useRef({ x: 0, y: 0 });
   const localStateRef = useRef<EditorState>({ zoom: 1, rotation: 0, x: 0, y: 0 });
 
   const updateStateClamped = useCallback(
     (next: EditorState, metaAr: number, commit: boolean = true) => {
       const { xLim, yLim } = calculateLimits(metaAr, next.zoom);
+      const { x, y } = next;
 
       const updated: EditorState = {
         ...next,
-        x: next.x < -xLim ? -xLim : next.x > xLim ? xLim : next.x,
-        y: next.y < -yLim ? -yLim : next.y > yLim ? yLim : next.y,
+        x: x < -xLim ? -xLim : x > xLim ? xLim : x,
+        y: y < -yLim ? -yLim : y > yLim ? yLim : y,
       };
 
       localStateRef.current = updated;
@@ -37,39 +38,43 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
   );
 
   const performDragUpdate = useCallback(() => {
-    if (!isDragging.current || !latestPointerEvent.current || !containerRef.current) return;
+    if (!isDragging.current) return;
 
-    const e = latestPointerEvent.current;
-    const { containerSize, mouseX, mouseY, stateX, stateY } = dragStart.current;
-
+    const { containerSize, mouseX, mouseY, stateX, stateY, cos, sin } = dragStart.current;
     if (containerSize === 0) return;
 
-    const currentState = localStateRef.current;
-    const dxScreen = e.clientX - mouseX;
-    const dyScreen = e.clientY - mouseY;
-    const { dx: dxLocal, dy: dyLocal } = rotateDelta(dxScreen, dyScreen, currentState.rotation);
-    const zoomFactor = Math.max(currentState.zoom, 0.001);
+    const { x: px, y: py } = pointerPos.current;
+    const dxScreen = px - mouseX;
+    const dyScreen = py - mouseY;
+
+    const dxLocal = dxScreen * cos - dyScreen * sin;
+    const dyLocal = dxScreen * sin + dyScreen * cos;
+
+    const zoomFactor = localStateRef.current.zoom || 0.001;
+    const invScale = 1 / (zoomFactor * containerSize);
 
     updateStateClamped(
       {
-        ...currentState,
-        x: stateX + dxLocal / zoomFactor / containerSize,
-        y: stateY + dyLocal / zoomFactor / containerSize,
+        ...localStateRef.current,
+        x: stateX + dxLocal * invScale,
+        y: stateY + dyLocal * invScale,
       },
       ar,
-      false, // Don't commit to store every frame during drag
+      false,
     );
 
     frameRef.current = requestAnimationFrame(performDragUpdate);
-  }, [ar, containerRef, updateStateClamped]);
+  }, [ar, updateStateClamped]);
 
   const handlePointerDown = useCallback(
     (e: PointerEvent) => {
-      if (!containerRef.current) return;
+      const container = containerRef.current;
+      if (!container) return;
+
       const currentState = useStore.getState().editorState;
       localStateRef.current = currentState;
-      const containerSize = containerRef.current.offsetWidth ?? 0;
 
+      const rad = (currentState.rotation * Math.PI) / -180;
       isDragging.current = true;
       (e.target as Element).setPointerCapture(e.pointerId);
 
@@ -78,10 +83,13 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
         mouseY: e.clientY,
         stateX: currentState.x,
         stateY: currentState.y,
-        containerSize,
+        containerSize: container.offsetWidth || 0,
+        cos: Math.cos(rad),
+        sin: Math.sin(rad),
       };
 
-      latestPointerEvent.current = e;
+      pointerPos.current.x = e.clientX;
+      pointerPos.current.y = e.clientY;
       cancelAnimationFrame(frameRef.current);
       frameRef.current = requestAnimationFrame(performDragUpdate);
     },
@@ -90,15 +98,14 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
 
   const handlePointerMove = useCallback((e: PointerEvent) => {
     if (!isDragging.current) return;
-    e.preventDefault();
-    latestPointerEvent.current = e;
+    pointerPos.current.x = e.clientX;
+    pointerPos.current.y = e.clientY;
   }, []);
 
   const handlePointerUp = useCallback(
     (e: PointerEvent) => {
       if (!isDragging.current) return;
       isDragging.current = false;
-      latestPointerEvent.current = null;
       cancelAnimationFrame(frameRef.current);
       (e.target as Element).releasePointerCapture(e.pointerId);
 
