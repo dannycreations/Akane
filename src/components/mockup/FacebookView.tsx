@@ -3,61 +3,63 @@ import { memo } from 'react';
 import { LuBell, LuEllipsis, LuGlobe, LuHouse, LuImage, LuMessageCircle, LuSearch, LuShare2, LuThumbsUp, LuTv, LuUsers } from 'react-icons/lu';
 
 import { Perspective } from '../../app/constants';
-import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
+import { MockupContent, MockupScreen, PerspectiveSwitcher } from './MockupBase';
 
 const ProfileView = memo(() => (
-  <div className="h-full w-full overflow-y-auto bg-[#18191a] font-sans text-[#e4e6eb]">
-    <div className="relative">
-      <div className="h-40 w-full bg-gradient-to-r from-blue-900 to-slate-800"></div>
-      <div className="absolute -bottom-12 left-4">
-        <div className="h-[130px] w-[130px] rounded-full bg-[#18191a] p-1">
-          <ProfileImage className="h-full w-full rounded-full ring-2 ring-gray-700" />
-        </div>
-        <div className="absolute bottom-2 right-2 rounded-full border-2 border-[#18191a] bg-[#3a3b3c] p-1.5">
-          <LuImage size={14} className="text-white" />
-        </div>
-      </div>
-    </div>
-
-    <div className="mt-14 border-b border-[#3e4042] px-4 pb-4">
-      <h1 className="text-2xl font-bold">Your Name</h1>
-      <p className="text-sm font-medium text-[#b0b3b8]">1.2K friends</p>
-
-      <div className="mt-4 flex gap-2">
-        <button className="flex flex-1 items-center justify-center gap-2 rounded-md bg-[#2374e1] py-2 text-sm font-semibold text-white">
-          <span className="text-lg">+</span> Add to Story
-        </button>
-        <button className="flex flex-1 items-center justify-center gap-2 rounded-md bg-[#3a3b3c] py-2 text-sm font-semibold text-white">
-          Edit profile
-        </button>
-      </div>
-    </div>
-
-    <div className="space-y-4 p-4">
-      <div className="rounded-lg bg-[#242526] p-4">
-        <div className="mb-2 text-lg font-bold">Details</div>
-        <div className="space-y-3 text-sm text-[#b0b3b8]">
-          <div className="flex items-center gap-2">
-            <div className="w-5" />
-            Designer at <strong className="text-white">Workplace</strong>
+  <MockupScreen className="bg-[#18191a] text-[#e4e6eb]">
+    <MockupContent>
+      <div className="relative">
+        <div className="h-40 w-full bg-gradient-to-r from-blue-900 to-slate-800"></div>
+        <div className="absolute -bottom-12 left-4">
+          <div className="h-[130px] w-[130px] rounded-full bg-[#18191a] p-1">
+            <ProfileImage className="h-full w-full rounded-full ring-2 ring-gray-700" />
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-5" />
-            Studied at <strong className="text-white">University</strong>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-5" />
-            Lives in <strong className="text-white">City</strong>
+          <div className="absolute bottom-2 right-2 rounded-full border-2 border-[#18191a] bg-[#3a3b3c] p-1.5">
+            <LuImage size={14} className="text-white" />
           </div>
         </div>
       </div>
-    </div>
-  </div>
+
+      <div className="mt-14 border-b border-[#3e4042] px-4 pb-4">
+        <h1 className="text-2xl font-bold">Your Name</h1>
+        <p className="text-sm font-medium text-[#b0b3b8]">1.2K friends</p>
+
+        <div className="mt-4 flex gap-2">
+          <button className="flex flex-1 items-center justify-center gap-2 rounded-md bg-[#2374e1] py-2 text-sm font-semibold text-white">
+            <span className="text-lg">+</span> Add to Story
+          </button>
+          <button className="flex flex-1 items-center justify-center gap-2 rounded-md bg-[#3a3b3c] py-2 text-sm font-semibold text-white">
+            Edit profile
+          </button>
+        </div>
+      </div>
+
+      <div className="space-y-4 p-4">
+        <div className="rounded-lg bg-[#242526] p-4">
+          <div className="mb-2 text-lg font-bold">Details</div>
+          <div className="space-y-3 text-sm text-[#b0b3b8]">
+            <div className="flex items-center gap-2">
+              <div className="w-5" />
+              Designer at <strong className="text-white">Workplace</strong>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-5" />
+              Studied at <strong className="text-white">University</strong>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-5" />
+              Lives in <strong className="text-white">City</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </MockupContent>
+  </MockupScreen>
 ));
 
 const FeedView = memo(() => (
-  <div className="relative flex h-full w-full flex-col bg-[#18191a] font-sans text-[#e4e6eb]">
+  <MockupScreen className="bg-[#18191a] text-[#e4e6eb]">
     <div className={clsx('z-20 flex h-14 shrink-0 items-center justify-between border-b border-[#3e4042] bg-[#242526] px-4')}>
       <h1 className="text-2xl font-bold tracking-tighter text-[#2374e1]">facebook</h1>
       <div className="flex gap-2">
@@ -85,7 +87,7 @@ const FeedView = memo(() => (
       </div>
     </div>
 
-    <div className="flex-1 overflow-y-auto pt-2 no-scrollbar">
+    <MockupContent className="pt-2">
       <div className="mb-2 bg-[#242526] p-3">
         <div className="flex gap-3">
           <div className="h-10 w-10 shrink-0">
@@ -144,12 +146,15 @@ const FeedView = memo(() => (
           </button>
         </div>
       </div>
-    </div>
-  </div>
+    </MockupContent>
+  </MockupScreen>
 ));
 
-export const FacebookView = memo(() => {
-  const perspective = useStore((state) => state.perspective);
-
-  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <FeedView />}</div>;
-});
+export const FacebookView = memo(() => (
+  <PerspectiveSwitcher
+    screens={{
+      [Perspective.Profile]: <ProfileView />,
+      [Perspective.Feed]: <FeedView />,
+    }}
+  />
+));

@@ -15,9 +15,9 @@ import {
 } from 'react-icons/lu';
 
 import { Perspective } from '../../app/constants';
-import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
+import { MockupContent, MockupScreen, PerspectiveSwitcher } from './MockupBase';
 
 const HIGHLIGHT_IDS = [1, 2, 3];
 const SPOTLIGHT_ITEMS = Array.from({ length: 3 });
@@ -47,7 +47,7 @@ const BottomNav = ({ active = 'chat' }: { active?: string }) => (
 );
 
 const ProfileView = memo(() => (
-  <div className="relative flex h-full w-full flex-col overflow-hidden bg-[#000000] font-sans text-white">
+  <MockupScreen className="bg-black text-white">
     <div className="absolute left-0 right-0 top-0 z-20 flex items-center justify-between p-4">
       <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-black/50 shadow-sm backdrop-blur-md">
         <LuChevronLeft size={24} className="text-white" />
@@ -62,7 +62,7 @@ const ProfileView = memo(() => (
       </div>
     </div>
 
-    <div className="flex-1 overflow-y-auto no-scrollbar">
+    <MockupContent>
       <div className="relative overflow-hidden rounded-b-[2.5rem] border-b border-white/5 bg-[#121212] pb-6 shadow-sm">
         <div className="relative h-40 w-full overflow-hidden bg-[#1A1A1A]">
           <PostImage containerClass="h-full w-full" imageClass="h-full w-full scale-125 object-cover opacity-60 blur-2xl" />
@@ -135,12 +135,14 @@ const ProfileView = memo(() => (
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </MockupContent>
+
+    <BottomNav />
+  </MockupScreen>
 ));
 
 const ChatView = memo(() => (
-  <div className="relative flex h-full w-full flex-col overflow-hidden bg-[#000000] font-sans text-white">
+  <MockupScreen className="bg-black text-white">
     <div className="z-20 flex h-16 shrink-0 items-center justify-between border-b border-white/5 bg-[#000000] px-4">
       <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-white/5 bg-[#1A1A1A]">
         <div className="h-full w-full bg-gradient-to-br from-purple-500 to-indigo-600 opacity-80"></div>
@@ -156,7 +158,7 @@ const ChatView = memo(() => (
       </div>
     </div>
 
-    <div className="flex-1 overflow-y-auto no-scrollbar">
+    <MockupContent>
       <div className="px-4 py-3">
         <div className="flex h-10 items-center gap-2 rounded-full border border-white/5 bg-[#1A1A1A] px-4 text-gray-500">
           <LuSearch size={18} />
@@ -224,14 +226,17 @@ const ChatView = memo(() => (
           </div>
         </div>
       </div>
-    </div>
+    </MockupContent>
 
     <BottomNav />
-  </div>
+  </MockupScreen>
 ));
 
-export const SnapchatView = memo(() => {
-  const perspective = useStore((state) => state.perspective);
-
-  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <ChatView />}</div>;
-});
+export const SnapchatView = memo(() => (
+  <PerspectiveSwitcher
+    screens={{
+      [Perspective.Profile]: <ProfileView />,
+      [Perspective.Chat]: <ChatView />,
+    }}
+  />
+));

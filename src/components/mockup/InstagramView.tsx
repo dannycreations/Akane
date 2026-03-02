@@ -14,9 +14,9 @@ import {
 } from 'react-icons/lu';
 
 import { Perspective } from '../../app/constants';
-import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
+import { MockupContent, MockupScreen, PerspectiveSwitcher } from './MockupBase';
 
 const isDark = true;
 const bg = isDark ? 'bg-black' : 'bg-white';
@@ -42,7 +42,7 @@ const BottomNav = () => (
 );
 
 const StoryView = memo(() => (
-  <div className="relative flex h-full w-full flex-col bg-gradient-to-tr from-indigo-900 via-purple-900 to-orange-900">
+  <MockupScreen className="bg-gradient-to-tr from-indigo-900 via-purple-900 to-orange-900">
     <div className="pointer-events-none absolute left-0 top-0 z-10 h-32 w-full bg-gradient-to-b from-black/60 to-transparent"></div>
     <div className="absolute left-0 top-0 z-20 mt-2 flex h-1 w-full gap-1 px-1">
       <div className="h-full flex-1 rounded-full bg-white shadow-[0_0_2px_rgba(0,0,0,0.5)]"></div>
@@ -73,11 +73,11 @@ const StoryView = memo(() => (
         <LuSend className="text-white" size={24} />
       </div>
     </Navigation>
-  </div>
+  </MockupScreen>
 ));
 
 const FeedView = memo(() => (
-  <div className={clsx('flex h-full w-full flex-col font-sans', bg, text)}>
+  <MockupScreen className={clsx(bg, text)}>
     <div className={clsx('flex h-12 shrink-0 items-center justify-between border-b px-4', border)}>
       <div className="text-xl font-bold tracking-tight italic">Instagram</div>
       <div className="flex gap-5">
@@ -86,7 +86,7 @@ const FeedView = memo(() => (
       </div>
     </div>
 
-    <div className="flex-1 overflow-y-auto no-scrollbar">
+    <MockupContent>
       <div className={clsx('mb-2 flex gap-4 overflow-x-auto border-b px-4 py-2 no-scrollbar', border)}>
         <div className="flex min-w-[64px] flex-col items-center gap-1">
           <div className="relative rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 p-[2px]">
@@ -144,14 +144,14 @@ const FeedView = memo(() => (
           <div className="mt-1 text-[10px] uppercase tracking-wide text-gray-500">2 hours ago</div>
         </div>
       </div>
-    </div>
+    </MockupContent>
 
     <BottomNav />
-  </div>
+  </MockupScreen>
 ));
 
 const ProfileView = memo(() => (
-  <div className={clsx('flex h-full w-full flex-col font-sans', bg, text)}>
+  <MockupScreen className={clsx(bg, text)}>
     <div className={clsx('flex h-12 shrink-0 items-center justify-between border-b px-4', border)}>
       <span className="text-lg font-bold">username</span>
       <div className="flex gap-4">
@@ -160,7 +160,7 @@ const ProfileView = memo(() => (
       </div>
     </div>
 
-    <div className="flex-1 overflow-y-auto no-scrollbar">
+    <MockupContent>
       <div className="p-4">
         <div className="mb-4 flex items-center justify-between">
           <div className="rounded-full bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 p-[2px]">
@@ -209,20 +209,18 @@ const ProfileView = memo(() => (
           ))}
         </div>
       </div>
-    </div>
+    </MockupContent>
 
     <BottomNav />
-  </div>
+  </MockupScreen>
 ));
 
-export const InstagramView = memo(() => {
-  const perspective = useStore((state) => state.perspective);
-
-  return (
-    <div className="relative h-full w-full">
-      {perspective === Perspective.Story && <StoryView />}
-      {perspective === Perspective.Feed && <FeedView />}
-      {perspective === Perspective.Profile && <ProfileView />}
-    </div>
-  );
-});
+export const InstagramView = memo(() => (
+  <PerspectiveSwitcher
+    screens={{
+      [Perspective.Story]: <StoryView />,
+      [Perspective.Feed]: <FeedView />,
+      [Perspective.Profile]: <ProfileView />,
+    }}
+  />
+));

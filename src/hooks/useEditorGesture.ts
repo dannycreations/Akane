@@ -23,8 +23,8 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
 
       const updated: EditorState = {
         ...next,
-        x: x < -xLim ? -xLim : x > xLim ? xLim : x,
-        y: y < -yLim ? -yLim : y > yLim ? yLim : y,
+        x: Math.max(-xLim, Math.min(xLim, x)),
+        y: Math.max(-yLim, Math.min(yLim, y)),
       };
 
       localStateRef.current = updated;

@@ -20,9 +20,9 @@ import {
 } from 'react-icons/lu';
 
 import { Perspective } from '../../app/constants';
-import { useStore } from '../../stores/useStore';
 import { ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
+import { MockupContent, MockupScreen, PerspectiveSwitcher } from './MockupBase';
 
 const TABS = ['Posts', 'Replies', 'Highlights', 'Media'];
 
@@ -58,7 +58,7 @@ const BottomNav = () => (
 );
 
 const ProfileView = memo(() => (
-  <div className="relative flex h-full w-full flex-col overflow-hidden bg-black font-sans text-[#e7e9ea]">
+  <MockupScreen className="bg-black text-[#e7e9ea]">
     <div className="absolute left-0 right-0 top-0 z-20 flex h-14 items-center justify-between bg-black/60 px-4 backdrop-blur-sm">
       <div className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-black/50 hover:bg-white/10">
         <LuArrowLeft size={20} className="text-white" />
@@ -69,7 +69,7 @@ const ProfileView = memo(() => (
       </div>
     </div>
 
-    <div className="flex-1 overflow-y-auto no-scrollbar">
+    <MockupContent>
       <div className="relative h-32 w-full bg-[#333639]"></div>
 
       <div className="relative border-b border-[#2f3336] px-4 pb-4">
@@ -180,7 +180,7 @@ const ProfileView = memo(() => (
           </div>
         </div>
       </div>
-    </div>
+    </MockupContent>
 
     <div className="absolute bottom-16 right-4 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-[#1d9bf0] shadow-lg hover:bg-[#1a8cd8]">
       <svg viewBox="0 0 24 24" className="h-6 w-6 fill-current text-white">
@@ -191,11 +191,11 @@ const ProfileView = memo(() => (
     </div>
 
     <BottomNav />
-  </div>
+  </MockupScreen>
 ));
 
 const FeedView = memo(() => (
-  <div className="relative flex h-full w-full flex-col bg-black font-sans text-[#e7e9ea]">
+  <MockupScreen className="bg-black text-[#e7e9ea]">
     <div className="sticky top-0 z-30 flex h-14 shrink-0 items-center justify-between border-b border-[#2f3336] bg-black/80 px-4 backdrop-blur-md">
       <div className="h-8 w-8 overflow-hidden rounded-full">
         <ProfileImage className="h-full w-full" />
@@ -204,7 +204,7 @@ const FeedView = memo(() => (
       <div className="w-8"></div>
     </div>
 
-    <div className="flex-1 overflow-y-auto no-scrollbar">
+    <MockupContent>
       <div className="flex border-b border-[#2f3336]">
         <div className="relative flex flex-1 cursor-pointer justify-center py-3 hover:bg-white/5">
           <span className="text-sm font-bold text-[#e7e9ea]">For you</span>
@@ -279,18 +279,21 @@ const FeedView = memo(() => (
           </div>
         </div>
       </div>
-    </div>
+    </MockupContent>
 
     <div className="absolute bottom-20 right-4 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-[#1d9bf0] shadow-lg hover:bg-[#1a8cd8]">
       <LuSquarePlus size={24} className="text-white" />
     </div>
 
     <BottomNav />
-  </div>
+  </MockupScreen>
 ));
 
-export const TwitterView = memo(() => {
-  const perspective = useStore((state) => state.perspective);
-
-  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <FeedView />}</div>;
-});
+export const TwitterView = memo(() => (
+  <PerspectiveSwitcher
+    screens={{
+      [Perspective.Profile]: <ProfileView />,
+      [Perspective.Feed]: <FeedView />,
+    }}
+  />
+));

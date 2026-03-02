@@ -14,9 +14,9 @@ import {
 } from 'react-icons/lu';
 
 import { Perspective } from '../../app/constants';
-import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
+import { MockupContent, MockupScreen, PerspectiveSwitcher } from './MockupBase';
 
 const BottomNav = () => (
   <Navigation className="border-t border-[#31363c] bg-[#1b1f23]" safeAreaClassName="pb-6">
@@ -46,7 +46,7 @@ const BottomNav = () => (
 );
 
 const ProfileView = memo(() => (
-  <div className="relative flex h-full w-full flex-col overflow-hidden bg-[#000000] font-sans text-white">
+  <MockupScreen className="bg-black text-white">
     <div className="flex shrink-0 items-center gap-3 border-b border-[#31363c] bg-[#1b1f23] p-3">
       <div className="h-8 w-8 shrink-0 overflow-hidden rounded-full">
         <ProfileImage className="h-full w-full" />
@@ -58,7 +58,7 @@ const ProfileView = memo(() => (
       <LuMessageSquare size={24} className="text-[#90959c]" />
     </div>
 
-    <div className="flex-1 overflow-y-auto no-scrollbar">
+    <MockupContent>
       <div className="mb-2 bg-[#1b1f23] pb-4">
         <div className="relative h-24 w-full bg-[#a0b4b7]">
           <div className="absolute inset-0 bg-gradient-to-r from-slate-600 to-slate-500"></div>
@@ -126,14 +126,14 @@ const ProfileView = memo(() => (
           building.
         </p>
       </div>
-    </div>
+    </MockupContent>
 
     <BottomNav />
-  </div>
+  </MockupScreen>
 ));
 
 const FeedView = memo(() => (
-  <div className="relative flex h-full w-full flex-col bg-[#000000] font-sans text-white">
+  <MockupScreen className="bg-black text-white">
     <div className="flex shrink-0 items-center gap-3 border-b border-[#31363c] bg-[#1b1f23] p-3">
       <div className="h-8 w-8 shrink-0 overflow-hidden rounded-full">
         <ProfileImage className="h-full w-full" />
@@ -145,7 +145,7 @@ const FeedView = memo(() => (
       <LuMessageSquare size={24} className="text-[#90959c]" />
     </div>
 
-    <div className="flex-1 overflow-y-auto bg-[#000000] no-scrollbar">
+    <MockupContent className="bg-black">
       <div className="mb-2 mt-2 bg-[#1b1f23] pb-1 pt-3">
         <div className="mb-2 flex gap-3 px-3">
           <div className="h-12 w-12 shrink-0">
@@ -214,14 +214,17 @@ const FeedView = memo(() => (
           </button>
         </div>
       </div>
-    </div>
+    </MockupContent>
 
     <BottomNav />
-  </div>
+  </MockupScreen>
 ));
 
-export const LinkedInView = memo(() => {
-  const perspective = useStore((state) => state.perspective);
-
-  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <FeedView />}</div>;
-});
+export const LinkedInView = memo(() => (
+  <PerspectiveSwitcher
+    screens={{
+      [Perspective.Profile]: <ProfileView />,
+      [Perspective.Feed]: <FeedView />,
+    }}
+  />
+));

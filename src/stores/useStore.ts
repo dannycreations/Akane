@@ -34,7 +34,7 @@ export const useStore = create<AppState>()(
     platform: Platform.Discord,
     perspective: Perspective.Profile,
 
-    setImage: (image) => set({ image, editorState: { zoom: 1, rotation: 0, x: 0, y: 0 } }),
+    setImage: (image) => set({ image, activeTab: image ? 'editor' : 'preview', editorState: { zoom: 1, rotation: 0, x: 0, y: 0 } }),
     setActiveTab: (activeTab) => set({ activeTab }),
     setEditorState: (editorState) => set({ editorState }),
     setPlatform: (platform) =>

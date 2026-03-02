@@ -18,9 +18,9 @@ import {
 } from 'react-icons/lu';
 
 import { Perspective } from '../../app/constants';
-import { useStore } from '../../stores/useStore';
 import { PostImage, ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
+import { MockupContent, MockupScreen, PerspectiveSwitcher } from './MockupBase';
 
 const GRID_ITEMS = Array.from({ length: 8 });
 
@@ -60,7 +60,7 @@ const BottomNav = ({ active = 'home' }: { active?: string }) => (
 );
 
 const ProfileView = memo(() => (
-  <div className="relative flex h-full w-full flex-col overflow-hidden bg-black font-sans text-white">
+  <MockupScreen className="bg-black text-white">
     <div className="z-20 flex h-12 shrink-0 items-center justify-between px-4">
       <div className="w-6"></div>
       <div className="flex cursor-pointer items-center gap-1 text-base font-bold">
@@ -70,7 +70,7 @@ const ProfileView = memo(() => (
       <LuMenu size={24} />
     </div>
 
-    <div className="flex-1 overflow-y-auto no-scrollbar">
+    <MockupContent>
       <div className="flex flex-col items-center pb-2 pt-4">
         <div className="relative mb-3">
           <div className="h-24 w-24 overflow-hidden rounded-full border border-white/10">
@@ -146,14 +146,14 @@ const ProfileView = memo(() => (
         ))}
       </div>
       <div className="h-16"></div>
-    </div>
+    </MockupContent>
 
     <BottomNav active="profile" />
-  </div>
+  </MockupScreen>
 ));
 
 const FeedView = memo(() => (
-  <div className="relative flex h-full w-full flex-col justify-end overflow-hidden bg-black font-sans text-white">
+  <MockupScreen className="bg-black text-white">
     <div className="absolute inset-0 z-0 bg-[#111]">
       <PostImage containerClass="flex h-full w-full items-center justify-center" imageClass="h-full w-full object-cover opacity-60" />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60"></div>
@@ -224,11 +224,14 @@ const FeedView = memo(() => (
     </div>
 
     <BottomNav active="home" />
-  </div>
+  </MockupScreen>
 ));
 
-export const TikTokView = memo(() => {
-  const perspective = useStore((state) => state.perspective);
-
-  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <FeedView />}</div>;
-});
+export const TikTokView = memo(() => (
+  <PerspectiveSwitcher
+    screens={{
+      [Perspective.Profile]: <ProfileView />,
+      [Perspective.Feed]: <FeedView />,
+    }}
+  />
+));

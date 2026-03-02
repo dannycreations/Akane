@@ -3,9 +3,9 @@ import { memo } from 'react';
 import { LuCirclePlus, LuGift, LuHash, LuMenu, LuPhone, LuSearch, LuSettings, LuSmile, LuSticker, LuUsers, LuVideo } from 'react-icons/lu';
 
 import { Perspective } from '../../app/constants';
-import { useStore } from '../../stores/useStore';
 import { ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
+import { MockupContent, MockupScreen, PerspectiveSwitcher } from './MockupBase';
 
 const bgMain = 'bg-[#1e1f22]';
 const bgSidebar = 'bg-[#2b2d31]';
@@ -55,12 +55,12 @@ const NitroBadge = () => (
 );
 
 const ProfileView = memo(() => (
-  <div className={clsx('relative flex h-full w-full flex-col overflow-hidden font-sans', bgUserCard, textMain)}>
+  <MockupScreen className={clsx(bgUserCard, textMain)}>
     <div className="absolute left-0 right-0 top-0 z-30 flex h-14 items-center justify-end gap-4 bg-transparent px-4">
       <LuSettings size={24} className="text-white drop-shadow-md" />
     </div>
 
-    <div className="flex-1 overflow-y-auto no-scrollbar">
+    <MockupContent>
       <div className="relative h-[180px] w-full bg-[#5865f2]">
         <div className="absolute inset-0 bg-gradient-to-t from-[#111214]/80 to-transparent"></div>
       </div>
@@ -118,13 +118,13 @@ const ProfileView = memo(() => (
           </div>
         </div>
       </div>
-    </div>
+    </MockupContent>
     <BottomNav />
-  </div>
+  </MockupScreen>
 ));
 
 const ChatView = memo(() => (
-  <div className={clsx('relative flex h-full w-full flex-col font-sans', bgMain, textMain)}>
+  <MockupScreen className={clsx(bgMain, textMain)}>
     <div className="flex flex-1 min-w-0 flex-col">
       <div className={clsx('flex h-12 shrink-0 items-center justify-between border-b border-[#26272d] px-4 shadow-sm', bgSidebar)}>
         <div className="flex items-center gap-3">
@@ -141,7 +141,7 @@ const ChatView = memo(() => (
         </div>
       </div>
 
-      <div className="flex-1 space-y-5 overflow-y-auto p-4">
+      <MockupContent className="space-y-5 p-4">
         <div className="group flex gap-4">
           <div className="mt-1 h-10 w-10 shrink-0 cursor-pointer transition-opacity hover:opacity-80">
             <ProfileImage className="h-full w-full rounded-full" />
@@ -175,7 +175,7 @@ const ChatView = memo(() => (
             <p className="leading-snug text-[#dbdee1]">That looks super clean! Did you edit that yourself?</p>
           </div>
         </div>
-      </div>
+      </MockupContent>
 
       <Navigation className={clsx(bgMain)} safeAreaClassName="pb-6">
         <div className="px-4 pt-2">
@@ -195,11 +195,14 @@ const ChatView = memo(() => (
         </div>
       </Navigation>
     </div>
-  </div>
+  </MockupScreen>
 ));
 
-export const DiscordView = memo(() => {
-  const perspective = useStore((state) => state.perspective);
-
-  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <ChatView />}</div>;
-});
+export const DiscordView = memo(() => (
+  <PerspectiveSwitcher
+    screens={{
+      [Perspective.Profile]: <ProfileView />,
+      [Perspective.Chat]: <ChatView />,
+    }}
+  />
+));

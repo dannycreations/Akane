@@ -1,9 +1,9 @@
 import type { EditorState, ImageSource } from '../app/types';
 
 export async function saveImage(image: ImageSource, editorState: EditorState, outputSize?: number, suffix?: string): Promise<void> {
-  const bitmap = await fetch(image.url)
-    .then((r) => r.blob())
-    .then(createImageBitmap);
+  const response = await fetch(image.url);
+  const inputBlob = await response.blob();
+  const bitmap = await createImageBitmap(inputBlob);
 
   const { width: w, height: h } = bitmap;
   const size = outputSize ?? Math.max(w, h, 1080);

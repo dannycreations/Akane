@@ -3,9 +3,9 @@ import { memo } from 'react';
 import { LuChevronDown, LuClock, LuEllipsis, LuHash, LuMessageSquare, LuPaperclip, LuSend, LuSmile, LuUserPlus, LuVideo, LuX } from 'react-icons/lu';
 
 import { Perspective } from '../../app/constants';
-import { useStore } from '../../stores/useStore';
 import { ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
+import { MockupContent, MockupScreen, PerspectiveSwitcher } from './MockupBase';
 
 const bgMain = 'bg-[#1A1D21]';
 const textPrimary = 'text-[#D1D2D3]';
@@ -13,7 +13,7 @@ const textSecondary = 'text-[#ABABAD]';
 const border = 'border-[#36373A]';
 
 const ProfileView = memo(() => (
-  <div className={clsx('relative flex h-full w-full flex-col overflow-hidden font-sans', bgMain, textPrimary)}>
+  <MockupScreen className={clsx(bgMain, textPrimary)}>
     <div className={clsx('z-20 flex h-14 items-center justify-between border-b bg-[#1A1D21] px-4', border)}>
       <h2 className="text-lg font-bold">Profile</h2>
       <div className="cursor-pointer rounded-lg p-2 hover:bg-[#35373B]">
@@ -21,7 +21,7 @@ const ProfileView = memo(() => (
       </div>
     </div>
 
-    <div className="flex-1 overflow-y-auto p-6 no-scrollbar">
+    <MockupContent className="p-6">
       <div className="mb-6 flex flex-col items-center">
         <div className="group relative cursor-pointer">
           <div className="h-[180px] w-[180px] overflow-hidden rounded-3xl shadow-2xl ring-4 ring-[#1A1D21]">
@@ -82,12 +82,12 @@ const ProfileView = memo(() => (
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </MockupContent>
+  </MockupScreen>
 ));
 
 const ChatView = memo(() => (
-  <div className={clsx('relative flex h-full w-full flex-col font-sans', bgMain, textPrimary)}>
+  <MockupScreen className={clsx(bgMain, textPrimary)}>
     <div className="flex flex-1 min-w-0 flex-col">
       <div className={clsx('flex h-12 shrink-0 items-center justify-between border-b px-4', border)}>
         <div className="flex items-center gap-1 text-lg font-bold">
@@ -108,7 +108,7 @@ const ChatView = memo(() => (
         </div>
       </div>
 
-      <div className="flex-1 space-y-6 overflow-y-auto p-4">
+      <MockupContent className="space-y-6 p-4">
         <div className="relative my-4 flex items-center justify-center">
           <div className="absolute top-1/2 h-px w-full bg-[#36373A]"></div>
           <span className="relative rounded-full border border-[#36373A] bg-[#1A1D21] px-3 text-xs font-bold text-[#ABABAD]">Today</span>
@@ -145,7 +145,7 @@ const ChatView = memo(() => (
             <p className="text-[15px] leading-relaxed">Nice work! The rounded square crop for Slack is a nice touch. 👌</p>
           </div>
         </div>
-      </div>
+      </MockupContent>
 
       <Navigation className={bgMain} safeAreaClassName="pb-4">
         <div className="px-4 pt-2">
@@ -195,11 +195,14 @@ const ChatView = memo(() => (
         </div>
       </Navigation>
     </div>
-  </div>
+  </MockupScreen>
 ));
 
-export const SlackView = memo(() => {
-  const perspective = useStore((state) => state.perspective);
-
-  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <ChatView />}</div>;
-});
+export const SlackView = memo(() => (
+  <PerspectiveSwitcher
+    screens={{
+      [Perspective.Profile]: <ProfileView />,
+      [Perspective.Chat]: <ChatView />,
+    }}
+  />
+));

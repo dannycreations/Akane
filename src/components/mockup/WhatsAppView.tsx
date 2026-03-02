@@ -2,53 +2,55 @@ import { memo } from 'react';
 import { LuArrowLeft, LuCircleCheck, LuEllipsisVertical, LuImage, LuPhone, LuSend, LuVideo } from 'react-icons/lu';
 
 import { Perspective } from '../../app/constants';
-import { useStore } from '../../stores/useStore';
 import { ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
+import { MockupContent, MockupScreen, PerspectiveSwitcher } from './MockupBase';
 
 const ProfileView = memo(() => (
-  <div className="flex h-full w-full flex-col bg-[#0b141a] font-sans text-[#e9edef]">
+  <MockupScreen className="bg-[#0b141a] text-[#e9edef]">
     <div className="flex items-center gap-4 p-4 text-xl">
       <LuArrowLeft size={24} />
       <span className="flex-1 font-medium">Profile</span>
       <LuEllipsisVertical size={24} />
     </div>
-    <div className="group relative my-8 flex justify-center">
-      <div className="h-[180px] w-[180px]">
-        <ProfileImage className="h-full w-full rounded-full ring-4 ring-[#25D366]/20 transition-all duration-300 group-hover:ring-[#25D366]" />
-      </div>
-      <div className="absolute bottom-2 right-14 rounded-full bg-[#00a884] p-3 shadow-lg">
-        <LuImage size={20} className="text-white" />
-      </div>
-    </div>
-    <div className="space-y-6 px-6">
-      <div className="flex items-center gap-4 text-[#8696a0]">
-        <div className="flex-1">
-          <label className="mb-1 block text-sm">Name</label>
-          <div className="flex items-center justify-between text-lg text-[#e9edef]">
-            <span>Your Name</span>
-            <span className="text-[#00a884]">
-              <LuCircleCheck size={16} />
-            </span>
-          </div>
+    <MockupContent>
+      <div className="group relative my-8 flex justify-center">
+        <div className="h-[180px] w-[180px]">
+          <ProfileImage className="h-full w-full rounded-full ring-4 ring-[#25D366]/20 transition-all duration-300 group-hover:ring-[#25D366]" />
+        </div>
+        <div className="absolute bottom-2 right-14 rounded-full bg-[#00a884] p-3 shadow-lg">
+          <LuImage size={20} className="text-white" />
         </div>
       </div>
-      <div className="h-px bg-[#202c33]" />
-      <div className="text-[#8696a0]">
-        <label className="mb-1 block text-sm">About</label>
-        <p className="text-[#e9edef]">Living the dream ✨</p>
+      <div className="space-y-6 px-6">
+        <div className="flex items-center gap-4 text-[#8696a0]">
+          <div className="flex-1">
+            <label className="mb-1 block text-sm">Name</label>
+            <div className="flex items-center justify-between text-lg text-[#e9edef]">
+              <span>Your Name</span>
+              <span className="text-[#00a884]">
+                <LuCircleCheck size={16} />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="h-px bg-[#202c33]" />
+        <div className="text-[#8696a0]">
+          <label className="mb-1 block text-sm">About</label>
+          <p className="text-[#e9edef]">Living the dream ✨</p>
+        </div>
+        <div className="h-px bg-[#202c33]" />
+        <div className="text-[#8696a0]">
+          <label className="mb-1 block text-sm">Phone</label>
+          <p className="text-[#e9edef]">+1 234 567 890</p>
+        </div>
       </div>
-      <div className="h-px bg-[#202c33]" />
-      <div className="text-[#8696a0]">
-        <label className="mb-1 block text-sm">Phone</label>
-        <p className="text-[#e9edef]">+1 234 567 890</p>
-      </div>
-    </div>
-  </div>
+    </MockupContent>
+  </MockupScreen>
 ));
 
 const ChatView = memo(() => (
-  <div className="relative flex h-full w-full flex-col overflow-hidden bg-[#0b141a] font-sans">
+  <MockupScreen className="bg-[#0b141a]">
     <div className="relative z-10 flex h-16 shrink-0 items-center justify-between bg-[#202c33] px-2 shadow-sm">
       <div className="flex items-center gap-2">
         <LuArrowLeft size={20} className="text-white" />
@@ -69,7 +71,7 @@ const ChatView = memo(() => (
       </div>
     </div>
 
-    <div className="relative z-10 flex-1 space-y-3 overflow-y-auto p-4">
+    <MockupContent className="z-10 space-y-3 p-4">
       <div className="flex justify-start">
         <div className="max-w-[80%] rounded-bl-lg rounded-br-lg rounded-tr-lg bg-[#202c33] p-2 px-3 text-sm text-white shadow">
           Hey! Check out my new profile pic! 😎
@@ -84,7 +86,7 @@ const ChatView = memo(() => (
           </span>
         </div>
       </div>
-    </div>
+    </MockupContent>
 
     <Navigation className="bg-[#202c33]" safeAreaClassName="pb-8">
       <div className="relative z-20 flex items-center gap-2 px-2 pt-2">
@@ -96,11 +98,14 @@ const ChatView = memo(() => (
         </div>
       </div>
     </Navigation>
-  </div>
+  </MockupScreen>
 ));
 
-export const WhatsAppView = memo(() => {
-  const perspective = useStore((state) => state.perspective);
-
-  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <ChatView />}</div>;
-});
+export const WhatsAppView = memo(() => (
+  <PerspectiveSwitcher
+    screens={{
+      [Perspective.Profile]: <ProfileView />,
+      [Perspective.Chat]: <ChatView />,
+    }}
+  />
+));

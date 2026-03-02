@@ -3,9 +3,9 @@ import { memo } from 'react';
 import { LuArrowLeft, LuCheck, LuEllipsisVertical, LuMic, LuPaperclip, LuPhone, LuSmile } from 'react-icons/lu';
 
 import { Perspective } from '../../app/constants';
-import { useStore } from '../../stores/useStore';
 import { ProfileImage } from '../shared/Image';
 import { Navigation } from '../shared/Navigation';
+import { MockupContent, MockupScreen, PerspectiveSwitcher } from './MockupBase';
 
 const bgMain = 'bg-[#17212b]';
 const bgContent = 'bg-[#0e1621]';
@@ -27,7 +27,7 @@ const PremiumStar = ({ size = 16, className = '' }: { size?: number; className?:
 );
 
 const ProfileView = memo(() => (
-  <div className={clsx('relative flex h-full w-full flex-col font-sans', bgMain)}>
+  <MockupScreen className={bgMain}>
     <div className="absolute left-0 right-0 top-0 z-30 flex items-center justify-between p-3 text-white drop-shadow-md">
       <LuArrowLeft size={24} />
       <div className="flex gap-4">
@@ -48,7 +48,7 @@ const ProfileView = memo(() => (
       </div>
     </div>
 
-    <div className="flex-1 space-y-6 overflow-y-auto p-5 no-scrollbar">
+    <MockupContent className="space-y-6 p-5">
       <div>
         <h3 className={clsx('mb-1 text-sm font-medium', accent)}>Info</h3>
         <p className={clsx('text-[17px] leading-snug', textPrimary)}>Bio description here. 🚀</p>
@@ -71,18 +71,18 @@ const ProfileView = memo(() => (
         <div className={clsx('text-[17px]', textPrimary)}>Notifications</div>
         <div className="font-medium text-[#6ab3f3]">On</div>
       </div>
-    </div>
+    </MockupContent>
 
     <div className="absolute bottom-8 right-6 z-40 flex h-14 w-14 cursor-pointer items-center justify-center rounded-full bg-[#5288c1] shadow-lg hover:brightness-110">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
         <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
       </svg>
     </div>
-  </div>
+  </MockupScreen>
 ));
 
 const ChatView = memo(() => (
-  <div className={clsx('relative flex h-full w-full flex-col font-sans', bgContent)}>
+  <MockupScreen className={bgContent}>
     <div className={clsx('z-20 flex h-[56px] shrink-0 items-center px-2 shadow-sm', headerBg)}>
       <div className="cursor-pointer rounded-full p-2 hover:bg-[#202b36]">
         <LuArrowLeft size={22} className={clsx(textSecondary)} />
@@ -106,7 +106,7 @@ const ChatView = memo(() => (
       </div>
     </div>
 
-    <div className="z-10 flex-1 space-y-2 overflow-y-auto p-3 pb-4">
+    <MockupContent className="z-10 space-y-2 p-3 pb-4">
       <div className="my-4 flex justify-center">
         <div className="rounded-full border border-white/5 bg-[#17212b]/80 px-3 py-1 text-xs font-bold text-white shadow-sm backdrop-blur-sm">
           Today
@@ -140,7 +140,7 @@ const ChatView = memo(() => (
           </div>
         </div>
       </div>
-    </div>
+    </MockupContent>
 
     <Navigation className={headerBg} safeAreaClassName="pb-8">
       <div className="relative z-20 flex items-end gap-2 px-2 pt-2">
@@ -160,11 +160,14 @@ const ChatView = memo(() => (
         </div>
       </div>
     </Navigation>
-  </div>
+  </MockupScreen>
 ));
 
-export const TelegramView = memo(() => {
-  const perspective = useStore((state) => state.perspective);
-
-  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <ChatView />}</div>;
-});
+export const TelegramView = memo(() => (
+  <PerspectiveSwitcher
+    screens={{
+      [Perspective.Profile]: <ProfileView />,
+      [Perspective.Chat]: <ChatView />,
+    }}
+  />
+));

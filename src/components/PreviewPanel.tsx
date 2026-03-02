@@ -67,7 +67,7 @@ const PhoneFrame = memo(() => {
   useEffect(() => {
     const timer = window.setTimeout(() => {
       setVisited((prev) => (prev.size === PLATFORMS.length ? prev : new Set(PLATFORMS.map((p) => p.id))));
-    }, 2000);
+    }, 1000);
 
     return () => window.clearTimeout(timer);
   }, []);

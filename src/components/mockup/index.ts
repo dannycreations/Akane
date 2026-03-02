@@ -17,7 +17,7 @@ const loadView = (importer: () => Promise<{ default: ComponentType }>) => {
   };
 };
 
-const views = {
+const VIEWS = {
   [Platform.Discord]: loadView(() => import('./DiscordView').then((m) => ({ default: m.DiscordView }))),
   [Platform.Facebook]: loadView(() => import('./FacebookView').then((m) => ({ default: m.FacebookView }))),
   [Platform.Instagram]: loadView(() => import('./InstagramView').then((m) => ({ default: m.InstagramView }))),
@@ -28,11 +28,11 @@ const views = {
   [Platform.TikTok]: loadView(() => import('./TikTokView').then((m) => ({ default: m.TikTokView }))),
   [Platform.WhatsApp]: loadView(() => import('./WhatsAppView').then((m) => ({ default: m.WhatsAppView }))),
   [Platform.Twitter]: loadView(() => import('./TwitterView').then((m) => ({ default: m.TwitterView }))),
-};
+} as const;
 
 export const PLATFORMS: readonly PlatformConfig[] = PLATFORM_METADATA.map((meta) => ({
   ...meta,
-  ...views[meta.id],
+  ...VIEWS[meta.id],
 }));
 
 const CONFIG_MAP = new Map<Platform, PlatformConfig>(PLATFORMS.map((p) => [p.id, p]));
