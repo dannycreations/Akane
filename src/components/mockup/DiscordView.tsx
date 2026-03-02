@@ -201,14 +201,5 @@ const ChatView = memo(() => (
 export const DiscordView = memo(() => {
   const perspective = useStore((state) => state.perspective);
 
-  return (
-    <div className="relative h-full w-full">
-      <div className="h-full w-full" style={{ display: perspective === Perspective.Profile ? 'block' : 'none' }}>
-        <ProfileView />
-      </div>
-      <div className="h-full w-full" style={{ display: perspective === Perspective.Chat ? 'block' : 'none' }}>
-        <ChatView />
-      </div>
-    </div>
-  );
+  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <ChatView />}</div>;
 });

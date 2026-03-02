@@ -227,18 +227,8 @@ const FeedView = memo(() => (
   </div>
 ));
 
-export const TikTokView = () => {
+export const TikTokView = memo(() => {
   const perspective = useStore((state) => state.perspective);
-  const isProfile = perspective === Perspective.Profile;
 
-  return (
-    <div className="relative h-full w-full">
-      <div className="h-full w-full" style={{ display: isProfile ? 'block' : 'none' }}>
-        <ProfileView />
-      </div>
-      <div className="h-full w-full" style={{ display: !isProfile ? 'block' : 'none' }}>
-        <FeedView />
-      </div>
-    </div>
-  );
-};
+  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <FeedView />}</div>;
+});

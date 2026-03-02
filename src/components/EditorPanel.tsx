@@ -94,10 +94,7 @@ const EditorControls = memo(
 );
 
 export const EditorPanel = memo(() => {
-  const image = useStore((state) => state.image);
-  const platform = useStore((state) => state.platform);
-  const setImage = useStore((state) => state.setImage);
-  const setImageWithEditorState = useStore((state) => state.setImageWithEditorState);
+  const { image, platform, setImage, setImageWithEditorState } = useStore();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);

@@ -220,15 +220,9 @@ export const InstagramView = memo(() => {
 
   return (
     <div className="relative h-full w-full">
-      <div className="h-full w-full" style={{ display: perspective === Perspective.Story ? 'block' : 'none' }}>
-        <StoryView />
-      </div>
-      <div className="h-full w-full" style={{ display: perspective === Perspective.Feed ? 'block' : 'none' }}>
-        <FeedView />
-      </div>
-      <div className="h-full w-full" style={{ display: perspective === Perspective.Profile ? 'block' : 'none' }}>
-        <ProfileView />
-      </div>
+      {perspective === Perspective.Story && <StoryView />}
+      {perspective === Perspective.Feed && <FeedView />}
+      {perspective === Perspective.Profile && <ProfileView />}
     </div>
   );
 });

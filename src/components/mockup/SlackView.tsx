@@ -198,18 +198,8 @@ const ChatView = memo(() => (
   </div>
 ));
 
-export const SlackView = () => {
+export const SlackView = memo(() => {
   const perspective = useStore((state) => state.perspective);
-  const isProfile = perspective === Perspective.Profile;
 
-  return (
-    <div className="relative h-full w-full">
-      <div className="h-full w-full" style={{ display: isProfile ? 'block' : 'none' }}>
-        <ProfileView />
-      </div>
-      <div className="h-full w-full" style={{ display: !isProfile ? 'block' : 'none' }}>
-        <ChatView />
-      </div>
-    </div>
-  );
-};
+  return <div className="relative h-full w-full">{perspective === Perspective.Profile ? <ProfileView /> : <ChatView />}</div>;
+});

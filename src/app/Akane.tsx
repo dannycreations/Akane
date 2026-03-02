@@ -11,8 +11,7 @@ import { useStore } from '../stores/useStore';
 import { updateEditorCssVars } from '../utilities/dom';
 
 export const AkaneApp = () => {
-  const activeTab = useStore((state) => state.activeTab);
-  const setActiveTab = useStore((state) => state.setActiveTab);
+  const { activeTab, setActiveTab } = useStore();
 
   useLayoutEffect(() => {
     updateEditorCssVars(useStore.getState().editorState);
