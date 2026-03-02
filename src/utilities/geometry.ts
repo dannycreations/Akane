@@ -1,8 +1,8 @@
 export function calculateLimits(ar: number, zoom: number): { xLim: number; yLim: number } {
-  const invZoom = 1 / zoom;
+  const invZoom = 1 / Math.max(zoom, 1e-2);
   return {
-    xLim: Math.max(0, (Math.min(1, ar) - invZoom) / 2),
-    yLim: Math.max(0, (Math.min(1, 1 / ar) - invZoom) / 2),
+    xLim: Math.max(0, (Math.min(1, ar) - invZoom) * 0.5),
+    yLim: Math.max(0, (Math.min(1, 1 / ar) - invZoom) * 0.5),
   };
 }
 

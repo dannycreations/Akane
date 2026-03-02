@@ -22,7 +22,7 @@ export const Slider = memo(({ label, value, min, max, step = 1, onChange }: Slid
         max={max}
         step={step}
         value={value}
-        onChange={(e) => onChange(parseFloat(e.target.value))}
+        onChange={(e) => onChange(e.target.valueAsNumber)}
         className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-slate-700 transition-all accent-indigo-500 hover:accent-indigo-400"
       />
     </div>

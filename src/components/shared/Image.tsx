@@ -60,8 +60,6 @@ export const PostImage = memo(
   },
 );
 
-const TRANSFORM_STYLE = { transform: 'rotate(var(--crop-rotate)) scale(var(--crop-scale)) translate(var(--crop-x), var(--crop-y))' };
-
 interface EditorImageProps {
   readonly image?: ImageSource | null;
   readonly className?: string;
@@ -70,12 +68,16 @@ interface EditorImageProps {
 }
 
 export const EditorImage = memo(({ image, className, style, imgClassName }: EditorImageProps) => {
-  const finalStyle = style ? { ...TRANSFORM_STYLE, ...style } : TRANSFORM_STYLE;
-
   if (!image) return null;
 
   return (
-    <div className={clsx('h-full w-full origin-center will-change-transform', className)} style={finalStyle}>
+    <div
+      className={clsx('h-full w-full origin-center will-change-transform', className)}
+      style={{
+        transform: 'rotate(var(--crop-rotate)) scale(var(--crop-scale)) translate(var(--crop-x), var(--crop-y))',
+        ...style,
+      }}
+    >
       <img
         src={image.url}
         className={imgClassName ?? 'pointer-events-none block h-full w-full select-none object-contain'}

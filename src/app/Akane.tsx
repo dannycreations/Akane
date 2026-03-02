@@ -19,13 +19,6 @@ export const AkaneApp = () => {
     return useStore.subscribe((state) => state.editorState, updateEditorCssVars);
   }, []);
 
-  const getTabButtonClass = (isActive: boolean) => {
-    return clsx(
-      'flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-lg py-2 text-sm font-medium transition-all',
-      isActive ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200',
-    );
-  };
-
   const editorPanelContainerClass = clsx(
     'z-10 flex flex-1 min-w-0 overflow-hidden border-r border-slate-800 shadow-xl',
     activeTab === 'editor' ? 'flex' : 'hidden lg:flex',
@@ -40,11 +33,23 @@ export const AkaneApp = () => {
     <div data-akane-root className="flex h-screen w-screen flex-col overflow-hidden bg-slate-950 font-sans lg:flex-row">
       <div className="z-30 flex-none border-b border-slate-800 bg-slate-950 p-3 lg:hidden">
         <div className="flex rounded-xl bg-slate-900 p-1">
-          <button onClick={() => setActiveTab('editor')} className={getTabButtonClass(activeTab === 'editor')}>
+          <button
+            onClick={() => setActiveTab('editor')}
+            className={clsx(
+              'flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-lg py-2 text-sm font-medium transition-all',
+              activeTab === 'editor' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200',
+            )}
+          >
             <LuPencil size={16} />
             Edit
           </button>
-          <button onClick={() => setActiveTab('preview')} className={getTabButtonClass(activeTab === 'preview')}>
+          <button
+            onClick={() => setActiveTab('preview')}
+            className={clsx(
+              'flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-lg py-2 text-sm font-medium transition-all',
+              activeTab === 'preview' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200',
+            )}
+          >
             <LuEye size={16} />
             Preview
           </button>

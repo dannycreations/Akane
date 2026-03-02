@@ -17,16 +17,13 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
   const localStateRef = useRef<EditorState>({ zoom: 1, rotation: 0, x: 0, y: 0 });
 
   const updateStateClamped = useCallback(
-    (newState: EditorState, metaAr: number, commit: boolean = true) => {
-      const { xLim, yLim } = calculateLimits(metaAr, newState.zoom);
-      const newX = Math.max(-xLim, Math.min(xLim, newState.x));
-      const newY = Math.max(-yLim, Math.min(yLim, newState.y));
+    (next: EditorState, metaAr: number, commit: boolean = true) => {
+      const { xLim, yLim } = calculateLimits(metaAr, next.zoom);
 
-      const updated = {
-        zoom: newState.zoom,
-        rotation: newState.rotation,
-        x: newX,
-        y: newY,
+      const updated: EditorState = {
+        ...next,
+        x: next.x < -xLim ? -xLim : next.x > xLim ? xLim : next.x,
+        y: next.y < -yLim ? -yLim : next.y > yLim ? yLim : next.y,
       };
 
       localStateRef.current = updated;
@@ -114,7 +111,7 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
   const handleWheel = useCallback(
     (e: WheelEvent) => {
       const currentState = useStore.getState().editorState;
-      const sensitivity = 0.001;
+      const sensitivity = 0.001 * (currentState.zoom / minZoom);
       const newZoom = Math.min(Math.max(currentState.zoom - e.deltaY * sensitivity, minZoom), maxZoom);
       updateStateClamped({ ...currentState, zoom: newZoom }, ar);
     },

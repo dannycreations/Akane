@@ -35,14 +35,14 @@ export const useStore = create<AppState>()(
     platform: PLATFORM_METADATA[0].id,
     perspective: Perspective.Profile,
 
-    setImage: (image) => set({ image }),
+    setImage: (image) => set({ image, editorState: { zoom: 1, rotation: 0, x: 0, y: 0 } }),
     setActiveTab: (activeTab) => set({ activeTab }),
     setEditorState: (editorState) => set({ editorState }),
     setPlatform: (platform) =>
       set((state) => {
         if (state.platform === platform) return {};
-        const available = getPlatformPerspective(platform);
-        const perspective = available.includes(state.perspective) ? state.perspective : available[0];
+        const perspectives = getPlatformPerspective(platform);
+        const perspective = perspectives.includes(state.perspective) ? state.perspective : (perspectives[0] ?? state.perspective);
         return { platform, perspective };
       }),
     setPerspective: (perspective) => set({ perspective }),

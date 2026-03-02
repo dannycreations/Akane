@@ -111,10 +111,5 @@ export const PLATFORM_METADATA: readonly PlatformMetadata[] = [
 
 const METADATA_MAP = new Map<Platform, PlatformMetadata>(PLATFORM_METADATA.map((p) => [p.id, p]));
 
-export function getPlatformMetadata(id: Platform): PlatformMetadata {
-  return METADATA_MAP.get(id) ?? PLATFORM_METADATA[0];
-}
-
-export function getPlatformPerspective(id: Platform): Perspective[] {
-  return getPlatformMetadata(id).perspectives;
-}
+export const getPlatformMetadata = (id: Platform): PlatformMetadata => METADATA_MAP.get(id) ?? PLATFORM_METADATA[0];
+export const getPlatformPerspective = (id: Platform): Perspective[] => METADATA_MAP.get(id)?.perspectives ?? [];

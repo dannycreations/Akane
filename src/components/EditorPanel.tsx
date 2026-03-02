@@ -105,8 +105,8 @@ export const EditorPanel = memo(() => {
 
   const isRoundedSquare = platform === Platform.Slack || platform === Platform.Snapchat;
   const ar = image ? image.width / image.height : 1;
-  const minZoom = image ? Math.max(ar, 1 / ar) : 0;
-  const maxZoom = Math.max(5.0, minZoom * 3);
+  const minZoom = image ? (ar > 1 ? ar : 1 / ar) : 0;
+  const maxZoom = minZoom * 3 > 5.0 ? minZoom * 3 : 5.0;
 
   const { handlePointerDown, handlePointerMove, handlePointerUp, handleWheel, updateStateClamped } = useEditorGesture(
     containerRef,
@@ -180,17 +180,22 @@ export const EditorPanel = memo(() => {
     await saveImage(image, currentState, outputSize, platform);
   }, [image, platform]);
 
-  const buttonBaseClass =
-    'flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg bg-slate-900/50 px-2 py-1 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-30';
-
   return (
     <div className="relative flex h-full w-full flex-col select-none border-r border-slate-800 bg-slate-900 p-2">
       <div className="z-20 mb-1 flex shrink-0 items-center justify-between">
-        <button onClick={() => setImage(null)} disabled={!image} className={clsx(buttonBaseClass, 'text-slate-400 hover:text-red-400')}>
+        <button
+          onClick={() => setImage(null)}
+          disabled={!image}
+          className="flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg bg-slate-900/50 px-2 py-1 text-xs font-medium text-slate-400 transition-colors hover:text-red-400 disabled:cursor-not-allowed disabled:opacity-30"
+        >
           <LuX size={16} />
           <span className="sm:inline">CLOSE</span>
         </button>
-        <button onClick={handleDownload} disabled={!image} className={clsx(buttonBaseClass, 'text-slate-400 hover:text-emerald-400')}>
+        <button
+          onClick={handleDownload}
+          disabled={!image}
+          className="flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg bg-slate-900/50 px-2 py-1 text-xs font-medium text-slate-400 transition-colors hover:text-emerald-400 disabled:cursor-not-allowed disabled:opacity-30"
+        >
           <LuDownload size={16} />
           <span className="sm:inline">SAVE</span>
         </button>

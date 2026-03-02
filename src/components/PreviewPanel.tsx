@@ -123,36 +123,22 @@ export const PreviewPanel = memo(() => {
     const content = contentRef.current;
     if (!container || !content) return;
 
-    let rafId: number;
-
     const observer = new ResizeObserver((entries) => {
-      if (rafId) {
-        window.cancelAnimationFrame(rafId);
-      }
+      const entry = entries[0];
+      if (!entry) return;
 
-      rafId = window.requestAnimationFrame(() => {
-        const entry = entries[0];
-        if (!entry) return;
+      const { width, height } = entry.contentRect;
 
-        const { width, height } = entry.contentRect;
+      const scaleX = (width - MARGIN) / PHONE_WIDTH;
+      const scaleY = (height - MARGIN) / PHONE_HEIGHT;
 
-        const scaleX = (width - MARGIN) / PHONE_WIDTH;
-        const scaleY = (height - MARGIN) / PHONE_HEIGHT;
+      const finalScale = Math.max(0.3, Math.min(1, scaleX, scaleY));
 
-        const newScale = Math.min(1, scaleX, scaleY);
-        const finalScale = Math.max(0.3, newScale);
-
-        content.style.setProperty('--preview-scale', finalScale.toString());
-      });
+      content.style.setProperty('--preview-scale', finalScale.toString());
     });
 
     observer.observe(container);
-    return () => {
-      observer.disconnect();
-      if (rafId) {
-        window.cancelAnimationFrame(rafId);
-      }
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (
