@@ -11,7 +11,7 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
   const setEditorState = useStore((state) => state.setEditorState);
 
   const isDragging = useRef(false);
-  const dragStart = useRef({ mouseX: 0, mouseY: 0, stateX: 0, stateY: 0, containerSize: 0, cos: 1, sin: 0 });
+  const dragStart = useRef({ mouseX: 0, mouseY: 0, stateX: 0, stateY: 0, cos: 1, sin: 0, invScale: 0 });
   const frameRef = useRef<number>(0);
   const pointerPos = useRef({ x: 0, y: 0 });
   const localStateRef = useRef<EditorState>({ zoom: 1, rotation: 0, x: 0, y: 0 });
@@ -40,24 +40,17 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
   const performDragUpdate = useCallback(() => {
     if (!isDragging.current) return;
 
-    const { containerSize, mouseX, mouseY, stateX, stateY, cos, sin } = dragStart.current;
-    if (containerSize === 0) return;
-
+    const { mouseX, mouseY, stateX, stateY, cos, sin, invScale } = dragStart.current;
     const { x: px, y: py } = pointerPos.current;
+
     const dxScreen = px - mouseX;
     const dyScreen = py - mouseY;
-
-    const dxLocal = dxScreen * cos - dyScreen * sin;
-    const dyLocal = dxScreen * sin + dyScreen * cos;
-
-    const zoomFactor = localStateRef.current.zoom || 0.001;
-    const invScale = 1 / (zoomFactor * containerSize);
 
     updateStateClamped(
       {
         ...localStateRef.current,
-        x: stateX + dxLocal * invScale,
-        y: stateY + dyLocal * invScale,
+        x: stateX + (dxScreen * cos - dyScreen * sin) * invScale,
+        y: stateY + (dxScreen * sin + dyScreen * cos) * invScale,
       },
       ar,
       false,
@@ -71,21 +64,23 @@ export const useEditorGesture = (containerRef: RefObject<HTMLDivElement | null>,
       const container = containerRef.current;
       if (!container) return;
 
-      const currentState = useStore.getState().editorState;
-      localStateRef.current = currentState;
+      const state = useStore.getState().editorState;
+      localStateRef.current = state;
 
-      const rad = (currentState.rotation * Math.PI) / -180;
+      const rad = (state.rotation * Math.PI) / -180;
+      const size = container.offsetWidth || 1;
+
       isDragging.current = true;
       (e.target as Element).setPointerCapture(e.pointerId);
 
       dragStart.current = {
         mouseX: e.clientX,
         mouseY: e.clientY,
-        stateX: currentState.x,
-        stateY: currentState.y,
-        containerSize: container.offsetWidth || 0,
+        stateX: state.x,
+        stateY: state.y,
         cos: Math.cos(rad),
         sin: Math.sin(rad),
+        invScale: 1 / (state.zoom * size),
       };
 
       pointerPos.current.x = e.clientX;

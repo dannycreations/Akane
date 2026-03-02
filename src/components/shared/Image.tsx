@@ -18,11 +18,11 @@ export const ProfileImage = memo(({ size, className }: ProfileImageProps) => {
   const containerStyle = useMemo(() => (size !== undefined ? { width: size, height: size } : DEFAULT_STYLE), [size]);
 
   if (!image) {
-    return <div className={clsx('bg-slate-700', className)} style={containerStyle} />;
+    return <div className={clsx('bg-surface-elevated', className)} style={containerStyle} />;
   }
 
   return (
-    <div className={clsx('relative flex-shrink-0 select-none overflow-hidden bg-slate-800', className)} style={containerStyle}>
+    <div className={clsx('relative flex-shrink-0 select-none overflow-hidden bg-bg-main', className)} style={containerStyle}>
       <EditorImage image={image} />
     </div>
   );
@@ -36,7 +36,7 @@ interface PostImageProps {
 
 export const PostImage = memo(
   ({
-    containerClass = 'flex h-64 w-full items-center justify-center text-[#b0b3b8]',
+    containerClass = 'flex h-64 w-full items-center justify-center text-text-muted',
     imageClass = 'block h-full w-full object-contain',
     fallbackText,
   }: PostImageProps) => {

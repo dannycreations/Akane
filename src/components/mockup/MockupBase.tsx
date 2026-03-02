@@ -13,7 +13,7 @@ interface MockupScreenProps {
 
 export const MockupScreen = memo(({ children, className, backgroundColor }: MockupScreenProps) => (
   <div
-    className={clsx('relative flex h-full w-full flex-col overflow-hidden font-sans', className)}
+    className={clsx('relative flex h-full w-full flex-col overflow-hidden font-inter', className)}
     style={backgroundColor ? { backgroundColor } : undefined}
   >
     {children}

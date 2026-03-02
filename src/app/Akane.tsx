@@ -20,24 +20,24 @@ export const AkaneApp = () => {
   }, []);
 
   const editorPanelContainerClass = clsx(
-    'z-10 flex flex-1 min-w-0 overflow-hidden border-r border-slate-800 shadow-xl',
+    'z-10 flex flex-1 min-w-0 overflow-hidden border-r border-border-subtle shadow-xl',
     activeTab === 'editor' ? 'flex' : 'hidden lg:flex',
   );
 
   const previewPanelContainerClass = clsx(
-    'z-0 flex flex-1 flex-col min-w-0 overflow-hidden bg-gradient-to-br from-slate-900 to-slate-950',
+    'z-0 flex flex-1 flex-col min-w-0 overflow-hidden bg-gradient-to-br from-bg-main to-bg-darker',
     activeTab === 'preview' ? 'flex' : 'hidden lg:flex',
   );
 
   return (
-    <div data-akane-root className="flex h-screen w-screen flex-col overflow-hidden bg-slate-950 font-sans lg:flex-row">
-      <div className="z-30 flex-none border-b border-slate-800 bg-slate-950 p-3 lg:hidden">
-        <div className="flex rounded-xl bg-slate-900 p-1">
+    <div data-akane-root className="flex h-screen w-screen flex-col overflow-hidden bg-surface-lg font-inter lg:flex-row">
+      <div className="z-30 flex-none border-b border-border-subtle bg-surface-lg p-3 lg:hidden">
+        <div className="flex rounded-xl bg-surface-md p-1">
           <button
             onClick={() => setActiveTab('editor')}
             className={clsx(
               'flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-lg py-2 text-sm font-medium transition-all',
-              activeTab === 'editor' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200',
+              activeTab === 'editor' ? 'bg-primary text-text-main shadow-lg' : 'text-text-muted hover:text-text-main',
             )}
           >
             <LuPencil size={16} />
@@ -47,7 +47,7 @@ export const AkaneApp = () => {
             onClick={() => setActiveTab('preview')}
             className={clsx(
               'flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-lg py-2 text-sm font-medium transition-all',
-              activeTab === 'preview' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200',
+              activeTab === 'preview' ? 'bg-primary text-text-main shadow-lg' : 'text-text-muted hover:text-text-main',
             )}
           >
             <LuEye size={16} />

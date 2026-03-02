@@ -50,7 +50,7 @@ const ZoomControl = memo(
 
     return (
       <div className="flex items-center gap-3">
-        <LuZoomIn size={16} className={clsx('flex-shrink-0 text-indigo-400', disabled && 'opacity-50')} />
+        <LuZoomIn size={16} className={clsx('flex-shrink-0 text-primary', disabled && 'opacity-50')} />
         <Slider label="ZOOM" min={0} max={maxZoom - minZoom} step={0.01} value={!disabled ? Math.max(0, zoom - minZoom) : 0} onChange={onChange} />
       </div>
     );
@@ -62,7 +62,7 @@ const RotationControl = memo(({ disabled, onChange }: { readonly disabled: boole
 
   return (
     <div className="flex items-center gap-3">
-      <LuRotateCw size={16} className={clsx('flex-shrink-0 text-indigo-400', disabled && 'opacity-50')} />
+      <LuRotateCw size={16} className={clsx('flex-shrink-0 text-primary', disabled && 'opacity-50')} />
       <Slider label="ROTATE" min={-180} max={180} value={rotation} onChange={onChange} />
     </div>
   );
@@ -83,7 +83,7 @@ const EditorControls = memo(
     readonly disabled: boolean;
   }) => {
     return (
-      <div className="z-20 mt-2 shrink-0 rounded-xl border border-slate-700/50 bg-slate-800/80 p-3 backdrop-blur-md">
+      <div className="z-20 mt-2 shrink-0 rounded-xl border border-border-subtle/50 bg-surface-elevated/80 p-3 backdrop-blur-md">
         <div className="grid grid-cols-1 gap-2 sm:gap-4">
           <ZoomControl minZoom={minZoom} maxZoom={maxZoom} disabled={disabled} onChange={onZoomChange} />
           <RotationControl disabled={disabled} onChange={onRotationChange} />
@@ -175,12 +175,12 @@ export const EditorPanel = memo(() => {
   }, [image, platform]);
 
   return (
-    <div className="relative flex h-full w-full flex-col select-none border-r border-slate-800 bg-slate-900 p-2">
+    <div className="relative flex h-full w-full flex-col select-none border-r border-border-subtle bg-bg-main p-2">
       <div className="z-20 mb-1 flex shrink-0 items-center justify-between">
         <button
           onClick={() => setImage(null)}
           disabled={!image}
-          className="flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg bg-slate-900/50 px-2 py-1 text-xs font-medium text-slate-400 transition-colors hover:text-red-400 disabled:cursor-not-allowed disabled:opacity-30"
+          className="flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg bg-bg-main/50 px-2 py-1 text-xs font-medium text-text-muted transition-colors hover:text-red-400 disabled:cursor-not-allowed disabled:opacity-30"
         >
           <LuX size={16} />
           <span className="sm:inline">CLOSE</span>
@@ -188,7 +188,7 @@ export const EditorPanel = memo(() => {
         <button
           onClick={handleDownload}
           disabled={!image}
-          className="flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg bg-slate-900/50 px-2 py-1 text-xs font-medium text-slate-400 transition-colors hover:text-emerald-400 disabled:cursor-not-allowed disabled:opacity-30"
+          className="flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-lg bg-bg-main/50 px-2 py-1 text-xs font-medium text-text-muted transition-colors hover:text-emerald-400 disabled:cursor-not-allowed disabled:opacity-30"
         >
           <LuDownload size={16} />
           <span className="sm:inline">SAVE</span>
@@ -198,14 +198,14 @@ export const EditorPanel = memo(() => {
       <div className="relative flex flex-1 w-full min-h-0 items-center justify-center overflow-hidden p-2">
         {!image ? (
           <div
-            className="group flex aspect-square w-full max-w-[min(100%,320px)] cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-700 transition-all hover:border-indigo-500 hover:bg-slate-800/30"
+            className="group flex aspect-square w-full max-w-[min(100%,320px)] cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-border-subtle transition-all hover:border-primary hover:bg-surface-elevated/30"
             onClick={() => fileInputRef.current?.click()}
           >
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-slate-800 transition-transform group-hover:scale-110">
-              <LuUpload className="text-indigo-400" size={24} />
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-surface-elevated transition-transform group-hover:scale-110">
+              <LuUpload className="text-primary" size={24} />
             </div>
-            <p className="px-4 text-center text-sm font-medium text-slate-300">Upload Photo</p>
-            <p className="mt-2 text-xs text-slate-500">Supports JPG, PNG</p>
+            <p className="px-4 text-center text-sm font-medium text-text-main">Upload Photo</p>
+            <p className="mt-2 text-xs text-text-muted">Supports JPG, PNG</p>
             <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
           </div>
         ) : (
@@ -220,7 +220,7 @@ export const EditorPanel = memo(() => {
               <div
                 ref={containerRef}
                 className={clsx(
-                  'relative h-full w-full touch-none cursor-move overflow-hidden bg-slate-950 shadow-2xl ring-4 ring-indigo-500/20 transition-all duration-300 ease-in-out',
+                  'relative h-full w-full touch-none cursor-move overflow-hidden bg-bg-darker shadow-2xl ring-4 ring-primary/20 transition-all duration-300 ease-in-out',
                   isRoundedSquare ? 'rounded-3xl' : 'rounded-full',
                 )}
                 onPointerDown={handlePointerDown}

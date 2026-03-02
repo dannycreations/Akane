@@ -28,18 +28,18 @@ const PlatformItem = memo(
     const buttonClass = clsx(
       'relative group flex shrink-0 cursor-pointer items-center justify-center rounded-2xl transition-all duration-300',
       isVertical ? 'w-14 h-14' : 'w-12 h-12',
-      isSelected ? 'scale-110 bg-slate-800 shadow-[0_0_20px_rgba(99,102,241,0.3)]' : 'hover:bg-slate-900',
+      isSelected ? 'scale-110 bg-surface-elevated shadow-[0_0_20px_rgba(99,102,241,0.3)]' : 'hover:bg-surface-lg',
     );
 
-    const iconClass = clsx('transition-colors duration-300', isSelected ? p.color : 'text-slate-500 group-hover:text-slate-300');
+    const iconClass = clsx('transition-colors duration-300', isSelected ? p.color : 'text-text-muted group-hover:text-text-main');
 
     return (
       <button onClick={() => onSelect(p.id)} className={buttonClass} title={p.name} aria-label={p.name}>
-        {isSelected && isVertical && <div className="absolute left-0 h-8 w-1 animate-pulse rounded-r-full bg-indigo-500" />}
-        {isSelected && !isVertical && <div className="absolute bottom-0 h-1 w-8 animate-pulse rounded-t-full bg-indigo-500" />}
+        {isSelected && isVertical && <div className="absolute left-0 h-8 w-1 animate-pulse rounded-r-full bg-primary" />}
+        {isSelected && !isVertical && <div className="absolute bottom-0 h-1 w-8 animate-pulse rounded-t-full bg-primary" />}
         <Icon size={isVertical ? 28 : 24} className={iconClass} />
         {isVertical && (
-          <div className="absolute left-full z-50 ml-4 whitespace-nowrap rounded bg-slate-800 px-2 py-1 text-xs text-white opacity-0 transition-opacity pointer-events-none group-hover:opacity-100">
+          <div className="absolute left-full z-50 ml-4 whitespace-nowrap rounded bg-surface-elevated px-2 py-1 text-xs text-text-main opacity-0 transition-opacity pointer-events-none group-hover:opacity-100">
             {p.name}
           </div>
         )}
@@ -61,8 +61,10 @@ export const PlatformList = memo(({ orientation = 'vertical' }: PlatformListProp
   };
 
   const containerClass = clsx(
-    'relative z-10 bg-slate-950 shadow-2xl',
-    isVertical ? 'flex h-full w-24 flex-col items-center justify-center border-r border-slate-800 py-8' : 'h-20 w-full border-t border-slate-800',
+    'relative z-10 bg-bg-darker shadow-2xl',
+    isVertical
+      ? 'flex h-full w-24 flex-col items-center justify-center border-r border-border-subtle py-8'
+      : 'h-20 w-full border-t border-border-subtle',
   );
 
   const scrollContainerClass = clsx(

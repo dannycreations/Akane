@@ -35,14 +35,14 @@ const PerspectiveControls = memo(() => {
     <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 flex w-full max-w-[500px] -translate-x-1/2 -translate-y-1/2 justify-between px-4">
       <button
         onClick={handlePrevPerspective}
-        className="pointer-events-auto cursor-pointer rounded-full bg-slate-800/80 p-3 text-white shadow-lg transition-all hover:bg-indigo-500"
+        className="pointer-events-auto cursor-pointer rounded-full bg-surface-elevated/80 p-3 text-text-main shadow-lg transition-all hover:bg-primary"
         aria-label="Previous Perspective"
       >
         <LuArrowLeft size={20} />
       </button>
       <button
         onClick={handleNextPerspective}
-        className="pointer-events-auto cursor-pointer rounded-full bg-slate-800/80 p-3 text-white shadow-lg transition-all hover:bg-indigo-500"
+        className="pointer-events-auto cursor-pointer rounded-full bg-surface-elevated/80 p-3 text-text-main shadow-lg transition-all hover:bg-primary"
         aria-label="Next Perspective"
       >
         <LuArrowRight size={20} />
@@ -65,20 +65,20 @@ const PhoneFrame = memo(() => {
   }, [platform]);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => {
+    const request = requestIdleCallback(() => {
       setVisited((prev) => (prev.size === PLATFORMS.length ? prev : new Set(PLATFORMS.map((p) => p.id))));
-    }, 1000);
+    });
 
-    return () => window.clearTimeout(timer);
+    return () => cancelIdleCallback(request);
   }, []);
 
   return (
-    <div className="relative h-[680px] w-[340px] overflow-hidden rounded-[3rem] border-8 border-slate-800 bg-black shadow-2xl ring-1 ring-white/10">
+    <div className="relative h-[680px] w-[340px] overflow-hidden rounded-[3rem] border-8 border-surface-elevated bg-black shadow-2xl ring-1 ring-white/10">
       <div className="absolute left-1/2 top-0 z-50 flex h-7 w-28 -translate-x-1/2 items-center justify-center gap-2 rounded-b-2xl bg-black">
-        <div className="h-3 w-16 rounded-full bg-slate-900/50" />
+        <div className="h-3 w-16 rounded-full bg-surface-lg/50" />
       </div>
 
-      <div className="absolute left-6 right-6 top-2 z-40 flex items-center justify-between text-[10px] font-medium text-white">
+      <div className="absolute left-6 right-6 top-2 z-40 flex items-center justify-between text-[10px] font-medium text-text-main">
         <span>9:41</span>
         <div className="flex items-center gap-1.5">
           <LuSignal size={12} />
@@ -87,7 +87,7 @@ const PhoneFrame = memo(() => {
         </div>
       </div>
 
-      <div className="relative h-full w-full bg-slate-950 pt-8">
+      <div className="relative h-full w-full bg-bg-darker pt-8">
         {PLATFORMS.map((p) => {
           const isActive = p.id === platform;
           if (!isActive && !visited.has(p.id)) return null;
@@ -104,7 +104,7 @@ const PhoneFrame = memo(() => {
               <Suspense
                 fallback={
                   isActive ? (
-                    <div className="flex h-full items-center justify-center text-slate-500">
+                    <div className="flex h-full items-center justify-center text-text-muted">
                       <div className="animate-pulse">Loading...</div>
                     </div>
                   ) : null

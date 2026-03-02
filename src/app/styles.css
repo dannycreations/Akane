@@ -8,18 +8,94 @@
     transform: translate3d(-100%, 0, 0);
   }
 }
+@theme {
+  --font-inter: 'Inter', sans-serif;
 
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #0f172a;
-  color: #f8fafc;
-  overflow: hidden;
+  --color-bg-main: #0f172a;
+  --color-bg-darker: #020617;
+  --color-border-subtle: #1e293b;
+  --color-text-main: #f8fafc;
+  --color-text-muted: #94a3b8;
+  --color-text-secondary: #949ba4;
+
+  --color-status-online: #23a559;
+
+  --color-surface-sm: #1e293b;
+  --color-surface-md: #0f172a;
+  --color-surface-lg: #020617;
+  --color-surface-elevated: #1e293b;
+
+  --color-discord-main: #1e1f22;
+  --color-discord-sidebar: #2b2d31;
+  --color-discord-user-card: #111214;
+  --color-discord-accent: #5865f2;
+  --color-discord-nitro-start: #ff73fa;
+  --color-discord-nitro-end: #6a32ee;
+
+  --color-twitter-main: #000000;
+  --color-twitter-border: #2f3336;
+  --color-twitter-accent: #1d9bf0;
+  --color-twitter-banner: #333639;
+
+  --color-facebook-main: #18191a;
+  --color-facebook-surface: #242526;
+  --color-facebook-accent: #2374e1;
+  --color-facebook-secondary: #3a3b3c;
+
+  --color-whatsapp-main: #0b141a;
+  --color-whatsapp-surface: #202c33;
+  --color-whatsapp-accent: #25d366;
+
+  --color-slack-main: #1a1d21;
+  --color-slack-surface: #222529;
+  --color-slack-accent: #36c5f0;
+
+  --color-telegram-main: #17212b;
+  --color-telegram-surface: #0e1621;
+  --color-telegram-accent: #6ab2f2;
+
+  --color-instagram-main: #000000;
+  --color-instagram-border: #262626;
+
+  --color-linkedin-main: #000000;
+  --color-linkedin-surface: #1b1f23;
+  --color-linkedin-input: #293038;
+  --color-linkedin-accent: #0a66c2;
+  --color-linkedin-border: #31363c;
+
+  --color-snapchat-main: #000000;
+  --color-snapchat-surface: #121212;
+  --color-snapchat-card: #1a1a1a;
+  --color-snapchat-accent: #fffc00;
+  --color-snapchat-map: #00ff00;
+  --color-snapchat-chat: #3e95ff;
+  --color-snapchat-stories: #a05dcd;
+  --color-snapchat-spotlight: #ff0000;
+
+  --color-tiktok-main: #000000;
+  --color-tiktok-surface: #121212;
+  --color-tiktok-card: #1a1a1a;
+  --color-tiktok-accent-red: #fe2c55;
+  --color-tiktok-accent-cyan: #25f4ee;
+
+  --color-primary: #4f46e5;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+@layer base {
+  body {
+    font-family: var(--font-inter);
+    background-color: var(--color-bg-main);
+    color: var(--color-text-main);
+    overflow: hidden;
+  }
 }
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
