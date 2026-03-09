@@ -21,7 +21,6 @@ const VIEWS = {
   [Platform.Discord]: loadView(() => import('./DiscordView').then((m) => ({ default: m.DiscordView }))),
   [Platform.Facebook]: loadView(() => import('./FacebookView').then((m) => ({ default: m.FacebookView }))),
   [Platform.Instagram]: loadView(() => import('./InstagramView').then((m) => ({ default: m.InstagramView }))),
-  [Platform.LinkedIn]: loadView(() => import('./LinkedInView').then((m) => ({ default: m.LinkedInView }))),
   [Platform.Slack]: loadView(() => import('./SlackView').then((m) => ({ default: m.SlackView }))),
   [Platform.Snapchat]: loadView(() => import('./SnapchatView').then((m) => ({ default: m.SnapchatView }))),
   [Platform.Telegram]: loadView(() => import('./TelegramView').then((m) => ({ default: m.TelegramView }))),
